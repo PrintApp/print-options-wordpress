@@ -77,7 +77,7 @@ class Product_Options_Backend
         $store  = self::store_id();
         $secret = self::secret();
         if (!$store || !$secret) {
-            return self::failure(__('The plugin identity is missing — deactivate and reactivate the plugin.', 'product-options'));
+            return self::failure(__('The plugin identity is missing — deactivate and reactivate the plugin.', 'print-options'));
         }
 
         if (null !== $payload) {
@@ -113,7 +113,7 @@ class Product_Options_Backend
         ]);
 
         if (is_wp_error($response)) {
-            return self::failure(__('The Print Options service is unreachable — try again.', 'product-options'));
+            return self::failure(__('The Print Options service is unreachable — try again.', 'print-options'));
         }
 
         $status  = (int) wp_remote_retrieve_response_code($response);
@@ -125,7 +125,7 @@ class Product_Options_Backend
                 ? $decoded['error']
                 : sprintf(
                     /* translators: %d: HTTP status code */
-                    __('The request failed (HTTP %d) — try again.', 'product-options'),
+                    __('The request failed (HTTP %d) — try again.', 'print-options'),
                     $status
                 );
             return ['ok' => false, 'status' => $status, 'body' => $decoded, 'error' => $error];

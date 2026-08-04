@@ -45,18 +45,18 @@ class Product_Options_Cart
                 'product_options_add_to_cart'
             )
         ) {
-            throw new Exception(esc_html__('Security check failed — please reload the page.', 'product-options'));
+            throw new Exception(esc_html__('Security check failed — please reload the page.', 'print-options'));
         }
 
         // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- JSON payload: sanitize_text_field would corrupt it; it is json_decoded, structurally validated, price-verified server-side, and never echoed raw.
         $payload = json_decode((string) wp_unslash($_POST['product_options']), true);
         if (!is_array($payload) || !isset($payload['selections']) || !is_array($payload['selections'])) {
-            throw new Exception(esc_html__('Invalid product configuration.', 'product-options'));
+            throw new Exception(esc_html__('Invalid product configuration.', 'print-options'));
         }
 
         $config = Product_Options_Product_Config::get_config($product_id);
         if (!$config) {
-            throw new Exception(esc_html__('This product has no configurator blueprint.', 'product-options'));
+            throw new Exception(esc_html__('This product has no configurator blueprint.', 'print-options'));
         }
 
         $verified = self::verify_price($config, $payload);
@@ -100,7 +100,7 @@ class Product_Options_Cart
         $endpoint = Product_Options_Settings::get('po_verify_endpoint');
         if (!$endpoint) {
             throw new Exception(
-                esc_html__('Price verification is not configured — item cannot be added.', 'product-options')
+                esc_html__('Price verification is not configured — item cannot be added.', 'print-options')
             );
         }
 
@@ -122,17 +122,17 @@ class Product_Options_Cart
 
         if (is_wp_error($response)) {
             throw new Exception(
-                esc_html__('Price verification is unavailable right now — please try again.', 'product-options')
+                esc_html__('Price verification is unavailable right now — please try again.', 'print-options')
             );
         }
 
         $code = wp_remote_retrieve_response_code($response);
         $body = json_decode(wp_remote_retrieve_body($response), true);
         if (200 !== $code || !is_array($body) || empty($body['success'])) {
-            throw new Exception(esc_html__('This configuration could not be priced.', 'product-options'));
+            throw new Exception(esc_html__('This configuration could not be priced.', 'print-options'));
         }
         if (!empty($body['unavailable'])) {
-            throw new Exception(esc_html__('This combination is currently unavailable.', 'product-options'));
+            throw new Exception(esc_html__('This combination is currently unavailable.', 'print-options'));
         }
 
         return [

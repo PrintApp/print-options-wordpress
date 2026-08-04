@@ -35,7 +35,7 @@ class Product_Options_Product_Tab
     public static function add_tab(array $tabs): array
     {
         $tabs['print_options'] = [
-            'label'    => __('Print Options', 'product-options'),
+            'label'    => __('Print Options', 'print-options'),
             'target'   => 'print_options_product_data',
             'class'    => [],
             'priority' => 65,
@@ -56,9 +56,9 @@ class Product_Options_Product_Tab
         <div id="print_options_product_data" class="panel woocommerce_options_panel">
             <div class="options_group">
                 <p class="form-field">
-                    <label for="po_set_key"><?php esc_html_e('Print Options', 'product-options'); ?></label>
+                    <label for="po_set_key"><?php esc_html_e('Print Options', 'print-options'); ?></label>
                     <select id="po_set_key" name="po_set_key" style="min-width: 260px;">
-                        <option value=""><?php esc_html_e('None — sell at the normal price', 'product-options'); ?></option>
+                        <option value=""><?php esc_html_e('None — sell at the normal price', 'print-options'); ?></option>
                         <?php foreach ($library as $set) : ?>
                             <?php
                             if (!isset($set['setKey']) || !is_string($set['setKey'])) {
@@ -66,7 +66,7 @@ class Product_Options_Product_Tab
                             }
                             $title = isset($set['title']) && is_string($set['title']) && '' !== $set['title']
                                 ? $set['title']
-                                : __('Untitled options', 'product-options');
+                                : __('Untitled options', 'print-options');
                             ?>
                             <option
                                 value="<?php echo esc_attr($set['setKey']); ?>"
@@ -80,8 +80,8 @@ class Product_Options_Product_Tab
                         <?php
                         printf(
                             /* translators: %s: link to the Print Options page */
-                            esc_html__('You haven\'t created any print options yet — %s to build your first set.', 'product-options'),
-                            '<a href="' . esc_url($manage) . '">' . esc_html__('open Print Options', 'product-options') . '</a>'
+                            esc_html__('You haven\'t created any print options yet — %s to build your first set.', 'print-options'),
+                            '<a href="' . esc_url($manage) . '">' . esc_html__('open Print Options', 'print-options') . '</a>'
                         );
                         ?>
                     </p>
@@ -90,8 +90,8 @@ class Product_Options_Product_Tab
                         <?php
                         printf(
                             /* translators: %s: link to the Print Options page */
-                            esc_html__('Customers configure and price their job right on the product page. Manage the sets themselves on the %s page.', 'product-options'),
-                            '<a href="' . esc_url($manage) . '">' . esc_html__('Print Options', 'product-options') . '</a>'
+                            esc_html__('Customers configure and price their job right on the product page. Manage the sets themselves on the %s page.', 'print-options'),
+                            '<a href="' . esc_url($manage) . '">' . esc_html__('Print Options', 'print-options') . '</a>'
                         );
                         ?>
                     </p>
@@ -131,7 +131,7 @@ class Product_Options_Product_Tab
             if (!$result['ok']) {
                 self::notify(sprintf(
                     /* translators: %s: error message */
-                    __('Print Options could not be removed from this product: %s', 'product-options'),
+                    __('Print Options could not be removed from this product: %s', 'print-options'),
                     $result['error']
                 ));
                 return;
@@ -155,7 +155,7 @@ class Product_Options_Product_Tab
             if (!$result['ok']) {
                 self::notify(sprintf(
                     /* translators: %s: error message */
-                    __('Print Options could not be assigned to this product: %s', 'product-options'),
+                    __('Print Options could not be assigned to this product: %s', 'print-options'),
                     $result['error']
                 ));
                 return;

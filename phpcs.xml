@@ -8,7 +8,7 @@
         gates. Run: phpcs (with wp-coding-standards/wpcs installed).
     </description>
 
-    <file>product-options.php</file>
+    <file>print-options.php</file>
     <file>uninstall.php</file>
     <file>includes</file>
     <file>templates</file>
@@ -20,7 +20,7 @@
     <rule ref="WordPress.WP.I18n">
         <properties>
             <property name="text_domain" type="array">
-                <element value="product-options"/>
+                <element value="print-options"/>
             </property>
         </properties>
     </rule>
