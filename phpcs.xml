@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<ruleset name="ProductOptions">
+    <description>
+        Security-focused WordPress sniffs for the wp.org review: escaping,
+        sanitization, nonces, SQL, i18n. Deliberately NOT the full
+        WordPress-Core formatting standard — the codebase keeps its own
+        consistent style, and php -l plus the wp-env E2E are the functional
+        gates. Run: phpcs (with wp-coding-standards/wpcs installed).
+    </description>
+
+    <file>product-options.php</file>
+    <file>uninstall.php</file>
+    <file>includes</file>
+    <file>templates</file>
+
+    <rule ref="WordPress.Security"/>
+    <rule ref="WordPress.DB"/>
+    <rule ref="WordPress.PHP.DevelopmentFunctions"/>
+    <rule ref="WordPress.WP.EnqueuedResourceParameters"/>
+    <rule ref="WordPress.WP.I18n">
+        <properties>
+            <property name="text_domain" type="array">
+                <element value="product-options"/>
+            </property>
+        </properties>
+    </rule>
+</ruleset>

@@ -1,0 +1,14 @@
+{
+    "phpVersion": "8.2",
+    "plugins": [
+        "https://downloads.wordpress.org/plugin/woocommerce.latest-stable.zip"
+    ],
+    "mappings": {
+        "wp-content/plugins/product-options": "."
+    },
+    "config": {
+        "WP_DEBUG": true,
+        "WP_DEBUG_LOG": true,
+        "WP_DEBUG_DISPLAY": false
+    }
+}
