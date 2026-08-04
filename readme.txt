@@ -62,9 +62,9 @@ customer account is required and no personal data is sold or shared.
   domain, and published option sets are served from it to your product
   pages via your server (cached locally for 60 seconds).
 
-These services are operated by Print.App: https://print.app/
-(TODO before wp.org submission: publish privacy-policy and terms pages and
-link them here — the review team requires both for service-backed plugins.)
+These services are operated by Print.App ApS: https://print.app/
+Privacy policy: https://print.app/company/privacy
+Terms of service: https://print.app/company/terms
 
 == Frequently Asked Questions ==
 
