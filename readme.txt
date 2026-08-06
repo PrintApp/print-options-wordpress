@@ -2,27 +2,24 @@
 Contributors: printapp
 Tags: woocommerce, product options, printing, web-to-print, price calculator
 Requires at least: 6.2
-Tested up to: 6.7
+Tested up to: 7.0
 Requires PHP: 7.4
 Stable tag: 0.3.0
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
-Print product configurator for WooCommerce: options, live pricing, artwork
-upload — built for print shops (business cards, stickers, t-shirts, posters,
-booklets, thesis binding and more).
+Print product options with live pricing and artwork upload for WooCommerce — built for print shops.
 
 == Description ==
 
-Product Options renders a fast, accessible configurator on your product pages:
+Print Options renders a fast, accessible configurator on your product pages:
 
 * Visual builder with print-ready templates (business cards, stickers with
   area pricing, t-shirt size × color matrices, posters, …) — right inside
   your WordPress admin, no JSON anywhere
 * Live price preview: per-unit, per-page, per-area, quantity breaks
   (flat or graduated), setup fees, minimum orders
-* Conditional options, multi-select finishes, artwork upload with optional
-  bot protection (Cloudflare Turnstile)
+* Conditional options, multi-select finishes, and artwork upload
 * Prices are ALWAYS re-verified server-side before an item enters the cart —
   the browser price is never trusted.
 
@@ -30,10 +27,13 @@ Create your option sets on the Print Options page, then open any product and
 pick a set from its Print Options tab — next to Attributes and Variations.
 Editing a set later updates every product that uses it.
 
+Requires WooCommerce.
+
 == Installation ==
 
 1. Upload and activate the plugin.
-2. Open WooCommerce → Print Options and create an option set from a template.
+2. Open Print Options → Option Sets in your admin sidebar and create an option
+   set from a template.
 3. Edit a product, open its Print Options tab, and pick the set from the
    dropdown. Done — the product page now shows the configurator.
 
@@ -66,26 +66,51 @@ These services are operated by Print.App ApS: https://print.app/
 Privacy policy: https://print.app/company/privacy
 Terms of service: https://print.app/company/terms
 
+== Source Code ==
+
+The configurator widget shipped in assets/print-configurator.js is compiled
+from TypeScript and Vue sources. The full, human-readable source and the build
+tooling are available at:
+
+https://github.com/PrintApp/print-options-wordpress
+
+Build it with `npm install` and `npm run build` in the core-ui package of the
+linked monorepo; the output is the file bundled here unchanged.
+
 == Frequently Asked Questions ==
 
 = Where do I build the options? =
-WooCommerce → Print Options, inside your own admin. Start from a template and
+Print Options → Option Sets, inside your own admin. Start from a template and
 adjust the choices and prices to match what you sell.
 
 = Can several products share the same options? =
 Yes — assign the same set on each product's Print Options tab. Saving the set
 once updates all of them.
 
+= Do I need an account or API keys? =
+No. The plugin creates its own anonymous identity when you activate it, and
+talks to the service on your server's behalf.
+
 = What happens if the verification endpoint is down? =
 Adding to cart is refused with a friendly error. The plugin never falls back
 to a browser-computed price.
+
+= Is it really free? =
+Yes, with no product or option limits.
+
+== Screenshots ==
+
+1. The configurator on a product page: options, live pricing, and the verified total.
+2. The visual builder — outline, editor and a live preview of the storefront widget.
+3. Ready-made print templates: business cards, flyers, stickers, thesis binding and more.
+4. The Print Options tab on the product edit page, next to Attributes and Variations.
 
 == Changelog ==
 
 = 0.3.0 =
 * Print Options tab on the product edit page — assign a named option set from
   a dropdown, no JSON pasting
-* Embedded visual builder (WooCommerce → Print Options) to create and manage
+* Embedded visual builder (Print Options → Option Sets) to create and manage
   option sets
 * Option sets are served from the CDN and shared across products; editing a
   set updates every product that uses it
@@ -93,7 +118,7 @@ to a browser-computed price.
 
 = 0.2.0 =
 * Full add-to-cart bridge with server-side price verification
-* Settings page, per-product blueprint metabox, order line persistence
+* Settings page, per-product options metabox, order line persistence
 
 = 0.1.0 =
 * Initial stub
