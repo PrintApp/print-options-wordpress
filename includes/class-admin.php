@@ -38,8 +38,8 @@ class Product_Options_Admin
         /* Top-level menu (owner decision): the plugin is its own product,
            not a WooCommerce sub-feature — it only REQUIRES WooCommerce. */
         add_menu_page(
-            __('Print Options', 'printapp-product-options'),
-            __('Print Options', 'printapp-product-options'),
+            __('Print Options', 'print-app-product-options-for-woocommerce'),
+            __('Print Options', 'print-app-product-options-for-woocommerce'),
             'manage_woocommerce',
             self::PAGE_SLUG,
             [self::class, 'render'],
@@ -49,8 +49,8 @@ class Product_Options_Admin
         // Rename the auto-created first submenu entry.
         add_submenu_page(
             self::PAGE_SLUG,
-            __('Option Sets', 'printapp-product-options'),
-            __('Option Sets', 'printapp-product-options'),
+            __('Option Sets', 'print-app-product-options-for-woocommerce'),
+            __('Option Sets', 'print-app-product-options-for-woocommerce'),
             'manage_woocommerce',
             self::PAGE_SLUG,
             [self::class, 'render']
@@ -122,7 +122,7 @@ class Product_Options_Admin
             <iframe
                 id="po-builder-frame"
                 src="<?php echo esc_url(self::builder_url()); ?>"
-                title="<?php esc_attr_e('Print Options builder', 'printapp-product-options'); ?>"
+                title="<?php esc_attr_e('Print Options builder', 'print-app-product-options-for-woocommerce'); ?>"
                 style="flex: 1; width: 100%; border: 1px solid #c3c4c7; border-radius: 4px; background: #fff;"
             ></iframe>
         </div>
@@ -137,12 +137,12 @@ class Product_Options_Admin
     {
         check_ajax_referer('po_bridge', 'nonce');
         if (!current_user_can('manage_woocommerce')) {
-            wp_send_json_error(['message' => __('You are not allowed to manage Print Options.', 'printapp-product-options')], 403);
+            wp_send_json_error(['message' => __('You are not allowed to manage Print Options.', 'print-app-product-options-for-woocommerce')], 403);
         }
 
         $method = isset($_POST['method']) ? sanitize_key(wp_unslash($_POST['method'])) : '';
         if (!isset(self::METHODS[$method])) {
-            wp_send_json_error(['message' => __('Unknown request.', 'printapp-product-options')], 400);
+            wp_send_json_error(['message' => __('Unknown request.', 'print-app-product-options-for-woocommerce')], 400);
         }
 
         // Params are structured JSON (an option-set document is deeply nested);
@@ -166,7 +166,7 @@ class Product_Options_Admin
         $title   = isset($params['title']) && is_string($params['title']) ? $params['title'] : '';
         $config  = isset($params['config']) && is_array($params['config']) ? $params['config'] : null;
         if ('' === $set_key || null === $config) {
-            wp_send_json_error(['message' => __('Invalid option set.', 'printapp-product-options')], 400);
+            wp_send_json_error(['message' => __('Invalid option set.', 'print-app-product-options-for-woocommerce')], 400);
         }
 
         $result = Product_Options_Backend::request('POST', '/po/woo/library', [
@@ -198,7 +198,7 @@ class Product_Options_Admin
     {
         $set_key = isset($params['setKey']) && is_string($params['setKey']) ? $params['setKey'] : '';
         if ('' === $set_key) {
-            wp_send_json_error(['message' => __('Invalid option set.', 'printapp-product-options')], 400);
+            wp_send_json_error(['message' => __('Invalid option set.', 'print-app-product-options-for-woocommerce')], 400);
         }
 
         $result = Product_Options_Backend::request('DELETE', '/po/woo/library', null, ['setKey' => $set_key]);

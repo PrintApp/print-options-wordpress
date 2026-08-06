@@ -12,7 +12,10 @@ if (!defined('WP_UNINSTALL_PLUGIN')) {
     exit;
 }
 
-foreach (
+// array_map avoids a file-scope loop variable (static analysis reads
+// those as unprefixed globals).
+array_map(
+    'delete_option',
     [
         'po_builder_base',
         'po_bundle_url',
@@ -24,10 +27,8 @@ foreach (
         'po_filecheck_agent_id',
         'po_store_id',
         'po_store_secret',
-    ] as $option
-) {
-    delete_option($option);
-}
+    ]
+);
 
 // Legacy pasted-JSON storage and the current assignment metadata.
 delete_post_meta_by_key('_product_options_config');

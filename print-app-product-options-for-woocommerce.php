@@ -6,7 +6,7 @@
  * Version:     0.3.0
  * Author:      Print.App
  * License:     MIT
- * Text Domain: printapp-product-options
+ * Text Domain: print-app-product-options-for-woocommerce
  *
  * Requires Plugins: woocommerce
  */
@@ -39,14 +39,12 @@ add_action('plugins_loaded', static function () {
                 '<div class="notice notice-error"><p>%s</p></div>',
                 esc_html__(
                     'Product Options (Print Configurator) requires WooCommerce to be active.',
-                    'printapp-product-options'
+                    'print-app-product-options-for-woocommerce'
                 )
             );
         });
         return;
     }
-
-    load_plugin_textdomain('printapp-product-options', false, dirname(plugin_basename(__FILE__)) . '/languages');
 
     Product_Options_Settings::init();
     Product_Options_Admin::init();

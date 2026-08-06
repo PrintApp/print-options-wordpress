@@ -91,6 +91,40 @@ class Product_Options_Frontend
             $turnstile_url = add_query_arg('sitekey', rawurlencode($sitekey), $turnstile_url);
         }
 
+        // Built here, not in the template: assignments inside an included
+        // file land at file scope, which reads as globals to static analysis.
+        $provider_attr = self::provider_attribute();
+
         include PRODUCT_OPTIONS_PLUGIN_DIR . 'templates/configurator.php';
+    }
+
+    /**
+     * Filecheck element-mode provider config as a JSON attribute value, or ''
+     * when no publishable key is configured. The store-level key lives in
+     * settings; the per-field workflow lives inside the option set.
+     */
+    private static function provider_attribute(): string
+    {
+        $key = Product_Options_Settings::get('po_filecheck_pk');
+        if ('' === $key) {
+            return '';
+        }
+        $provider = [
+            'id'             => 'filecheck',
+            'name'           => 'Filecheck',
+            'mode'           => 'element',
+            'publishableKey' => $key,
+            'capabilities'   => [
+                'pages'           => true,
+                'colorDetection'  => true,
+                'canvas'          => true,
+                'preflightIssues' => true,
+            ],
+        ];
+        $agent = Product_Options_Settings::get('po_filecheck_agent_id');
+        if ('' !== $agent) {
+            $provider['agentId'] = $agent;
+        }
+        return (string) wp_json_encode($provider);
     }
 }
