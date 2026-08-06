@@ -1,4 +1,4 @@
-=== Print Options ===
+=== Print.App Product Options for WooCommerce ===
 Contributors: printapp
 Tags: woocommerce, product options, printing, web-to-print, price calculator
 Requires at least: 6.2

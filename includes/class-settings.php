@@ -94,8 +94,8 @@ class Product_Options_Settings
     {
         add_submenu_page(
             Product_Options_Admin::PAGE_SLUG,
-            __('Print Options Settings', 'print-options'),
-            __('Settings', 'print-options'),
+            __('Print Options Settings', 'printapp-product-options'),
+            __('Settings', 'printapp-product-options'),
             'manage_woocommerce',
             'product-options-settings',
             [self::class, 'render']
@@ -109,11 +109,11 @@ class Product_Options_Settings
         }
         ?>
         <div class="wrap">
-            <h1><?php esc_html_e('Print Options Settings', 'print-options'); ?></h1>
+            <h1><?php esc_html_e('Print Options Settings', 'printapp-product-options'); ?></h1>
             <p>
                 <?php esc_html_e(
                     'Create option sets on the Print Options page, assign them on each product\'s Print Options tab, and connect your pricing/upload backend here.',
-                    'print-options'
+                    'printapp-product-options'
                 ); ?>
             </p>
             <form method="post" action="options.php">

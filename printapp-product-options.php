@@ -1,12 +1,12 @@
 <?php
 /**
- * Plugin Name: Print Options
+ * Plugin Name: Print.App Product Options for WooCommerce
  * Plugin URI:  https://options.print.app
  * Description: Print product configurator for WooCommerce — options, live pricing, artwork upload. Prices are always re-verified server-side.
  * Version:     0.3.0
  * Author:      Print.App
  * License:     MIT
- * Text Domain: print-options
+ * Text Domain: printapp-product-options
  *
  * Requires Plugins: woocommerce
  */
@@ -39,14 +39,14 @@ add_action('plugins_loaded', static function () {
                 '<div class="notice notice-error"><p>%s</p></div>',
                 esc_html__(
                     'Product Options (Print Configurator) requires WooCommerce to be active.',
-                    'print-options'
+                    'printapp-product-options'
                 )
             );
         });
         return;
     }
 
-    load_plugin_textdomain('print-options', false, dirname(plugin_basename(__FILE__)) . '/languages');
+    load_plugin_textdomain('printapp-product-options', false, dirname(plugin_basename(__FILE__)) . '/languages');
 
     Product_Options_Settings::init();
     Product_Options_Admin::init();

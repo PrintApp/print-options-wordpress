@@ -4,7 +4,7 @@
         "https://downloads.wordpress.org/plugin/woocommerce.latest-stable.zip"
     ],
     "mappings": {
-        "wp-content/plugins/print-options": "."
+        "wp-content/plugins/printapp-product-options": "."
     },
     "config": {
         "WP_DEBUG": true,
