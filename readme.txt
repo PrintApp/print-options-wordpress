@@ -4,7 +4,7 @@ Tags: woocommerce, product options, printing, web-to-print, price calculator
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 0.4.0
+Stable tag: 0.4.1
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -130,6 +130,11 @@ Yes, with no product or option limits.
 4. Every price is recomputed and signed on the server before it can reach the cart.
 
 == Changelog ==
+
+= 0.4.1 =
+* Fix: option sets with quantity tiers on individual choices (for example
+  size-dependent price breaks) could not be saved — the values were being
+  truncated before they reached the server and the save was refused
 
 = 0.4.0 =
 * The visual builder now ships with the plugin and runs on its own admin page

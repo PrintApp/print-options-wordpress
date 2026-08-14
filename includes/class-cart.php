@@ -19,8 +19,19 @@ class PAPO_Cart
 {
     private const VERIFY_TIMEOUT_SECONDS = 5;
 
-    /** Guard against a hostile payload nesting itself into a stack overflow. */
-    private const MAX_JSON_DEPTH = 12;
+    /**
+     * Guard against a hostile payload nesting itself into a stack overflow.
+     *
+     * 32, not lower: a real blueprint legitimately reaches depth 13 through
+     * the admin bridge — {params} > config > sections > section > fields >
+     * field > options > choice > priceModifiers > modifier > tiers > rows >
+     * row > upTo — and inline Filecheck workflows and nested visibleWhen
+     * groups go deeper still. A cap of 12 silently nulled the tier rows of
+     * any option set with per-choice quantity tiers, and the backend then
+     * refused the save ("Expected number, received null"). Hostile inputs
+     * are still bounded; legitimate documents never come near 32.
+     */
+    private const MAX_JSON_DEPTH = 32;
 
     /**
      * Clean a json_decode()'d structure, key by key and leaf by leaf.

@@ -3,7 +3,7 @@
  * Plugin Name: Print.App Product Options for WooCommerce
  * Plugin URI:  https://options.print.app
  * Description: Print product configurator for WooCommerce — options, live pricing, artwork upload. Prices are always re-verified server-side.
- * Version:     0.4.0
+ * Version:     0.4.1
  * Author:      Print.App
  * License:     MIT
  * Text Domain: print-app-product-options-for-woocommerce
@@ -15,7 +15,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('PAPO_VERSION', '0.4.0');
+define('PAPO_VERSION', '0.4.1');
 define('PAPO_PLUGIN_FILE', __FILE__);
 define('PAPO_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('PAPO_PLUGIN_URL', plugin_dir_url(__FILE__));
