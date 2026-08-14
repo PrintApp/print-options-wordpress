@@ -15,9 +15,45 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class Product_Options_Cart
+class PAPO_Cart
 {
     private const VERIFY_TIMEOUT_SECONDS = 5;
+
+    /** Guard against a hostile payload nesting itself into a stack overflow. */
+    private const MAX_JSON_DEPTH = 12;
+
+    /**
+     * Clean a json_decode()'d structure, key by key and leaf by leaf.
+     *
+     * json_decode() converts; it does not sanitize. Everything below arrives
+     * from the browser and ends up in cart item data, order item meta and the
+     * admin's order screen, so each scalar goes through the same treatment a
+     * single posted field would get, and keys are reduced to the identifier
+     * shape the blueprint actually uses.
+     */
+    public static function clean($value, int $depth = 0)
+    {
+        if ($depth > self::MAX_JSON_DEPTH) {
+            return null;
+        }
+        if (is_array($value)) {
+            $clean = [];
+            foreach ($value as $key => $item) {
+                /* Not sanitize_key(): it lowercases, and these keys are
+                   blueprint field ids that must still match the option set
+                   afterwards. Restrict the character set, keep the case. */
+                $key = is_int($key)
+                    ? $key
+                    : preg_replace('/[^A-Za-z0-9_\-]/', '', (string) $key);
+                $clean[$key] = self::clean($item, $depth + 1);
+            }
+            return $clean;
+        }
+        if (is_bool($value) || is_int($value) || is_float($value) || null === $value) {
+            return $value;
+        }
+        return sanitize_text_field((string) $value);
+    }
 
     public static function init(): void
     {
@@ -34,34 +70,37 @@ class Product_Options_Cart
      */
     public static function capture(array $cart_item_data, int $product_id): array
     {
-        if (!isset($_POST['product_options'])) {
+        if (!isset($_POST['papo_options'])) {
             return $cart_item_data;
         }
 
         if (
-            !isset($_POST['product_options_nonce']) ||
+            !isset($_POST['papo_nonce']) ||
             !wp_verify_nonce(
-                sanitize_text_field(wp_unslash($_POST['product_options_nonce'])),
-                'product_options_add_to_cart'
+                sanitize_text_field(wp_unslash($_POST['papo_nonce'])),
+                'papo_add_to_cart'
             )
         ) {
             throw new Exception(esc_html__('Security check failed — please reload the page.', 'print-app-product-options-for-woocommerce'));
         }
 
-        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- JSON payload: sanitize_text_field would corrupt it; it is json_decoded, structurally validated, price-verified server-side, and never echoed raw.
-        $payload = json_decode((string) wp_unslash($_POST['product_options']), true);
+        /* Decoded first because sanitize_text_field would destroy the JSON,
+           then cleaned recursively — see clean(). The result is what gets
+           stored and displayed; the raw string is never used again. */
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- decoded, then recursively sanitized by self::clean() on the next line.
+        $payload = self::clean(json_decode((string) wp_unslash($_POST['papo_options']), true));
         if (!is_array($payload) || !isset($payload['selections']) || !is_array($payload['selections'])) {
             throw new Exception(esc_html__('Invalid product configuration.', 'print-app-product-options-for-woocommerce'));
         }
 
-        $config = Product_Options_Product_Config::get_config($product_id);
+        $config = PAPO_Product_Config::get_config($product_id);
         if (!$config) {
             throw new Exception(esc_html__('This product has no configurator blueprint.', 'print-app-product-options-for-woocommerce'));
         }
 
         $verified = self::verify_price($config, $payload);
 
-        $cart_item_data['product_options'] = [
+        $cart_item_data['papo_options'] = [
             'selections' => $payload['selections'],
             'file'       => isset($payload['file']) && is_array($payload['file']) ? $payload['file'] : null,
             'verified'   => $verified,
@@ -82,7 +121,7 @@ class Product_Options_Cart
     public static function force_single_line($quantity, int $product_id)
     {
         // phpcs:ignore WordPress.Security.NonceVerification.Missing -- presence check only; the value is consumed exclusively by capture(), which verifies the nonce.
-        if (isset($_POST['product_options'])) {
+        if (isset($_POST['papo_options'])) {
             return 1;
         }
         return $quantity;
@@ -97,7 +136,7 @@ class Product_Options_Cart
      */
     private static function verify_price(array $config, array $payload): array
     {
-        $endpoint = Product_Options_Settings::get('po_verify_endpoint');
+        $endpoint = PAPO_Settings::get('papo_verify_endpoint');
         if (!$endpoint) {
             throw new Exception(
                 esc_html__('Price verification is not configured — item cannot be added.', 'print-app-product-options-for-woocommerce')
@@ -116,7 +155,7 @@ class Product_Options_Cart
                 // currency, so the blueprint must be priced in it.
                 'currency'   => get_woocommerce_currency(),
                 // Store namespace — activity heartbeat for future pruning.
-                'shop'       => Product_Options_Backend::store_id(),
+                'shop'       => PAPO_Backend::store_id(),
             ]),
         ]);
 
@@ -223,13 +262,33 @@ class Product_Options_Cart
         return $pairs;
     }
 
+    /**
+     * A cart line's configuration.
+     *
+     * Lines added before the keys were prefixed are still sitting in shoppers'
+     * carts and sessions after an update. Without this fallback the verified
+     * total below is never found for them, the line keeps the product's own
+     * price — which for a configured product is 0 — and it can be checked out
+     * for nothing. Reading both keys costs nothing and closes that window.
+     */
+    private static function line_options(array $item): ?array
+    {
+        foreach (['papo_options', 'product_options'] as $key) {
+            if (isset($item[$key]) && is_array($item[$key])) {
+                return $item[$key];
+            }
+        }
+        return null;
+    }
+
     /** Show the configuration under the cart line. */
     public static function display(array $item_data, array $cart_item): array
     {
-        if (empty($cart_item['product_options']['display'])) {
+        $options = self::line_options($cart_item);
+        if (empty($options['display'])) {
             return $item_data;
         }
-        foreach ($cart_item['product_options']['display'] as $pair) {
+        foreach ($options['display'] as $pair) {
             $item_data[] = [
                 'key'   => wp_strip_all_tags($pair['label']),
                 'value' => wp_strip_all_tags($pair['value']),
@@ -245,8 +304,9 @@ class Product_Options_Cart
             return;
         }
         foreach ($cart->get_cart() as $item) {
-            if (isset($item['product_options']['verified']['total'])) {
-                $item['data']->set_price((float) $item['product_options']['verified']['total']);
+            $options = self::line_options($item);
+            if (isset($options['verified']['total'])) {
+                $item['data']->set_price((float) $options['verified']['total']);
             }
         }
     }
@@ -258,10 +318,10 @@ class Product_Options_Cart
         array $values,
         WC_Order $order
     ): void {
-        if (empty($values['product_options'])) {
+        $options = self::line_options($values);
+        if (!$options) {
             return;
         }
-        $options = $values['product_options'];
 
         foreach ($options['display'] ?? [] as $pair) {
             $item->add_meta_data(
@@ -270,12 +330,12 @@ class Product_Options_Cart
             );
         }
         if (!empty($options['file']['fileId'])) {
-            $item->add_meta_data('_po_file_id', sanitize_text_field((string) $options['file']['fileId']));
+            $item->add_meta_data('_papo_file_id', sanitize_text_field((string) $options['file']['fileId']));
         }
         if (!empty($options['verified']['sku'])) {
-            $item->add_meta_data('_po_sku', sanitize_text_field((string) $options['verified']['sku']));
+            $item->add_meta_data('_papo_sku', sanitize_text_field((string) $options['verified']['sku']));
         }
-        $item->add_meta_data('_po_selections', wp_json_encode($options['selections']));
-        $item->add_meta_data('_po_copies', (string) ($options['verified']['quantity'] ?? 1));
+        $item->add_meta_data('_papo_selections', wp_json_encode($options['selections']));
+        $item->add_meta_data('_papo_copies', (string) ($options['verified']['quantity'] ?? 1));
     }
 }

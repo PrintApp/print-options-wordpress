@@ -2,7 +2,7 @@
 /**
  * Renders <print-configurator> inside the add-to-cart form.
  *
- * Available from the including scope (Product_Options_Frontend::render):
+ * Available from the including scope (PAPO_Frontend::render):
  * $product (WC_Product), $config (array), $turnstile_url (string),
  * $provider_attr (string, may be empty).
  *
@@ -21,7 +21,7 @@ if (!defined('ABSPATH')) {
 >
     <print-configurator
         id="wc-print-configurator"
-        upload-endpoint="<?php echo esc_url(Product_Options_Settings::get('po_upload_endpoint')); ?>"
+        upload-endpoint="<?php echo esc_url(PAPO_Settings::get('papo_upload_endpoint')); ?>"
         turnstile-url="<?php echo esc_url($turnstile_url); ?>"
         locale="<?php echo esc_attr(get_locale()); ?>"
         <?php if ('' !== $provider_attr) : ?>
@@ -29,8 +29,8 @@ if (!defined('ABSPATH')) {
         <?php endif; ?>
     ></print-configurator>
 
-    <input type="hidden" name="product_options" id="wc-product-options-payload" value="" />
-    <?php wp_nonce_field('product_options_add_to_cart', 'product_options_nonce'); ?>
+    <input type="hidden" name="papo_options" id="papo-payload" value="" />
+    <?php wp_nonce_field('papo_add_to_cart', 'papo_nonce'); ?>
 
     <script type="application/json" id="wc-product-options-config">
         <?php echo wp_json_encode($config); ?>

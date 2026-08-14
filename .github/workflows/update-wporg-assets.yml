@@ -1,0 +1,38 @@
+name: Update wp.org assets & readme
+
+# Updates ONLY the store listing on WordPress.org — the .wordpress-org assets
+# (banner, icon, screenshots) and readme.txt — without shipping a new version.
+#
+# MANUAL ONLY, DELIBERATELY. The obvious setup is to trigger this on pushes to
+# main that touch readme.txt, and that is what the Filecheck plugin does. It
+# fails on every release, because:
+#
+#   the underlying action refuses to run when trunk contains changes beyond
+#   the listing files, and a release commit necessarily brings the plugin code
+#   with it. The job races the tag-triggered release, sees code it is not
+#   allowed to deploy, and aborts with
+#   "Other files have been modified; changes not deployed".
+#
+# The release workflow already ships the assets with every tag, so the only
+# real use for this one is a listing-only edit between releases — which is
+# exactly when a human presses the button.
+#
+# Uses the same SVN_USERNAME / SVN_PASSWORD secrets as the release workflow.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  update-assets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update readme and assets on WordPress.org
+        uses: 10up/action-wordpress-plugin-asset-update@stable
+        env:
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          SLUG: print-app-product-options-for-woocommerce
+          ASSETS_DIR: .wordpress-org
+          README_NAME: readme.txt

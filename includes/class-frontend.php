@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class Product_Options_Frontend
+class PAPO_Frontend
 {
     public static function init(): void
     {
@@ -28,7 +28,7 @@ class Product_Options_Frontend
     {
         if (
             $product instanceof WC_Product &&
-            Product_Options_Product_Config::has_options($product->get_id())
+            PAPO_Product_Config::has_options($product->get_id())
         ) {
             return '';
         }
@@ -41,7 +41,7 @@ class Product_Options_Frontend
             return;
         }
         $product_id = get_queried_object_id();
-        if (!Product_Options_Product_Config::get_config($product_id)) {
+        if (!PAPO_Product_Config::get_config($product_id)) {
             return;
         }
 
@@ -52,23 +52,23 @@ class Product_Options_Frontend
            loading cannot have. (Also a wp.org listing requirement: no
            external scripts.) The setting remains as an override for
            self-hosted forks. */
-        $bundle = Product_Options_Settings::get('po_bundle_url');
+        $bundle = PAPO_Settings::get('papo_bundle_url');
         if ('' === $bundle) {
-            $bundle = PRODUCT_OPTIONS_PLUGIN_URL . 'assets/print-configurator.js';
+            $bundle = PAPO_PLUGIN_URL . 'assets/print-configurator.js';
         }
-        wp_enqueue_script('product-options-configurator', $bundle, [], PRODUCT_OPTIONS_VERSION, true);
+        wp_enqueue_script('papo-configurator', $bundle, [], PAPO_VERSION, true);
         wp_enqueue_script(
-            'product-options-loader',
-            PRODUCT_OPTIONS_PLUGIN_URL . 'assets/loader.js',
+            'papo-loader',
+            PAPO_PLUGIN_URL . 'assets/loader.js',
             [],
-            PRODUCT_OPTIONS_VERSION,
+            PAPO_VERSION,
             true
         );
     }
 
     public static function as_module(string $tag, string $handle): string
     {
-        if ('product-options-configurator' === $handle) {
+        if ('papo-configurator' === $handle) {
             return str_replace('<script ', '<script type="module" ', $tag);
         }
         return $tag;
@@ -80,13 +80,13 @@ class Product_Options_Frontend
         if (!$product instanceof WC_Product) {
             return;
         }
-        $config = Product_Options_Product_Config::get_config($product->get_id());
+        $config = PAPO_Product_Config::get_config($product->get_id());
         if (!$config) {
             return;
         }
 
-        $turnstile_url = Product_Options_Settings::get('po_turnstile_url');
-        $sitekey       = Product_Options_Settings::get('po_turnstile_sitekey');
+        $turnstile_url = PAPO_Settings::get('papo_turnstile_url');
+        $sitekey       = PAPO_Settings::get('papo_turnstile_sitekey');
         if ($turnstile_url && $sitekey) {
             $turnstile_url = add_query_arg('sitekey', rawurlencode($sitekey), $turnstile_url);
         }
@@ -95,7 +95,7 @@ class Product_Options_Frontend
         // file land at file scope, which reads as globals to static analysis.
         $provider_attr = self::provider_attribute();
 
-        include PRODUCT_OPTIONS_PLUGIN_DIR . 'templates/configurator.php';
+        include PAPO_PLUGIN_DIR . 'templates/configurator.php';
     }
 
     /**
@@ -105,7 +105,7 @@ class Product_Options_Frontend
      */
     private static function provider_attribute(): string
     {
-        $key = Product_Options_Settings::get('po_filecheck_pk');
+        $key = PAPO_Settings::get('papo_filecheck_pk');
         if ('' === $key) {
             return '';
         }
@@ -121,7 +121,7 @@ class Product_Options_Frontend
                 'preflightIssues' => true,
             ],
         ];
-        $agent = Product_Options_Settings::get('po_filecheck_agent_id');
+        $agent = PAPO_Settings::get('papo_filecheck_agent_id');
         if ('' !== $agent) {
             $provider['agentId'] = $agent;
         }

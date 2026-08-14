@@ -1,23 +1,24 @@
 <?php
 /**
- * The "Print Options" admin page: the builder, embedded.
+ * The "Print Options" admin page: the builder, bundled.
  *
  * The merchant creates and manages their option sets here; assigning a set to
  * a product happens on the product's own Print Options tab (class-product-tab).
  *
- * The iframe carries only PUBLIC values (?store= and ?origin=). Its writes
- * arrive as postMessage RPCs, relayed by assets/admin-bridge.js to the
- * admin-ajax handlers below, where PHP makes the signed backend call — the
- * store secret never reaches any browser, including this admin's.
+ * The builder is SHIPPED WITH THE PLUGIN and runs as an ordinary script on
+ * this page — WordPress does not allow a plugin screen to embed an external
+ * app in an iframe. Its writes POST to the admin-ajax handlers below, where
+ * PHP makes the signed backend call, so the store secret never reaches any
+ * browser, including this admin's.
  */
 
 if (!defined('ABSPATH')) {
     exit;
 }
 
-class Product_Options_Admin
+class PAPO_Admin
 {
-    public const PAGE_SLUG = 'product-options-library';
+    public const PAGE_SLUG = 'papo-library';
 
     /** RPC methods the bridge may relay, mapped to handlers below. */
     private const METHODS = [
@@ -30,7 +31,8 @@ class Product_Options_Admin
     {
         add_action('admin_menu', [self::class, 'menu']);
         add_action('admin_enqueue_scripts', [self::class, 'enqueue']);
-        add_action('wp_ajax_po_bridge', [self::class, 'handle_bridge']);
+        add_filter('script_loader_tag', [self::class, 'module_tag'], 10, 3);
+        add_action('wp_ajax_papo_bridge', [self::class, 'handle_bridge']);
     }
 
     public static function menu(): void
@@ -57,59 +59,53 @@ class Product_Options_Admin
         );
     }
 
-    /** The builder's origin — the only origin the bridge will talk to. */
-    public static function builder_origin(): string
-    {
-        $base  = Product_Options_Settings::get('po_builder_base');
-        $parts = wp_parse_url($base);
-        if (empty($parts['scheme']) || empty($parts['host'])) {
-            return 'https://options.print.app';
-        }
-        $origin = $parts['scheme'] . '://' . $parts['host'];
-        if (!empty($parts['port'])) {
-            $origin .= ':' . $parts['port'];
-        }
-        return $origin;
-    }
-
-    private static function builder_url(): string
-    {
-        Product_Options_Backend::ensure_identity();
-        /* The parent origin travels as SEPARATE host and scheme params —
-           never as a `scheme://` URL. The WAF in front of the CDN blocks
-           query strings containing full URLs (RFI rule) with an opaque 403,
-           which is exactly how the first embedded page load died. */
-        $admin_parts = wp_parse_url(admin_url());
-
-        return add_query_arg(
-            [
-                'platform' => 'woo',
-                'store'    => Product_Options_Backend::store_id(),
-                'parent'   => (string) ($admin_parts['host'] ?? '')
-                    . (empty($admin_parts['port']) ? '' : ':' . $admin_parts['port']),
-                'scheme'   => (string) ($admin_parts['scheme'] ?? 'https'),
-            ],
-            self::builder_origin() . '/builder/'
-        );
-    }
-
     public static function enqueue(string $hook): void
     {
         if (false === strpos($hook, self::PAGE_SLUG)) {
             return;
         }
-        wp_enqueue_script(
-            'product-options-admin-bridge',
-            PRODUCT_OPTIONS_PLUGIN_URL . 'assets/admin-bridge.js',
+        PAPO_Backend::ensure_identity();
+
+        wp_enqueue_style(
+            'papo-builder',
+            PAPO_PLUGIN_URL . 'assets/builder.css',
             [],
-            PRODUCT_OPTIONS_VERSION,
+            PAPO_VERSION
+        );
+        wp_enqueue_script(
+            'papo-builder',
+            PAPO_PLUGIN_URL . 'assets/builder.js',
+            [],
+            PAPO_VERSION,
             true
         );
-        wp_localize_script('product-options-admin-bridge', 'poBridge', [
-            'ajaxUrl'       => admin_url('admin-ajax.php'),
-            'nonce'         => wp_create_nonce('po_bridge'),
-            'builderOrigin' => self::builder_origin(),
+        /* The builder reads this to find admin-ajax and to know it is running
+           in WooCommerce mode. The store id is a public identifier; the store
+           SECRET is never exposed here — PHP signs backend writes itself. */
+        wp_localize_script('papo-builder', 'papoBuilder', [
+            'ajaxUrl' => admin_url('admin-ajax.php'),
+            'nonce'   => wp_create_nonce('papo_bridge'),
+            'store'   => PAPO_Backend::store_id(),
         ]);
+    }
+
+    /**
+     * The builder is an ES module; wp_enqueue_script emits a classic tag.
+     *
+     * Without this the browser refuses the file outright ("Cannot use
+     * import.meta outside a module") and the page renders an empty container.
+     * Only this one handle is touched.
+     */
+    public static function module_tag(string $tag, string $handle, string $src): string
+    {
+        if ('papo-builder' !== $handle) {
+            return $tag;
+        }
+        /* Add the attribute to WordPress's own tag rather than composing a
+           new one: the script stays properly enqueued (and Plugin Check can
+           still see that it is). */
+        unset($src);
+        return str_replace(' src=', ' type="module" src=', $tag);
     }
 
     public static function render(): void
@@ -117,14 +113,19 @@ class Product_Options_Admin
         if (!current_user_can('manage_woocommerce')) {
             return;
         }
+        /* The builder is shipped with the plugin and mounts here. It used to
+           be an iframe pointing at options.print.app, which the WordPress
+           guidelines do not allow for a plugin's own screens — and serving it
+           from this site removes the cross-origin handshake entirely. */
         ?>
-        <div class="wrap" style="height: calc(100vh - 65px); display: flex; flex-direction: column;">
-            <iframe
-                id="po-builder-frame"
-                src="<?php echo esc_url(self::builder_url()); ?>"
-                title="<?php esc_attr_e('Print Options builder', 'print-app-product-options-for-woocommerce'); ?>"
-                style="flex: 1; width: 100%; border: 1px solid #c3c4c7; border-radius: 4px; background: #fff;"
-            ></iframe>
+        <div class="wrap">
+            <div id="papo-builder"></div>
+            <noscript>
+                <?php esc_html_e(
+                    'The Print Options builder needs JavaScript enabled.',
+                    'print-app-product-options-for-woocommerce'
+                ); ?>
+            </noscript>
         </div>
         <?php
     }
@@ -135,7 +136,7 @@ class Product_Options_Admin
 
     public static function handle_bridge(): void
     {
-        check_ajax_referer('po_bridge', 'nonce');
+        check_ajax_referer('papo_bridge', 'nonce');
         if (!current_user_can('manage_woocommerce')) {
             wp_send_json_error(['message' => __('You are not allowed to manage Print Options.', 'print-app-product-options-for-woocommerce')], 403);
         }
@@ -145,12 +146,16 @@ class Product_Options_Admin
             wp_send_json_error(['message' => __('Unknown request.', 'print-app-product-options-for-woocommerce')], 400);
         }
 
-        // Params are structured JSON (an option-set document is deeply nested);
-        // decoded here, validated by each handler and — for backend writes —
-        // by the API itself with the same parser the pricing engine uses.
+        /* Params are structured JSON (an option-set document is deeply
+           nested), so they are decoded and then recursively sanitized by
+           PAPO_Cart::clean() — scalars through sanitize_text_field, keys
+           restricted to the identifier character set — before any handler
+           sees them. Backend writes are validated again by the API with the
+           same parser the pricing engine uses. */
         $params = [];
         if (isset($_POST['params'])) {
-            $decoded = json_decode((string) wp_unslash($_POST['params']), true); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+            // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- decoded, then recursively sanitized by PAPO_Cart::clean().
+            $decoded = PAPO_Cart::clean(json_decode((string) wp_unslash($_POST['params']), true));
             if (is_array($decoded)) {
                 $params = $decoded;
             }
@@ -169,7 +174,7 @@ class Product_Options_Admin
             wp_send_json_error(['message' => __('Invalid option set.', 'print-app-product-options-for-woocommerce')], 400);
         }
 
-        $result = Product_Options_Backend::request('POST', '/po/woo/library', [
+        $result = PAPO_Backend::request('POST', '/po/woo/library', [
             'setKey' => $set_key,
             'title'  => $title,
             'config' => $config,
@@ -178,14 +183,14 @@ class Product_Options_Admin
             wp_send_json_error(['message' => $result['error']], 502);
         }
 
-        Product_Options_Backend::bust_list_cache();
+        PAPO_Backend::bust_list_cache();
         // The save propagated to every assigned product server-side; drop
         // their local config caches so this site renders the new version now.
         $updated = isset($result['body']['updatedProducts']) && is_array($result['body']['updatedProducts'])
             ? $result['body']['updatedProducts']
             : [];
         foreach ($updated as $product_id) {
-            Product_Options_Product_Config::bust_config_cache((int) $product_id);
+            PAPO_Product_Config::bust_config_cache((int) $product_id);
         }
 
         wp_send_json_success([
@@ -201,12 +206,12 @@ class Product_Options_Admin
             wp_send_json_error(['message' => __('Invalid option set.', 'print-app-product-options-for-woocommerce')], 400);
         }
 
-        $result = Product_Options_Backend::request('DELETE', '/po/woo/library', null, ['setKey' => $set_key]);
+        $result = PAPO_Backend::request('DELETE', '/po/woo/library', null, ['setKey' => $set_key]);
         if (!$result['ok']) {
             wp_send_json_error(['message' => $result['error']], 502);
         }
 
-        Product_Options_Backend::bust_list_cache();
+        PAPO_Backend::bust_list_cache();
         wp_send_json_success(['setKey' => $set_key]);
     }
 

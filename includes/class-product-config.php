@@ -23,12 +23,12 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class Product_Options_Product_Config
+class PAPO_Product_Config
 {
     /** Pre-0.3 storage — read once as a fallback so upgrades keep rendering. */
     public const LEGACY_META_KEY = '_product_options_config';
 
-    private const TRANSIENT_PREFIX  = 'po_config_';
+    private const TRANSIENT_PREFIX  = 'papo_config_';
     private const CACHE_SECONDS     = 60;
     private const FETCH_TIMEOUT     = 5;
     /** Cached marker for "gate present but CDN copy unreadable". */
@@ -45,7 +45,7 @@ class Product_Options_Product_Config
      */
     public static function has_options(int $product_id): bool
     {
-        if ('yes' === get_post_meta($product_id, Product_Options_Product_Tab::GATE_META, true)) {
+        if ('yes' === get_post_meta($product_id, PAPO_Product_Tab::GATE_META, true)) {
             return true;
         }
         $legacy = get_post_meta($product_id, self::LEGACY_META_KEY, true);
@@ -55,7 +55,7 @@ class Product_Options_Product_Config
     /** Decoded option set for a product, or null when none is assigned. */
     public static function get_config(int $product_id): ?array
     {
-        if ('yes' !== get_post_meta($product_id, Product_Options_Product_Tab::GATE_META, true)) {
+        if ('yes' !== get_post_meta($product_id, PAPO_Product_Tab::GATE_META, true)) {
             return self::legacy_config($product_id);
         }
 
@@ -68,11 +68,11 @@ class Product_Options_Product_Config
             return $cached;
         }
 
-        $store = Product_Options_Backend::store_id();
+        $store = PAPO_Backend::store_id();
         if (!$store) {
             return null;
         }
-        $url      = Product_Options_Backend::cdn_base()
+        $url      = PAPO_Backend::cdn_base()
             . '/configs/' . rawurlencode($store) . '/' . $product_id . '.json';
         $response = wp_remote_get($url, ['timeout' => self::FETCH_TIMEOUT]);
 

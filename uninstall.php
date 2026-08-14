@@ -17,22 +17,22 @@ if (!defined('WP_UNINSTALL_PLUGIN')) {
 array_map(
     'delete_option',
     [
-        'po_builder_base',
-        'po_bundle_url',
-        'po_verify_endpoint',
-        'po_upload_endpoint',
-        'po_turnstile_url',
-        'po_turnstile_sitekey',
-        'po_filecheck_pk',
-        'po_filecheck_agent_id',
-        'po_store_id',
-        'po_store_secret',
+        'papo_builder_base',
+        'papo_bundle_url',
+        'papo_verify_endpoint',
+        'papo_upload_endpoint',
+        'papo_turnstile_url',
+        'papo_turnstile_sitekey',
+        'papo_filecheck_pk',
+        'papo_filecheck_agent_id',
+        'papo_store_id',
+        'papo_store_secret',
     ]
 );
 
 // Legacy pasted-JSON storage and the current assignment metadata.
 delete_post_meta_by_key('_product_options_config');
-delete_post_meta_by_key('_po_set_key');
+delete_post_meta_by_key('_papo_set_key');
 delete_post_meta_by_key('_po_has_options');
 
-delete_transient('po_library_list');
+delete_transient('papo_library_list');

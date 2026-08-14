@@ -7,18 +7,16 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class Product_Options_Settings
+class PAPO_Settings
 {
-    public const OPTION_GROUP = 'product_options_settings';
+    public const OPTION_GROUP = 'papo_settings';
 
     /** option_name => [label, description, default] */
     private const FIELDS = [
-        'po_builder_base' => [
-            'Builder URL',
-            'Where the Print Options builder and the published option sets are served from.',
-            'https://options.print.app',
-        ],
-        'po_bundle_url' => [
+        /* No builder URL: the builder ships with the plugin and is served
+           from this site. Published option sets are fetched from the CDN by
+           PAPO_Product_Config, which knows its own base. */
+        'papo_bundle_url' => [
             'Configurator bundle URL',
             'Leave empty to use the copy bundled with the plugin (recommended). Set only to load print-configurator.js from your own URL.',
             '',
@@ -26,32 +24,32 @@ class Product_Options_Settings
         // Defaults point at the hosted service so the plugin works on install.
         // Everything for this project lives under the /po/ namespace, which
         // keeps it clear of the other apps sharing api.print.app.
-        'po_verify_endpoint' => [
+        'papo_verify_endpoint' => [
             'Price verification endpoint',
             'The verify-price API that recomputes prices server-side. Adding to cart is refused if it is unreachable.',
             'https://api.print.app/po/verify-price',
         ],
-        'po_upload_endpoint' => [
+        'papo_upload_endpoint' => [
             'Upload endpoint',
             'The secure-upload API issuing presigned upload URLs.',
             'https://api.print.app/po/secure-upload',
         ],
-        'po_turnstile_url' => [
+        'papo_turnstile_url' => [
             'Turnstile challenge page URL',
             'Hosted challenge.html for invisible bot verification (optional).',
             '',
         ],
-        'po_turnstile_sitekey' => [
+        'papo_turnstile_sitekey' => [
             'Turnstile site key',
             'Cloudflare Turnstile site key (optional; appended to the challenge page URL).',
             '',
         ],
-        'po_filecheck_pk' => [
+        'papo_filecheck_pk' => [
             'Filecheck publishable key',
             'Optional. Activates Filecheck-validated uploads on products whose blueprint has a Filecheck-backed file field (pk_live_… — browser-safe).',
             '',
         ],
-        'po_filecheck_agent_id' => [
+        'papo_filecheck_agent_id' => [
             'Filecheck agent ID',
             'Optional Filecheck sub-tenant scope.',
             '',
@@ -60,9 +58,9 @@ class Product_Options_Settings
 
     /** Options that hold plain text rather than URLs. */
     private const TEXT_OPTIONS = [
-        'po_turnstile_sitekey',
-        'po_filecheck_pk',
-        'po_filecheck_agent_id',
+        'papo_turnstile_sitekey',
+        'papo_filecheck_pk',
+        'papo_filecheck_agent_id',
     ];
 
     public static function init(): void
@@ -75,29 +73,29 @@ class Product_Options_Settings
     public static function register(): void
     {
         foreach (self::FIELDS as $option => [$label, $description, $default]) {
+            /* Named outright rather than computed: every field here is either
+               a URL or plain text, and a static callback is what both a
+               reader and a scanner can verify at a glance. */
+            $sanitize_callback = in_array($option, self::TEXT_OPTIONS, true)
+                ? 'sanitize_text_field'
+                : 'esc_url_raw';
+
             register_setting(self::OPTION_GROUP, $option, [
                 'type'              => 'string',
-                'sanitize_callback' => 'esc_url_raw' === self::sanitizer($option)
-                    ? 'esc_url_raw'
-                    : 'sanitize_text_field',
+                'sanitize_callback' => $sanitize_callback,
                 'default'           => $default,
             ]);
         }
     }
 
-    private static function sanitizer(string $option): string
-    {
-        return in_array($option, self::TEXT_OPTIONS, true) ? 'sanitize_text_field' : 'esc_url_raw';
-    }
-
     public static function menu(): void
     {
         add_submenu_page(
-            Product_Options_Admin::PAGE_SLUG,
+            PAPO_Admin::PAGE_SLUG,
             __('Print Options Settings', 'print-app-product-options-for-woocommerce'),
             __('Settings', 'print-app-product-options-for-woocommerce'),
             'manage_woocommerce',
-            'product-options-settings',
+            'papo-settings',
             [self::class, 'render']
         );
     }

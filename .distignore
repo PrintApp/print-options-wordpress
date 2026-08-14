@@ -1,0 +1,22 @@
+# What NOT to ship to WordPress.org or into the release zip.
+#
+# The deploy action copies this whole repository into trunk unless files are
+# listed here. .wp-env.json matters most: a dotfile in trunk trips Plugin
+# Check's "Hidden files are not permitted" error, which is a review finding
+# rather than a warning.
+
+# Directories
+/.git
+/.github
+/.claude
+/.wordpress-org
+/node_modules
+
+# Development-only files
+.distignore
+.gitattributes
+.gitignore
+.wp-env.json
+phpcs.xml
+README.md
+*.zip

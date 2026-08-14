@@ -19,10 +19,10 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class Product_Options_Backend
+class PAPO_Backend
 {
-    public const STORE_ID_OPTION = 'po_store_id';
-    public const SECRET_OPTION   = 'po_store_secret';
+    public const STORE_ID_OPTION = 'papo_store_id';
+    public const SECRET_OPTION   = 'papo_store_secret';
 
     /** Everything for this project lives under the /po/ namespace. */
     private const API_BASE = 'https://api.print.app';
@@ -33,12 +33,12 @@ class Product_Options_Backend
 
     public static function api_base(): string
     {
-        return (string) apply_filters('product_options_api_base', self::API_BASE);
+        return (string) apply_filters('papo_api_base', self::API_BASE);
     }
 
     public static function cdn_base(): string
     {
-        return (string) apply_filters('product_options_cdn_base', self::CDN_BASE);
+        return (string) apply_filters('papo_cdn_base', self::CDN_BASE);
     }
 
     /** Create the identity if it does not exist yet (idempotent). */
@@ -143,7 +143,7 @@ class Product_Options_Backend
      */
     public static function fetch_list(): array
     {
-        $cached = get_transient('po_library_list');
+        $cached = get_transient('papo_library_list');
         if (is_array($cached)) {
             return $cached;
         }
@@ -170,13 +170,13 @@ class Product_Options_Backend
             'library'    => isset($decoded['library']) && is_array($decoded['library']) ? $decoded['library'] : [],
             'blueprints' => isset($decoded['blueprints']) && is_array($decoded['blueprints']) ? $decoded['blueprints'] : [],
         ];
-        set_transient('po_library_list', $list, 30);
+        set_transient('papo_library_list', $list, 30);
         return $list;
     }
 
     public static function bust_list_cache(): void
     {
-        delete_transient('po_library_list');
+        delete_transient('papo_library_list');
     }
 
     /** @return array{ok: bool, status: int, body: array, error: string} */

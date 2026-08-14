@@ -17,12 +17,12 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class Product_Options_Product_Tab
+class PAPO_Product_Tab
 {
-    public const SET_KEY_META = '_po_set_key';
+    public const SET_KEY_META = '_papo_set_key';
     public const GATE_META    = '_po_has_options';
 
-    private const NOTICE_TRANSIENT_PREFIX = 'po_tab_notice_';
+    private const NOTICE_TRANSIENT_PREFIX = 'papo_tab_notice_';
 
     public static function init(): void
     {
@@ -47,17 +47,17 @@ class Product_Options_Product_Tab
     {
         global $post;
         $current = (string) get_post_meta($post->ID, self::SET_KEY_META, true);
-        $list    = Product_Options_Backend::fetch_list();
+        $list    = PAPO_Backend::fetch_list();
         $library = $list['library'];
-        $manage  = admin_url('admin.php?page=' . Product_Options_Admin::PAGE_SLUG);
+        $manage  = admin_url('admin.php?page=' . PAPO_Admin::PAGE_SLUG);
 
-        wp_nonce_field('po_product_tab', 'po_product_tab_nonce');
+        wp_nonce_field('papo_product_tab', 'papo_product_tab_nonce');
         ?>
         <div id="print_options_product_data" class="panel woocommerce_options_panel">
             <div class="options_group">
                 <p class="form-field">
-                    <label for="po_set_key"><?php esc_html_e('Print Options', 'print-app-product-options-for-woocommerce'); ?></label>
-                    <select id="po_set_key" name="po_set_key" style="min-width: 260px;">
+                    <label for="papo_set_key"><?php esc_html_e('Print Options', 'print-app-product-options-for-woocommerce'); ?></label>
+                    <select id="papo_set_key" name="papo_set_key" style="min-width: 260px;">
                         <option value=""><?php esc_html_e('None — sell at the normal price', 'print-app-product-options-for-woocommerce'); ?></option>
                         <?php foreach ($library as $set) : ?>
                             <?php
@@ -104,10 +104,10 @@ class Product_Options_Product_Tab
     public static function save(int $post_id): void
     {
         if (
-            !isset($_POST['po_product_tab_nonce']) ||
+            !isset($_POST['papo_product_tab_nonce']) ||
             !wp_verify_nonce(
-                sanitize_text_field(wp_unslash($_POST['po_product_tab_nonce'])),
-                'po_product_tab'
+                sanitize_text_field(wp_unslash($_POST['papo_product_tab_nonce'])),
+                'papo_product_tab'
             )
         ) {
             return;
@@ -116,8 +116,8 @@ class Product_Options_Product_Tab
             return;
         }
 
-        $selected = isset($_POST['po_set_key'])
-            ? sanitize_text_field(wp_unslash($_POST['po_set_key']))
+        $selected = isset($_POST['papo_set_key'])
+            ? sanitize_text_field(wp_unslash($_POST['papo_set_key']))
             : '';
         $current = (string) get_post_meta($post_id, self::SET_KEY_META, true);
         if ($selected === $current) {
@@ -125,7 +125,7 @@ class Product_Options_Product_Tab
         }
 
         if ('' === $selected) {
-            $result = Product_Options_Backend::request('POST', '/po/woo/unassign', [
+            $result = PAPO_Backend::request('POST', '/po/woo/unassign', [
                 'productId' => (string) $post_id,
             ]);
             if (!$result['ok']) {
@@ -140,13 +140,13 @@ class Product_Options_Product_Tab
             delete_post_meta($post_id, self::GATE_META);
         } else {
             $set_title = '';
-            foreach (Product_Options_Backend::fetch_list()['library'] as $set) {
+            foreach (PAPO_Backend::fetch_list()['library'] as $set) {
                 if (isset($set['setKey']) && $set['setKey'] === $selected) {
                     $set_title = isset($set['title']) && is_string($set['title']) ? $set['title'] : '';
                     break;
                 }
             }
-            $result = Product_Options_Backend::request('POST', '/po/woo/assign', [
+            $result = PAPO_Backend::request('POST', '/po/woo/assign', [
                 'productId'    => (string) $post_id,
                 'setKey'       => $selected,
                 'productTitle' => get_the_title($post_id),
@@ -166,8 +166,8 @@ class Product_Options_Product_Tab
 
         // The assignment changed what this product serves — both local caches
         // are now wrong.
-        Product_Options_Product_Config::bust_config_cache($post_id);
-        Product_Options_Backend::bust_list_cache();
+        PAPO_Product_Config::bust_config_cache($post_id);
+        PAPO_Backend::bust_list_cache();
     }
 
     /**

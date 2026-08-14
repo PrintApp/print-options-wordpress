@@ -4,7 +4,7 @@ Tags: woocommerce, product options, printing, web-to-print, price calculator
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 0.3.0
+Stable tag: 0.4.0
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -56,26 +56,50 @@ customer account is required and no personal data is sold or shared.
   (a random ID generated at activation; your site URL host is recorded as
   metadata only).
 
-**options.print.app** (Print.App CDN and builder)
+**options.print.app** (Print.App CDN)
 
-* The visual builder is embedded on the plugin's admin page from this
-  domain, and published option sets are served from it to your product
-  pages via your server (cached locally for 60 seconds).
+* Published option sets are served from this domain to your product pages
+  via your server (cached locally for 60 seconds). The visual builder itself
+  is not loaded from here — it ships with the plugin and runs on your site.
 
 These services are operated by Print.App ApS: https://print.app/
 Privacy policy: https://print.app/company/privacy
 Terms of service: https://print.app/company/terms
 
+**cdn.filecheck.io** (Filecheck artwork preflight — optional)
+
+Only used if you enter a Filecheck publishable key in the plugin settings.
+Leave that field empty and this service is never contacted.
+
+* *When it loads* — with a key configured, the product page loads the
+  Filecheck upload element from this domain for any option set that has an
+  artwork-check step.
+* *What is sent* — the artwork file the customer chooses, and the check
+  settings for that option set (such as the required size, bleed and page
+  count). The check result — page count, artwork dimensions and any
+  warnings — comes back to the page and is stored with the order line so
+  you can see what was checked. No customer names, emails or addresses are
+  transmitted.
+
+This service is operated by Filecheck (Print.App ApS): https://filecheck.io/
+Privacy policy: https://filecheck.io/company/privacy
+Terms of service: https://filecheck.io/company/terms
+
 == Source Code ==
 
-The configurator widget shipped in assets/print-configurator.js is compiled
-from TypeScript and Vue sources. The full, human-readable source and the build
-tooling are available at:
+Two files in assets/ are compiled from TypeScript and Vue sources:
+
+* assets/print-configurator.js — the storefront configurator
+* assets/builder.js and assets/builder.css — the option-set builder used on
+  the plugin's own admin page
+
+The full, human-readable source and the build tooling are available at:
 
 https://github.com/PrintApp/print-options-wordpress
 
-Build it with `npm install` and `npm run build` in the core-ui package of the
-linked monorepo; the output is the file bundled here unchanged.
+Run `npm install`, then `npm run build` in the core-ui package for the
+configurator and in the admin package for the builder; the outputs are the
+files bundled here unchanged.
 
 == Frequently Asked Questions ==
 
@@ -103,9 +127,18 @@ Yes, with no product or option limits.
 1. The configurator on a product page: options, live pricing, and the verified total.
 2. The visual builder — outline, editor and a live preview of the storefront widget.
 3. Ready-made print templates: business cards, flyers, stickers, thesis binding and more.
-4. The Print Options tab on the product edit page, next to Attributes and Variations.
+4. Every price is recomputed and signed on the server before it can reach the cart.
 
 == Changelog ==
+
+= 0.4.0 =
+* The visual builder now ships with the plugin and runs on its own admin page
+  instead of being embedded from options.print.app
+* All classes, constants, options, transients, post meta and hooks carry a
+  PAPO_/papo_ prefix; existing store identity and product assignments are
+  migrated automatically on update
+* Configuration submitted with add-to-cart is sanitized value by value
+* Filecheck artwork preflight documented under External Services
 
 = 0.3.0 =
 * Print Options tab on the product edit page — assign a named option set from

@@ -2,7 +2,7 @@
  * WooCommerce storefront bridge.
  *
  * Feeds the product's inline blueprint into <print-configurator>, then on
- * submit serializes {selections, file} into the hidden product_options input
+ * submit serializes {selections, file} into the hidden papo_options input
  * and submits the native add-to-cart form. All pricing trust lives server
  * side (see includes/class-cart.php).
  */
@@ -14,7 +14,7 @@
     function init() {
         const wrapper = document.querySelector(".wc-print-configurator-wrapper");
         const configurator = document.getElementById("wc-print-configurator");
-        const payloadInput = document.getElementById("wc-product-options-payload");
+        const payloadInput = document.getElementById("papo-payload");
         const configScript = document.getElementById("wc-product-options-config");
         if (!wrapper || !configurator || !payloadInput || !configScript) {
             return;

@@ -1,0 +1,76 @@
+name: Release plugin
+
+# This repository IS the plugin: the packaged files sit at its root, so there
+# is nothing to build here. Pushing a version tag will:
+#   1. Verify the tag matches the plugin header, PAPO_VERSION and Stable tag
+#   2. Deploy to the WordPress.org SVN repository, listing assets included
+#   3. Attach the installable zip to a GitHub release
+#
+# Development happens in the product-options monorepo; scripts/publish-woo-repo.sh
+# syncs a release state here and pushes the tag that starts this workflow.
+#
+# Required repository secrets (Settings > Secrets and variables > Actions):
+#   SVN_USERNAME  -> printapp   (case sensitive, NOT the email address)
+#   SVN_PASSWORD  -> the SVN-specific password from
+#                    https://profiles.wordpress.org/printapp/profile/edit/group/3/?screen=svn-password
+
+on:
+  push:
+    tags:
+      - 'v*'                    # e.g. v0.4.0
+      - '[0-9]+.[0-9]+.[0-9]+'  # e.g. 0.4.0
+
+permissions:
+  contents: write   # required to create the GitHub release
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Derive version from tag
+        id: version
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+          echo "version=${TAG#v}" >> "$GITHUB_OUTPUT"
+
+      # Stable tag is what the directory actually serves. If it disagrees with
+      # the code the release "succeeds" while users keep downloading the old
+      # build, so this is a hard failure rather than a warning.
+      - name: Verify tag matches plugin version
+        run: |
+          PLUGIN=print-app-product-options-for-woocommerce.php
+          HEADER=$(grep -oiP '^\s*\*\s*Version:\s*\K[0-9A-Za-z.\-]+' "$PLUGIN" | head -n1)
+          CONST=$(grep -oP "PAPO_VERSION',\s*'\K[0-9A-Za-z.\-]+" "$PLUGIN" | head -n1)
+          STABLE=$(grep -oiP '^Stable tag:\s*\K[0-9A-Za-z.\-]+' readme.txt | head -n1)
+          WANT="${{ steps.version.outputs.version }}"
+          echo "tag: $WANT | header: $HEADER | PAPO_VERSION: $CONST | Stable tag: $STABLE"
+          FAIL=0
+          [ "$HEADER" = "$WANT" ] || { echo "::error::Plugin header ($HEADER) != tag ($WANT)"; FAIL=1; }
+          [ "$CONST"  = "$WANT" ] || { echo "::error::PAPO_VERSION ($CONST) != tag ($WANT)"; FAIL=1; }
+          [ "$STABLE" = "$WANT" ] || { echo "::error::Stable tag ($STABLE) != tag ($WANT)"; FAIL=1; }
+          exit $FAIL
+
+      # ASSETS_DIR is .wordpress-org, NOT assets/ — this plugin ships its own
+      # assets/ folder (the widget and builder bundles), and pointing the
+      # listing assets at that name would upload the wrong files to the
+      # plugin page. What reaches trunk is filtered by .distignore.
+      - name: Deploy to WordPress.org SVN
+        id: deploy
+        uses: 10up/action-wordpress-plugin-deploy@stable
+        with:
+          generate-zip: true
+        env:
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          SLUG: print-app-product-options-for-woocommerce
+          VERSION: ${{ steps.version.outputs.version }}
+          ASSETS_DIR: .wordpress-org
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Print Options for WooCommerce ${{ steps.version.outputs.version }}
+          generate_release_notes: true
+          files: ${{ steps.deploy.outputs.zip-path }}

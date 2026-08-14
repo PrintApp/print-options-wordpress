@@ -1,7 +1,8 @@
 {
     "phpVersion": "8.2",
     "plugins": [
-        "https://downloads.wordpress.org/plugin/woocommerce.latest-stable.zip"
+        "https://downloads.wordpress.org/plugin/woocommerce.latest-stable.zip",
+        "https://downloads.wordpress.org/plugin/plugin-check.zip"
     ],
     "mappings": {
         "wp-content/plugins/print-app-product-options-for-woocommerce": "."
