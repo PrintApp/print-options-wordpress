@@ -4,7 +4,7 @@ Tags: woocommerce, product options, printing, web-to-print, price calculator
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 0.4.1
+Stable tag: 0.4.2
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -130,6 +130,17 @@ Yes, with no product or option limits.
 4. Every price is recomputed and signed on the server before it can reach the cart.
 
 == Changelog ==
+
+= 0.4.2 =
+* New: file upload fields can be set to "Designer only (no direct upload)" -
+  only connected design tools (for example the Print.App designer) are
+  offered, without a dropzone
+* Fix: the configurator sized its text from the page root, so themes that
+  set the root font size to 62.5% rendered it at roughly 60% of the theme's
+  text size - it now follows the surrounding text
+* Fix: the widget's numeric inputs no longer shrink on those themes
+* Builder: per-length price rules (roll and linear pricing) with length-based
+  volume breaks
 
 = 0.4.1 =
 * Fix: option sets with quantity tiers on individual choices (for example
