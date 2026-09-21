@@ -4,7 +4,7 @@ Tags: woocommerce, product options, printing, web-to-print, price calculator
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 0.4.3
+Stable tag: 0.4.4
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -152,6 +152,14 @@ truth.
 4. Every price is recomputed and signed on the server before it can reach the cart.
 
 == Changelog ==
+
+= 0.4.4 =
+* New: quantity fields can take turns. Add one quantity field per group of
+  choices, each with a visibility rule (for example a paper that only comes
+  in three of your set quantities), and the visible one is the quantity that
+  is priced. Only one quantity field may be unconditional.
+* Builder: a quantity field can no longer be shown or hidden by the quantity
+  itself (circular)
 
 = 0.4.3 =
 * Fix: prices in the configurator ignored the site language — WordPress
