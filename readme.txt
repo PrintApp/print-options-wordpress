@@ -4,7 +4,7 @@ Tags: woocommerce, product options, printing, web-to-print, price calculator
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 0.4.2
+Stable tag: 0.4.3
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -122,6 +122,28 @@ to a browser-computed price.
 = Is it really free? =
 Yes, with no product or option limits.
 
+= Can the configurator be translated? =
+Yes. Every label the configurator renders itself ("Summary", "Add to cart",
+"Drop your file here…", validation messages) goes through WordPress
+translation, so a language pack from translate.wordpress.org, Loco Translate
+or a .po file in wp-content/languages/plugins applies. Option names, choices
+and help text come from your option set and are written in whatever language
+you type them in. To change individual labels from code, use the
+`papo_widget_strings` filter. Prices follow your WooCommerce currency
+settings (symbol, position, decimal and thousand separators).
+
+= Can I show a tax note next to the price? =
+The configurator shows the WooCommerce price display suffix (WooCommerce →
+Settings → Tax → Price display suffix) under the total. To use different
+wording, or to hide it, return your text from the `papo_price_note` filter.
+
+= Why does the product's own price not match the option set? =
+It is not used. A product with an option set is priced entirely by the set's
+base price and modifiers, re-verified on the server at add-to-cart, and the
+product's regular price is hidden on the storefront. Leave the regular price
+at 0 (or any placeholder) and treat the option set as the single source of
+truth.
+
 == Screenshots ==
 
 1. The configurator on a product page: options, live pricing, and the verified total.
@@ -130,6 +152,20 @@ Yes, with no product or option limits.
 4. Every price is recomputed and signed on the server before it can reach the cart.
 
 == Changelog ==
+
+= 0.4.3 =
+* Fix: prices in the configurator ignored the site language — WordPress
+  locales such as ro_RO were rejected by the browser's number formatter and
+  the summary fell back to "RON 10.00"
+* New: the summary uses your WooCommerce currency format (symbol, position,
+  separators), so it prints "10,00 lei" exactly as the cart will
+* New: every configurator label is translatable through WordPress i18n, with
+  a `papo_widget_strings` filter for per-site wording
+* New: the WooCommerce price display suffix (for example "incl. VAT") shows
+  under the total; `papo_price_note` sets custom wording
+* Theming: `::part()` hooks for the unit-price line (summary-unit), the
+  price note (summary-note), summary line labels/values and the choices
+  recap rows
 
 = 0.4.2 =
 * New: file upload fields can be set to "Designer only (no direct upload)" -
