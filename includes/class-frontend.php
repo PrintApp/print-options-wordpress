@@ -189,6 +189,10 @@ class PAPO_Frontend
             'artwork.or'                => __('or', 'print-app-product-options-for-woocommerce'),
             'artwork.change'            => __('Change', 'print-app-product-options-for-woocommerce'),
             'artwork.remove'            => __('Remove', 'print-app-product-options-for-woocommerce'),
+            'artwork.designName'        => __('Your design', 'print-app-product-options-for-woocommerce'),
+            /* translators: keep the {count} placeholder */
+            'artwork.pageCount'         => __('{count} pages', 'print-app-product-options-for-woocommerce'),
+            'artwork.pageCountOne'      => __('1 page', 'print-app-product-options-for-woocommerce'),
             'validation.design'         => __('Please create your design.', 'print-app-product-options-for-woocommerce'),
             'validation.file'           => __('Please upload a file.', 'print-app-product-options-for-woocommerce'),
             'validation.text'           => __('Please fill this in.', 'print-app-product-options-for-woocommerce'),

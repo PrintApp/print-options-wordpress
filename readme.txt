@@ -4,7 +4,7 @@ Tags: woocommerce, product options, printing, web-to-print, price calculator
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 0.4.4
+Stable tag: 0.4.5
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -123,9 +123,11 @@ to a browser-computed price.
 Yes, with no product or option limits.
 
 = Can the configurator be translated? =
-Yes. Every label the configurator renders itself ("Summary", "Add to cart",
-"Drop your file here…", validation messages) goes through WordPress
-translation, so a language pack from translate.wordpress.org, Loco Translate
+Yes. Danish, German, French, Spanish, Italian, Dutch and Romanian ship with
+the plugin and follow the site language automatically. Every label the
+configurator renders itself ("Summary", "Add to cart", "Drop your file
+here…", validation messages) goes through WordPress translation, so for any
+other language a language pack from translate.wordpress.org, Loco Translate
 or a .po file in wp-content/languages/plugins applies. Option names, choices
 and help text come from your option set and are written in whatever language
 you type them in. To change individual labels from code, use the
@@ -152,6 +154,16 @@ truth.
 4. Every price is recomputed and signed on the server before it can reach the cart.
 
 == Changelog ==
+
+= 0.4.5 =
+* New: the configurator ships translated into Danish, German, French,
+  Spanish, Italian, Dutch and Romanian — the site language is picked up
+  automatically. Community translations on translate.wordpress.org take
+  precedence once available.
+* Fix: a design made in a connected designer (for example Print.App) is now
+  labelled in the site language instead of "Your design"
+* Change: the design summary shows the page count only on products that are
+  priced by page; per-unit products no longer show "1 page"
 
 = 0.4.4 =
 * New: quantity fields can take turns. Add one quantity field per group of

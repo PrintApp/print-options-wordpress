@@ -3,10 +3,11 @@
  * Plugin Name: Print.App Product Options for WooCommerce
  * Plugin URI:  https://options.print.app
  * Description: Print product configurator for WooCommerce — options, live pricing, artwork upload. Prices are always re-verified server-side.
- * Version:     0.4.4
+ * Version:     0.4.5
  * Author:      Print.App
  * License:     MIT
  * Text Domain: print-app-product-options-for-woocommerce
+ * Domain Path: /languages
  *
  * Requires Plugins: woocommerce
  */
@@ -15,7 +16,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('PAPO_VERSION', '0.4.4');
+define('PAPO_VERSION', '0.4.5');
 define('PAPO_PLUGIN_FILE', __FILE__);
 define('PAPO_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('PAPO_PLUGIN_URL', plugin_dir_url(__FILE__));
@@ -31,6 +32,19 @@ require_once PAPO_PLUGIN_DIR . 'includes/class-frontend.php';
 /* The anonymous store identity (id + secret) is created locally at
    activation. The backend hears nothing until the first library save. */
 register_activation_hook(__FILE__, ['PAPO_Backend', 'ensure_identity']);
+
+/* Bundled translations (languages/*.mo). wordpress.org language packs, once
+   a locale is approved there, install under wp-content/languages/plugins and
+   take precedence automatically; the bundled files are the fallback. Hooked
+   on init, not plugins_loaded: WordPress 6.7+ flags text domains loaded
+   earlier as "too early". */
+add_action('init', static function () {
+    load_plugin_textdomain(
+        'print-app-product-options-for-woocommerce',
+        false,
+        dirname(plugin_basename(__FILE__)) . '/languages'
+    );
+});
 
 add_action('plugins_loaded', static function () {
     if (!class_exists('WooCommerce')) {

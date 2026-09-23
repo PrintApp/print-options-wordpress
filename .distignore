@@ -20,3 +20,6 @@
 phpcs.xml
 README.md
 *.zip
+
+# Translation sources: the generator is a dev tool; the .pot/.po/.mo it writes ship.
+languages/make-translations.py
