@@ -4,7 +4,7 @@ Tags: woocommerce, product options, printing, web-to-print, price calculator
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 0.4.5
+Stable tag: 0.4.6
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -139,6 +139,12 @@ The configurator shows the WooCommerce price display suffix (WooCommerce →
 Settings → Tax → Price display suffix) under the total. To use different
 wording, or to hide it, return your text from the `papo_price_note` filter.
 
+= How is shipping weight calculated? =
+Enter the weight of ONE copy on the WooCommerce product. A configured job is a
+single cart line, and the plugin gives that line the product weight multiplied
+by the configured quantity, so weight-based shipping rates are right. Use the
+`papo_cart_item_weight` filter if the weight depends on the chosen options.
+
 = Why does the product's own price not match the option set? =
 It is not used. A product with an option set is priced entirely by the set's
 base price and modifiers, re-verified on the server at add-to-cart, and the
@@ -154,6 +160,15 @@ truth.
 4. Every price is recomputed and signed on the server before it can reach the cart.
 
 == Changelog ==
+
+= 0.4.6 =
+* Fix: shipping weight. A configured job is one cart line, so weight-based
+  shipping saw the weight of a single copy. The line now weighs the product's
+  weight multiplied by the configured quantity. The `papo_cart_item_weight`
+  filter adjusts it, and the order line records the total as `_papo_weight`.
+* Builder: quantity breaks on the base price can now be seen and edited on the
+  Product panel. Templates such as Business Cards price their base this way,
+  and the plain Amount field had no effect while the breaks were hidden.
 
 = 0.4.5 =
 * New: the configurator ships translated into Danish, German, French,

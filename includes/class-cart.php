@@ -72,6 +72,7 @@ class PAPO_Cart
         add_filter('woocommerce_add_to_cart_quantity', [self::class, 'force_single_line'], 10, 2);
         add_filter('woocommerce_get_item_data', [self::class, 'display'], 10, 2);
         add_action('woocommerce_before_calculate_totals', [self::class, 'apply_price'], 20);
+        add_action('woocommerce_cart_loaded_from_session', [self::class, 'apply_weight'], 20);
         add_action('woocommerce_checkout_create_order_line_item', [self::class, 'persist'], 10, 4);
     }
 
@@ -320,6 +321,52 @@ class PAPO_Cart
                 $item['data']->set_price((float) $options['verified']['total']);
             }
         }
+        // Lines added in THIS request were not in the session when it loaded.
+        self::apply_weight($cart);
+    }
+
+    /**
+     * A configured job is one cart line (quantity 1) with the copies inside
+     * the verified total, so WooCommerce's own maths — product weight x line
+     * quantity — would ship 500 business cards at the weight of one. Give the
+     * line the weight of the whole job instead: the product's weight is the
+     * weight of ONE copy, and every weight-based shipping method reads it
+     * from this cart item.
+     *
+     * Idempotent by construction: the unit weight is always re-read from the
+     * stored product, never from the already-scaled cart object, because this
+     * runs on session load AND before every totals calculation.
+     */
+    public static function apply_weight(WC_Cart $cart): void
+    {
+        foreach ($cart->get_cart() as $item) {
+            $weight = self::line_weight($item);
+            if (null !== $weight) {
+                $item['data']->set_weight($weight);
+            }
+        }
+    }
+
+    /**
+     * Total weight of a configured line (unit weight x copies), or null when
+     * the line is not ours or the product has no weight. Filter
+     * `papo_cart_item_weight` to adjust it — paper stock that changes the
+     * weight, or a product whose weight is entered per job rather than per copy.
+     */
+    private static function line_weight(array $item): ?float
+    {
+        $options = self::line_options($item);
+        if (!$options || !isset($item['data']) || !$item['data'] instanceof WC_Product) {
+            return null;
+        }
+        $stored = wc_get_product($item['data']->get_id());
+        if (!$stored || !$stored->has_weight()) {
+            return null;
+        }
+        $unit   = (float) $stored->get_weight();
+        $copies = max(1, (int) ($options['verified']['quantity'] ?? 1));
+        $weight = (float) apply_filters('papo_cart_item_weight', $unit * $copies, $unit, $copies, $item);
+        return $weight >= 0 ? $weight : null;
     }
 
     /** Persist the configuration onto the order line for fulfillment. */
@@ -348,5 +395,12 @@ class PAPO_Cart
         }
         $item->add_meta_data('_papo_selections', wp_json_encode($options['selections']));
         $item->add_meta_data('_papo_copies', (string) ($options['verified']['quantity'] ?? 1));
+        /* The order line is quantity 1 as well, so label and fulfilment tools
+           that multiply product weight by line quantity undercount. The real
+           figure travels with the line, in the store's weight unit. */
+        $weight = self::line_weight($values);
+        if (null !== $weight) {
+            $item->add_meta_data('_papo_weight', wc_format_decimal($weight));
+        }
     }
 }
