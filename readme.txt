@@ -4,7 +4,7 @@ Tags: woocommerce, product options, printing, web-to-print, price calculator
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 0.4.6
+Stable tag: 0.4.7
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -160,6 +160,12 @@ truth.
 4. Every price is recomputed and signed on the server before it can reach the cart.
 
 == Changelog ==
+
+= 0.4.7 =
+* New: a quantity option can carry a unit word ("banners", "cards"), shown
+  after the number on the cart line and the order: "5 banners"
+* Fix: a quantity option without a label is listed as "Quantity" on the cart
+  line and order instead of its internal id
 
 = 0.4.6 =
 * Fix: shipping weight. A configured job is one cart line, so weight-based

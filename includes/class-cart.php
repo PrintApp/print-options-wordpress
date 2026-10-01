@@ -226,7 +226,11 @@ class PAPO_Cart
         // client happened to serialise its JSON.
         foreach ($fields as $field_id => $field) {
             $type  = $field['type'] ?? '';
-            $label = isset($field['label']) ? (string) $field['label'] : (string) $field_id;
+            // An unlabeled quantity never shows its internal id.
+            $fallback = 'quantity' === $type
+                ? __('Quantity', 'print-app-product-options-for-woocommerce')
+                : (string) $field_id;
+            $label    = isset($field['label']) && '' !== (string) $field['label'] ? (string) $field['label'] : $fallback;
 
             if ('info' === $type) {
                 continue;
@@ -266,6 +270,11 @@ class PAPO_Cart
                 );
             } else {
                 $display = $choice_labels[$value] ?? (string) $value;
+            }
+
+            // "5 banners": the merchant's unit word, when the quantity has one.
+            if ('quantity' === $type && isset($field['unit']) && '' !== trim((string) $field['unit'])) {
+                $display .= ' ' . trim((string) $field['unit']);
             }
 
             $pairs[] = ['label' => $label, 'value' => trim($display)];

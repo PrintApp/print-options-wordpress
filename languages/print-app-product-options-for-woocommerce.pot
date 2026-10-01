@@ -169,6 +169,7 @@ msgstr ""
 msgid "Product Options (Print Configurator) requires WooCommerce to be active."
 msgstr ""
 
+#: includes/class-cart.php
 #: includes/class-frontend.php
 msgid "Quantity"
 msgstr ""
