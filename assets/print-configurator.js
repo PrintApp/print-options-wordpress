@@ -12,7 +12,7 @@ function vr(e) {
   for (const n of e.split(",")) t[n] = 1;
   return (n) => n in t;
 }
-const xe = {}, sn = [], vt = () => {
+const we = {}, sn = [], vt = () => {
 }, na = () => !1, mi = (e) => e.charCodeAt(0) === 111 && e.charCodeAt(1) === 110 && // uppercase letter
 (e.charCodeAt(2) > 122 || e.charCodeAt(2) < 97), gi = (e) => e.startsWith("onUpdate:"), Ce = Object.assign, yr = (e, t) => {
   const n = e.indexOf(t);
@@ -237,7 +237,7 @@ class il {
 function rl() {
   return Ne;
 }
-let _e;
+let xe;
 const Mi = /* @__PURE__ */ new WeakSet();
 class ua {
   constructor(t) {
@@ -259,12 +259,12 @@ class ua {
     if (!(this.flags & 1))
       return this.fn();
     this.flags |= 2, ts(this), pa(this);
-    const t = _e, n = it;
-    _e = this, it = !0;
+    const t = xe, n = it;
+    xe = this, it = !0;
     try {
       return this.fn();
     } finally {
-      ha(this), _e = t, it = n, this.flags &= -3;
+      ha(this), xe = t, it = n, this.flags &= -3;
     }
   }
   stop() {
@@ -346,8 +346,8 @@ function ma(e) {
   if (e.flags & 4 && !(e.flags & 16) || (e.flags &= -17, e.globalVersion === Nn) || (e.globalVersion = Nn, !e.isSSR && e.flags & 128 && (!e.deps && !e._dirty || !Hi(e))))
     return;
   e.flags |= 2;
-  const t = e.dep, n = _e, i = it;
-  _e = e, it = !0;
+  const t = e.dep, n = xe, i = it;
+  xe = e, it = !0;
   try {
     pa(e);
     const r = e.fn(e._value);
@@ -355,7 +355,7 @@ function ma(e) {
   } catch (r) {
     throw t.version++, r;
   } finally {
-    _e = n, it = i, ha(e), e.flags &= -3;
+    xe = n, it = i, ha(e), e.flags &= -3;
   }
 }
 function kr(e, t = !1) {
@@ -383,12 +383,12 @@ function Et() {
 function ts(e) {
   const { cleanup: t } = e;
   if (e.cleanup = void 0, t) {
-    const n = _e;
-    _e = void 0;
+    const n = xe;
+    xe = void 0;
     try {
       t();
     } finally {
-      _e = n;
+      xe = n;
     }
   }
 }
@@ -404,14 +404,14 @@ class Sr {
     this.computed = t, this.version = 0, this.activeLink = void 0, this.subs = void 0, this.map = void 0, this.key = void 0, this.sc = 0, this.__v_skip = !0;
   }
   track(t) {
-    if (!_e || !it || _e === this.computed)
+    if (!xe || !it || xe === this.computed)
       return;
     let n = this.activeLink;
-    if (n === void 0 || n.sub !== _e)
-      n = this.activeLink = new al(_e, this), _e.deps ? (n.prevDep = _e.depsTail, _e.depsTail.nextDep = n, _e.depsTail = n) : _e.deps = _e.depsTail = n, va(n);
+    if (n === void 0 || n.sub !== xe)
+      n = this.activeLink = new al(xe, this), xe.deps ? (n.prevDep = xe.depsTail, xe.depsTail.nextDep = n, xe.depsTail = n) : xe.deps = xe.depsTail = n, va(n);
     else if (n.version === -1 && (n.version = this.version, n.nextDep)) {
       const i = n.nextDep;
-      i.prevDep = n.prevDep, n.prevDep && (n.prevDep.nextDep = i), n.prevDep = _e.depsTail, n.nextDep = void 0, _e.depsTail.nextDep = n, _e.depsTail = n, _e.deps === n && (_e.deps = i);
+      i.prevDep = n.prevDep, n.prevDep && (n.prevDep.nextDep = i), n.prevDep = xe.depsTail, n.nextDep = void 0, xe.depsTail.nextDep = n, xe.depsTail = n, xe.deps === n && (xe.deps = i);
     }
     return n;
   }
@@ -448,7 +448,7 @@ const Bi = /* @__PURE__ */ new WeakMap(), Gt = /* @__PURE__ */ Symbol(
   ""
 );
 function Me(e, t, n) {
-  if (it && _e) {
+  if (it && xe) {
     let i = Bi.get(e);
     i || Bi.set(e, i = /* @__PURE__ */ new Map());
     let r = i.get(n);
@@ -998,7 +998,7 @@ class Al {
    */
   notify() {
     if (this.flags |= 16, !(this.flags & 8) && // avoid infinite self recursion
-    _e !== this)
+    xe !== this)
       return fa(this, !0), !0;
   }
   get value() {
@@ -1022,7 +1022,7 @@ function Il(e, t = !1, n = Wt) {
     i || Yn.set(n, i = []), i.push(e);
   }
 }
-function El(e, t, n = xe) {
+function El(e, t, n = we) {
   const { immediate: i, deep: r, once: s, scheduler: a, augmentJob: o, call: l } = n, c = (B) => r ? B : /* @__PURE__ */ Je(B) || r === !1 || r === 0 ? jt(B, 1) : jt(B);
   let u, d, p, m, P = !1, w = !1;
   if (/* @__PURE__ */ je(e) ? (d = () => e.value, P = /* @__PURE__ */ Je(e)) : /* @__PURE__ */ Yt(e) ? (d = () => c(e), P = !0) : X(e) ? (w = !0, P = e.some((B) => /* @__PURE__ */ Yt(B) || /* @__PURE__ */ Je(B)), d = () => e.map((B) => {
@@ -1146,7 +1146,7 @@ function at(e, t, n, i) {
   }
 }
 function ki(e, t, n, i = !0) {
-  const r = t ? t.vnode : null, { errorHandler: s, throwUnhandledErrorInProduction: a } = t && t.appContext.config || xe;
+  const r = t ? t.vnode : null, { errorHandler: s, throwUnhandledErrorInProduction: a } = t && t.appContext.config || we;
   if (t) {
     let o = t.parent;
     const l = t.proxy, c = `https://vuejs.org/error-reference/#runtime-${n}`;
@@ -1307,7 +1307,7 @@ const Rl = /* @__PURE__ */ Symbol.for("v-scx"), Ml = () => Lt(Rl);
 function yt(e, t, n) {
   return Oa(e, t, n);
 }
-function Oa(e, t, n = xe) {
+function Oa(e, t, n = we) {
   const { immediate: i, deep: r, flush: s, once: a } = n, o = Ce({}, n), l = t && i || !t && s !== "post";
   let c;
   if (jn) {
@@ -1386,7 +1386,7 @@ function En(e, t, n, i, r = !1) {
     i.shapeFlag & 512 && i.type.__asyncResolved && i.component.subTree.component && En(e, t, n, i.component.subTree);
     return;
   }
-  const s = i.shapeFlag & 4 ? Fr(i.component) : i.el, a = r ? null : s, { i: o, r: l } = e, c = t && t.r, u = o.refs === xe ? o.refs = {} : o.refs, d = o.setupState, p = /* @__PURE__ */ de(d), m = d === xe ? na : (w) => rs(u, w) ? !1 : fe(p, w), P = (w, I) => !(I && rs(u, I));
+  const s = i.shapeFlag & 4 ? Fr(i.component) : i.el, a = r ? null : s, { i: o, r: l } = e, c = t && t.r, u = o.refs === we ? o.refs = {} : o.refs, d = o.setupState, p = /* @__PURE__ */ de(d), m = d === we ? na : (w) => rs(u, w) ? !1 : fe(p, w), P = (w, I) => !(I && rs(u, I));
   if (c != null && c !== l) {
     if (ss(t), Se(c))
       u[c] = null, m(c) && (d[c] = null);
@@ -1602,7 +1602,7 @@ const Qi = (e) => e ? ao(e) ? Fr(e) : Qi(e.parent) : null, On = (
     $nextTick: (e) => e.n || (e.n = Si.bind(e.proxy)),
     $watch: (e) => Fl.bind(e)
   })
-), Li = (e, t) => e !== xe && !e.__isScriptSetup && fe(e, t), Xl = {
+), Li = (e, t) => e !== we && !e.__isScriptSetup && fe(e, t), Xl = {
   get({ _: e }, t) {
     if (t === "__v_skip")
       return !0;
@@ -1623,11 +1623,11 @@ const Qi = (e) => e ? ao(e) ? Fr(e) : Qi(e.parent) : null, On = (
       else {
         if (Li(i, t))
           return a[t] = 1, i[t];
-        if (r !== xe && fe(r, t))
+        if (r !== we && fe(r, t))
           return a[t] = 2, r[t];
         if (fe(s, t))
           return a[t] = 3, s[t];
-        if (n !== xe && fe(n, t))
+        if (n !== we && fe(n, t))
           return a[t] = 4, n[t];
         Ji && (a[t] = 0);
       }
@@ -1641,7 +1641,7 @@ const Qi = (e) => e ? ao(e) ? Fr(e) : Qi(e.parent) : null, On = (
       (u = o.__cssModules) && (u = u[t])
     )
       return u;
-    if (n !== xe && fe(n, t))
+    if (n !== we && fe(n, t))
       return a[t] = 4, n[t];
     if (
       // global properties
@@ -1651,13 +1651,13 @@ const Qi = (e) => e ? ao(e) ? Fr(e) : Qi(e.parent) : null, On = (
   },
   set({ _: e }, t, n) {
     const { data: i, setupState: r, ctx: s } = e;
-    return Li(r, t) ? (r[t] = n, !0) : i !== xe && fe(i, t) ? (i[t] = n, !0) : fe(e.props, t) || t[0] === "$" && t.slice(1) in e ? !1 : (s[t] = n, !0);
+    return Li(r, t) ? (r[t] = n, !0) : i !== we && fe(i, t) ? (i[t] = n, !0) : fe(e.props, t) || t[0] === "$" && t.slice(1) in e ? !1 : (s[t] = n, !0);
   },
   has({
     _: { data: e, setupState: t, accessCache: n, ctx: i, appContext: r, props: s, type: a }
   }, o) {
     let l;
-    return !!(n[o] || e !== xe && o[0] !== "$" && fe(e, o) || Li(t, o) || fe(s, o) || fe(i, o) || fe(On, o) || fe(r.config.globalProperties, o) || (l = a.__cssModules) && l[o]);
+    return !!(n[o] || e !== we && o[0] !== "$" && fe(e, o) || Li(t, o) || fe(s, o) || fe(i, o) || fe(On, o) || fe(r.config.globalProperties, o) || (l = a.__cssModules) && l[o]);
   },
   defineProperty(e, t, n) {
     return n.get != null ? e._.accessCache[t] = 0 : fe(n, "value") && this.set(e, t, n.value, null), Reflect.defineProperty(e, t, n);
@@ -1707,21 +1707,21 @@ function ec(e) {
     filters: ke
   } = t;
   if (c && tc(c, i, null), a)
-    for (const be in a) {
-      const he = a[be];
-      ee(he) && (i[be] = he.bind(n));
+    for (const _e in a) {
+      const he = a[_e];
+      ee(he) && (i[_e] = he.bind(n));
     }
   if (r) {
-    const be = r.call(n, n);
-    ve(be) && (e.data = /* @__PURE__ */ Vt(be));
+    const _e = r.call(n, n);
+    ve(_e) && (e.data = /* @__PURE__ */ Vt(_e));
   }
   if (Ji = !0, s)
-    for (const be in s) {
-      const he = s[be], qt = ee(he) ? he.bind(n, n) : ee(he.get) ? he.get.bind(n, n) : vt, Zn = !ee(he) && ee(he.set) ? he.set.bind(n) : vt, Zt = te({
+    for (const _e in s) {
+      const he = s[_e], qt = ee(he) ? he.bind(n, n) : ee(he.get) ? he.get.bind(n, n) : vt, Zn = !ee(he) && ee(he.set) ? he.set.bind(n) : vt, Zt = te({
         get: qt,
         set: Zn
       });
-      Object.defineProperty(i, be, {
+      Object.defineProperty(i, _e, {
         enumerable: !0,
         configurable: !0,
         get: () => Zt.value,
@@ -1729,23 +1729,23 @@ function ec(e) {
       });
     }
   if (o)
-    for (const be in o)
-      za(o[be], i, n, be);
+    for (const _e in o)
+      za(o[_e], i, n, _e);
   if (l) {
-    const be = ee(l) ? l.call(n) : l;
-    Reflect.ownKeys(be).forEach((he) => {
-      Yi(he, be[he]);
+    const _e = ee(l) ? l.call(n) : l;
+    Reflect.ownKeys(_e).forEach((he) => {
+      Yi(he, _e[he]);
     });
   }
   u && ls(u, e, "c");
-  function Oe(be, he) {
-    X(he) ? he.forEach((qt) => be(qt.bind(n))) : he && be(he.bind(n));
+  function Oe(_e, he) {
+    X(he) ? he.forEach((qt) => _e(qt.bind(n))) : he && _e(he.bind(n));
   }
   if (Oe(Ul, d), Oe(Er, p), Oe(ql, m), Oe(Zl, P), Oe(Ll, w), Oe(zl, I), Oe(Kl, re), Oe(Wl, M), Oe(Bl, O), Oe(Fa, z), Oe(ja, B), Oe(Hl, pe), X(De))
     if (De.length) {
-      const be = e.exposed || (e.exposed = {});
+      const _e = e.exposed || (e.exposed = {});
       De.forEach((he) => {
-        Object.defineProperty(be, he, {
+        Object.defineProperty(_e, he, {
           get: () => n[he],
           set: (qt) => n[he] = qt,
           enumerable: !0
@@ -1976,7 +1976,7 @@ let cn = null;
 const oc = (e, t) => t === "modelValue" || t === "model-value" ? e.modelModifiers : e[`${t}Modifiers`] || e[`${Ee(t)}Modifiers`] || e[`${Ye(t)}Modifiers`];
 function lc(e, t, ...n) {
   if (e.isUnmounted) return;
-  const i = e.vnode.props || xe;
+  const i = e.vnode.props || we;
   let r = n;
   const s = t.startsWith("update:"), a = s && oc(i, t.slice(7));
   a && (a.trim && (r = n.map((u) => Se(u) ? u.trim() : u)), a.number && (r = n.map(Go)));
@@ -2217,7 +2217,7 @@ function Ka(e, t, n, i) {
       r && fe(r, u = Ee(l)) ? !s || !s.includes(u) ? n[u] = c : (o || (o = {}))[u] = c : Ti(e.emitsOptions, l) || (!(l in i) || c !== i[l]) && (i[l] = c, a = !0);
     }
   if (s) {
-    const l = /* @__PURE__ */ de(n), c = o || xe;
+    const l = /* @__PURE__ */ de(n), c = o || we;
     for (let u = 0; u < s.length; u++) {
       const d = s[u];
       n[d] = er(
@@ -2283,7 +2283,7 @@ function Ga(e, t, n = !1) {
   if (X(s))
     for (let u = 0; u < s.length; u++) {
       const d = Ee(s[u]);
-      ps(d) && (a[d] = xe);
+      ps(d) && (a[d] = we);
     }
   else if (s)
     for (const u in s) {
@@ -2347,7 +2347,7 @@ const Or = (e) => e === "_" || e === "_ctx" || e === "$stable", Pr = (e) => X(e)
   } else t && Qa(e, t);
 }, bc = (e, t, n) => {
   const { vnode: i, slots: r } = e;
-  let s = !0, a = xe;
+  let s = !0, a = we;
   if (i.shapeFlag & 32) {
     const o = t._;
     o ? n && o === 1 ? s = !1 : Ja(r, t, n) : (s = !t.$stable, Ya(t, r)), a = t;
@@ -2568,7 +2568,7 @@ function xc(e, t) {
     const $ = h.el = f.el;
     let { patchFlag: A, dynamicChildren: x, dirs: K } = h;
     A |= f.patchFlag & 16;
-    const F = f.props || xe, W = h.props || xe;
+    const F = f.props || we, W = h.props || we;
     let J;
     if (g && Bt(g, !1), (J = W.onVnodeBeforeUpdate) && ft(J, g, h, f), K && Ht(h, f, g, "beforeUpdate"), g && Bt(g, !0), (F.innerHTML && W.innerHTML == null || F.textContent && W.textContent == null) && u($, ""), x ? De(
       f.dynamicChildren,
@@ -2633,7 +2633,7 @@ function xc(e, t) {
     }
   }, T = (f, h, g, k, _) => {
     if (h !== g) {
-      if (h !== xe)
+      if (h !== we)
         for (const y in h)
           !An(y) && !(y in g) && s(
             f,
@@ -2737,7 +2737,7 @@ function xc(e, t) {
     const k = h.component = f.component;
     if (fc(f, h, g))
       if (k.asyncDep && !k.asyncResolved) {
-        be(k, h, g);
+        _e(k, h, g);
         return;
       } else
         k.next = h, k.update();
@@ -2750,7 +2750,7 @@ function xc(e, t) {
         {
           const ut = eo(f);
           if (ut) {
-            F && (F.el = ye.el, be(f, F, N)), ut.asyncDep.then(() => {
+            F && (F.el = ye.el, _e(f, F, N)), ut.asyncDep.then(() => {
               qe(() => {
                 f.isUnmounted || x();
               }, _);
@@ -2759,7 +2759,7 @@ function xc(e, t) {
           }
         }
         let me = F, Ae;
-        Bt(f, !1), F ? (F.el = ye.el, be(f, F, N)) : F = ye, W && Ni(W), (Ae = F.props && F.props.onVnodeBeforeUpdate) && ft(Ae, le, F, ye), Bt(f, !0);
+        Bt(f, !1), F ? (F.el = ye.el, _e(f, F, N)) : F = ye, W && Ni(W), (Ae = F.props && F.props.onVnodeBeforeUpdate) && ft(Ae, le, F, ye), Bt(f, !0);
         const Pe = ds(f), ct = f.subTree;
         f.subTree = Pe, w(
           ct,
@@ -2810,7 +2810,7 @@ function xc(e, t) {
     f.scope.off();
     const x = f.update = A.run.bind(A), K = f.job = A.runIfDirty.bind(A);
     K.i = f, K.id = f.uid, A.scheduler = () => $r(K), Bt(f, !0), x();
-  }, be = (f, h, g) => {
+  }, _e = (f, h, g) => {
     h.component = f;
     const k = f.vnode.props;
     f.vnode = h, f.next = null, mc(f, h.props, k, g), bc(f, h.children, g), It(), is(f), Et();
@@ -3513,17 +3513,17 @@ function Oc(e, t, n) {
     // to be set immediately
     emitted: null,
     // props default value
-    propsDefaults: xe,
+    propsDefaults: we,
     // inheritAttrs
     inheritAttrs: i.inheritAttrs,
     // state
-    ctx: xe,
-    data: xe,
-    props: xe,
-    attrs: xe,
-    slots: xe,
-    refs: xe,
-    setupState: xe,
+    ctx: we,
+    data: we,
+    props: we,
+    attrs: we,
+    slots: we,
+    refs: we,
+    setupState: we,
     setupContext: null,
     // suspense related
     suspense: n,
@@ -6949,11 +6949,11 @@ zt.create;
 const ge = bt.create, se = $e.create, zn = ri.create, zu = Dr.create;
 si.create;
 Qt.create;
-const zr = ai.create, Vu = oi.create, ot = li.create, we = Jt.create;
+const zr = ai.create, Vu = oi.create, ot = li.create, be = Jt.create;
 ci.create;
 $t.create;
 en.create;
-const Uu = we([
+const Uu = be([
   "eq",
   "neq",
   "in",
@@ -6979,7 +6979,7 @@ const qu = [
   "file.colorPages",
   "file.monoPages",
   "file.status"
-], go = "quantity", Zu = we(["quantity", "pages", "area", "length"]), Hu = se({
+], go = "quantity", Zu = be(["quantity", "pages", "area", "length"]), Hu = se({
   /**
    * Inclusive upper bound on the basis value. MUST be omitted on the last
    * row (open-ended) and present on every other row — validate.ts enforces
@@ -6994,9 +6994,9 @@ const qu = [
    * graduated: each band is priced at its own amount and summed
    *            (progressive-tax style).
    */
-  mode: we(["flat", "graduated"]).default("flat"),
+  mode: be(["flat", "graduated"]).default("flat"),
   rows: ge(Hu).min(1)
-}), Bu = we(["sqm", "sqft", "sqin"]), Wu = we(["m", "ft", "in", "cm"]), Ku = we([
+}), Bu = be(["sqm", "sqft", "sqin"]), Wu = be(["m", "ft", "in", "cm"]), Ku = be([
   "fixed",
   //        once per order
   "perUnit",
@@ -7029,7 +7029,7 @@ const qu = [
    * length. Default "h" (a roll's fixed width is w; the consumed
    * length is h). "max" prices the longest side.
    */
-  lengthAxis: we(["h", "w", "max"]).optional(),
+  lengthAxis: be(["h", "w", "max"]).optional(),
   /**
    * perArea/perLength only: id of a `dimensions` field to read W×H
    * from. Fallback when omitted: FileMetadata.canvas.
@@ -7043,7 +7043,7 @@ const qu = [
 }), Gu = se({
   amount: H().nonnegative().default(0),
   /** "order": added once (v1 behavior). "unit": × quantity (t-shirts, cards). */
-  per: we(["order", "unit"]).default("order"),
+  per: be(["order", "unit"]).default("order"),
   /**
    * Quantity breaks on the base. basis must be "quantity"; mode "graduated"
    * requires per === "unit" (validate.ts).
@@ -7055,7 +7055,26 @@ const qu = [
   /** Flat fee added once, after percent/multiplier (stage D). */
   setupFee: H().nonnegative().optional(),
   /** Floor applied to the final total (stage E). */
-  minimumPrice: H().nonnegative().optional()
+  minimumPrice: H().nonnegative().optional(),
+  /**
+   * How a configured job sits in the cart.
+   *
+   * "job" (the default when absent): one line of quantity 1 whose price is
+   * the job total; the count lives in the title and properties.
+   *
+   * "units": the line carries the REAL copy count at a per-unit price, so
+   * the platform's own quantity column, shipping weight and stock use the
+   * true number. Guarded — applied only when the verified total splits
+   * EXACTLY across the copies in the currency's minor units (and, on
+   * Shopify, the buyer is charged in the shop currency and the job is at
+   * most 2000 copies, the platform's cap for a bundle component). Any job
+   * that fails a guard is carried as "job" instead, at the same verified
+   * total — the customer never pays a different amount either way.
+   *
+   * Opt-in because it changes what an order looks like: line quantity,
+   * stock decrement and weight all follow the copies.
+   */
+  lineQuantity: be(["job", "units"]).optional()
 }), pi = "2.0", Qu = se({
   artworkSize: se({
     width_mm: H().positive().optional(),
@@ -7111,17 +7130,17 @@ const qu = [
   role: U().optional()
 }), Xu = Ut.extend({
   type: ot("select-one"),
-  display: we(["cards", "grid", "swatches", "pills", "dropdown", "list"]).default("pills"),
+  display: be(["cards", "grid", "swatches", "pills", "dropdown", "list"]).default("pills"),
   options: ge(bo).min(1)
 }), ed = Ut.extend({
   type: ot("select-many"),
-  display: we(["cards", "grid", "swatches", "pills", "list"]).default("list"),
+  display: be(["cards", "grid", "swatches", "pills", "list"]).default("list"),
   options: ge(bo).min(1),
   minSelect: H().int().nonnegative().default(0),
   maxSelect: H().int().positive().optional()
 }), td = Ut.extend({
   type: ot("quantity"),
-  display: we(["stepper", "pills", "dropdown", "input"]).default("stepper"),
+  display: be(["stepper", "pills", "dropdown", "input"]).default("stepper"),
   min: H().int().positive().default(1),
   max: H().int().positive().optional(),
   step: H().int().positive().default(1),
@@ -7137,19 +7156,19 @@ const qu = [
   unit: U().max(40).optional()
 }), nd = Ut.extend({
   type: ot("number"),
-  display: we(["stepper", "slider", "input"]).default("input"),
+  display: be(["stepper", "slider", "input"]).default("input"),
   min: H().optional(),
   max: H().optional(),
   step: H().positive().optional(),
   defaultValue: H().optional()
 }), id = Ut.extend({
   type: ot("text"),
-  display: we(["input", "textarea"]).default("input"),
+  display: be(["input", "textarea"]).default("input"),
   placeholder: U().optional(),
   maxLength: H().int().positive().optional()
-}), dr = we(["mm", "cm", "in"]), rd = Ut.extend({
+}), dr = be(["mm", "cm", "in"]), rd = Ut.extend({
   type: ot("dimensions"),
-  display: we(["inputs"]).default("inputs"),
+  display: be(["inputs"]).default("inputs"),
   /** Units the customer may pick between. */
   units: ge(dr).min(1).default(["mm"]),
   defaultUnit: dr.default("mm"),
@@ -7181,7 +7200,7 @@ const qu = [
    * upload - only the registered producers render; the merchant is
    * showcasing the designer, not file drops.
    */
-  display: we(["dropzone", "producer"]).default("dropzone"),
+  display: be(["dropzone", "producer"]).default("dropzone"),
   accept: ge(U()).default(["application/pdf"]),
   /** Which data-feed provider enriches the FileMetadata. */
   providerId: U().optional(),
@@ -7194,7 +7213,7 @@ const qu = [
 }), od = Ut.extend({
   type: ot("info"),
   /** summary: live selection recap. note: static text block. */
-  display: we(["summary", "note"]).default("note"),
+  display: be(["summary", "note"]).default("note"),
   body: U().optional()
 }), ld = zu("type", [
   Xu,
@@ -7231,7 +7250,7 @@ const cd = se({
   productId: U().min(1),
   title: U(),
   /** stacked: all sections at once. wizard: one section per step. */
-  layout: we(["stacked", "wizard"]).default("stacked"),
+  layout: be(["stacked", "wizard"]).default("stacked"),
   pricing: Yu.default({}),
   variants: dd.optional(),
   sections: ge(cd)
@@ -7510,7 +7529,7 @@ const fr = "1.0", Cd = se({
   /** Price/amount applied for this tier. */
   amount: H()
 }), Co = se({
-  type: we([
+  type: be([
     "fixed",
     "perUnit",
     "perPage",
@@ -7538,7 +7557,7 @@ const fr = "1.0", Cd = se({
   priceModifiers: ge(Co).default([]),
   /** Dead in v1 runtime; dropped by migration. */
   reveals: ge(U()).default([])
-}), $d = we([
+}), $d = be([
   "card-select",
   "image-grid",
   "swatch",
@@ -7565,7 +7584,7 @@ const fr = "1.0", Cd = se({
 }), Ed = se({
   id: U().min(1),
   title: U(),
-  layout: we(["stacked", "tabs"]).default("stacked"),
+  layout: be(["stacked", "tabs"]).default("stacked"),
   fields: ge(Id)
 }), Od = se({
   version: ot(fr).default(fr),
@@ -7773,7 +7792,7 @@ function zd(e, t) {
   const n = e.toUpperCase();
   return /^[A-Z]{3}$/.test(n) ? n : (t.push(`Currency "${e}" is not an ISO 4217 code; defaulting to USD.`), "USD");
 }
-const Zs = "1.0", Ao = we(["mm", "cm", "in", "pt", "px"]), Vd = we(["pending", "ready", "failed"]), Ud = we(["info", "warning", "error"]), qd = se({
+const Zs = "1.0", Ao = be(["mm", "cm", "in", "pt", "px"]), Vd = be(["pending", "ready", "failed"]), Ud = be(["info", "warning", "error"]), qd = se({
   /** 1-based page index. */
   page: H().int().positive(),
   w: H().nonnegative(),
@@ -7787,7 +7806,7 @@ const Zs = "1.0", Ao = we(["mm", "cm", "in", "pt", "px"]), Vd = we(["pending", "
   unit: Ao.default("mm")
 }), Hd = se({
   /** Dominant color model detected in the file. */
-  model: we(["RGB", "CMYK", "Gray", "Mixed", "Unknown"]).default("Unknown"),
+  model: be(["RGB", "CMYK", "Gray", "Mixed", "Unknown"]).default("Unknown"),
   /** Named spot colors (e.g. Pantone) found in the file. */
   spot: ge(U()).default([])
 }), Bd = se({
@@ -7833,7 +7852,7 @@ const Zs = "1.0", Ao = we(["mm", "cm", "in", "pt", "px"]), Vd = we(["pending", "
    * "element" = provider renders its own embedded uploader (e.g. the
    * Filecheck intake element) in place of the basic dropzone.
    */
-  mode: we(["push", "pull", "element"]).default("push"),
+  mode: be(["push", "pull", "element"]).default("push"),
   endpoint: U().url().optional(),
   capabilities: Wd.default({}),
   /** element mode: publishable key (pk_live_/pk_test_ — browser-safe, store-level). */
@@ -8675,7 +8694,7 @@ function _f(e) {
   }
   function re(T, j) {
     if (T === null) {
-      const be = M(), he = be ? !xf(n.selections[be.id]) : !1;
+      const _e = M(), he = _e ? !xf(n.selections[_e.id]) : !1;
       if (n.file.value === void 0 && !he)
         return;
       p(j), n.setFile(void 0), O(""), m();

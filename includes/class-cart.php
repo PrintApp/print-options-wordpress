@@ -73,6 +73,11 @@ class PAPO_Cart
         add_filter('woocommerce_get_item_data', [self::class, 'display'], 10, 2);
         add_action('woocommerce_before_calculate_totals', [self::class, 'apply_price'], 20);
         add_action('woocommerce_cart_loaded_from_session', [self::class, 'apply_weight'], 20);
+        // Real-quantity lines: the quantity is the verified copy count, not an input.
+        add_filter('woocommerce_cart_item_quantity', [self::class, 'lock_quantity'], 10, 3);
+        add_filter('woocommerce_store_api_product_quantity_editable', [self::class, 'lock_quantity_editable'], 10, 3);
+        add_filter('woocommerce_store_api_product_quantity_minimum', [self::class, 'lock_quantity_limit'], 10, 3);
+        add_filter('woocommerce_store_api_product_quantity_maximum', [self::class, 'lock_quantity_limit'], 10, 3);
         add_action('woocommerce_checkout_create_order_line_item', [self::class, 'persist'], 10, 4);
     }
 
@@ -116,6 +121,8 @@ class PAPO_Cart
             'selections' => $payload['selections'],
             'file'       => isset($payload['file']) && is_array($payload['file']) ? $payload['file'] : null,
             'verified'   => $verified,
+            // Null unless the blueprint opted in AND the total splits exactly.
+            'units'      => self::unit_split($config, $verified),
             'display'    => self::display_pairs(
                 $config,
                 $payload['selections'],
@@ -324,14 +331,116 @@ class PAPO_Cart
         if (is_admin() && !defined('DOING_AJAX')) {
             return;
         }
-        foreach ($cart->get_cart() as $item) {
+        foreach ($cart->get_cart() as $key => $item) {
             $options = self::line_options($item);
-            if (isset($options['verified']['total'])) {
-                $item['data']->set_price((float) $options['verified']['total']);
+            if (!isset($options['verified']['total'])) {
+                continue;
             }
+            $units = self::line_units($options);
+            if (null === $units) {
+                $item['data']->set_price((float) $options['verified']['total']);
+                continue;
+            }
+            /* Real quantity: the line IS the copy count at the per-copy price,
+               and copies x price is the verified total exactly. The quantity
+               is put back on every calculation, which is also the server-side
+               lock — the price was verified for this count and no other, so a
+               changed quantity (a tampered form, a third-party cart widget)
+               never reaches a total. To buy a different quantity the customer
+               reconfigures the product, which re-verifies the price. */
+            if ((int) $item['quantity'] !== $units['copies']) {
+                $cart->cart_contents[$key]['quantity'] = $units['copies'];
+            }
+            $item['data']->set_price($units['unit']);
         }
         // Lines added in THIS request were not in the session when it loaded.
         self::apply_weight($cart);
+    }
+
+    /**
+     * GUARDED real quantities (blueprint `pricing.lineQuantity: "units"`).
+     *
+     * Returns the copy count and per-copy price only when carrying the job
+     * as its real quantity cannot change what the customer pays: the verified
+     * total must be exact in the store's price decimals and divide by the
+     * copies with no remainder. Otherwise null, and the job stays one line of
+     * quantity 1 at the verified total, exactly as without the option.
+     *
+     * Decided once, at add-to-cart, from the TRUSTED blueprint and the
+     * VERIFIED price — never from anything the browser sent.
+     *
+     * @param array<string, mixed> $config   Blueprint.
+     * @param array<string, mixed> $verified verify_price() result.
+     * @return array{copies: int, unit: float}|null
+     */
+    private static function unit_split(array $config, array $verified): ?array
+    {
+        if ('units' !== ($config['pricing']['lineQuantity'] ?? 'job')) {
+            return null;
+        }
+        $copies = (int) ($verified['quantity'] ?? 1);
+        if ($copies < 2) {
+            return null;
+        }
+        $scale  = 10 ** max(0, (int) wc_get_price_decimals());
+        $scaled = (float) ($verified['total'] ?? 0) * $scale;
+        $minor  = (int) round($scaled);
+        if ($minor <= 0 || abs($scaled - $minor) > 1e-6 || 0 !== $minor % $copies) {
+            return null;
+        }
+        return ['copies' => $copies, 'unit' => (float) (intdiv($minor, $copies) / $scale)];
+    }
+
+    /**
+     * The split stored on a cart line, re-validated on the way out (it has
+     * been through the session).
+     *
+     * @param array<string, mixed> $options
+     * @return array{copies: int, unit: float}|null
+     */
+    private static function line_units(array $options): ?array
+    {
+        $units = $options['units'] ?? null;
+        if (!is_array($units) || !isset($units['copies'], $units['unit'])) {
+            return null;
+        }
+        $copies = (int) $units['copies'];
+        $unit   = (float) $units['unit'];
+        return ($copies >= 2 && $unit > 0) ? ['copies' => $copies, 'unit' => $unit] : null;
+    }
+
+    /** Copies of a real-quantity cart line, or null for any other line. */
+    private static function locked_copies($cart_item): ?int
+    {
+        if (!is_array($cart_item)) {
+            return null;
+        }
+        $options = self::line_options($cart_item);
+        $units   = $options ? self::line_units($options) : null;
+        return $units ? $units['copies'] : null;
+    }
+
+    /** Classic cart: show the count as text instead of an editable input. */
+    public static function lock_quantity($product_quantity, $cart_item_key, $cart_item)
+    {
+        $copies = self::locked_copies($cart_item);
+        if (null === $copies) {
+            return $product_quantity;
+        }
+        return '<span class="papo-fixed-quantity">' . esc_html((string) $copies) . '</span>';
+    }
+
+    /** Cart and checkout blocks: not editable. */
+    public static function lock_quantity_editable($editable, $product, $cart_item)
+    {
+        return null === self::locked_copies($cart_item) ? $editable : false;
+    }
+
+    /** Cart and checkout blocks: minimum and maximum are both the copy count. */
+    public static function lock_quantity_limit($limit, $product, $cart_item)
+    {
+        $copies = self::locked_copies($cart_item);
+        return null === $copies ? $limit : $copies;
     }
 
     /**
@@ -349,6 +458,12 @@ class PAPO_Cart
     public static function apply_weight(WC_Cart $cart): void
     {
         foreach ($cart->get_cart() as $item) {
+            /* A real-quantity line already carries its copies as the line
+               quantity, and WooCommerce multiplies the weight by that itself —
+               scaling here as well would count the copies twice. */
+            if (null !== self::locked_copies($item)) {
+                continue;
+            }
             $weight = self::line_weight($item);
             if (null !== $weight) {
                 $item['data']->set_weight($weight);

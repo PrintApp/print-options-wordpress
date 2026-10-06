@@ -4,7 +4,7 @@ Tags: woocommerce, product options, printing, web-to-print, price calculator
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 0.4.7
+Stable tag: 0.4.8
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -139,6 +139,17 @@ The configurator shows the WooCommerce price display suffix (WooCommerce →
 Settings → Tax → Price display suffix) under the total. To use different
 wording, or to hide it, return your text from the `papo_price_note` filter.
 
+= Can the cart show the real quantity instead of 1? =
+Yes. Open the option set, and on the Product panel set "Line quantity" to
+"Real quantity". The cart and order line then show the configured quantity at
+a per-copy price, and stock and shipping weight follow it. This is applied
+only when the total divides exactly by the quantity (a 10.00 job of 3 copies
+cannot be 3.33 each), so some jobs will still appear as one line of quantity
+1 at the same total. The quantity of a real-quantity line cannot be edited in
+the cart; the customer changes it on the product page so the price is
+verified again. If you track stock on the product, make sure it covers your
+largest jobs before turning this on.
+
 = How is shipping weight calculated? =
 Enter the weight of ONE copy on the WooCommerce product. A configured job is a
 single cart line, and the plugin gives that line the product weight multiplied
@@ -160,6 +171,15 @@ truth.
 4. Every price is recomputed and signed on the server before it can reach the cart.
 
 == Changelog ==
+
+= 0.4.8 =
+* New: real quantities, an opt-in setting on each option set (Product panel,
+  "Line quantity"). The cart and order line carry the real copy count at a
+  per-copy price, so WooCommerce's quantity, stock and shipping weight all
+  use the true number. Applied only when the verified total splits exactly
+  across the copies; any other job stays one line at the same total. The
+  quantity of such a line is fixed in the cart, because the price was
+  verified for that count: customers change it on the product page.
 
 = 0.4.7 =
 * New: a quantity option can carry a unit word ("banners", "cards"), shown
