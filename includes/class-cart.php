@@ -265,7 +265,10 @@ class PAPO_Cart
                 }
             }
 
-            if (is_array($value) && isset($value['w'], $value['h'])) {
+            if ('quantity' === $type) {
+                // The quantity it prices as, never a raw off-step answer.
+                $display = (string) self::normalize_quantity($field, $value);
+            } elseif (is_array($value) && isset($value['w'], $value['h'])) {
                 $display = $value['w'] . ' × ' . $value['h'] . ' ' . ($value['unit'] ?? '');
             } elseif (is_array($value)) {
                 $display = implode(
@@ -288,6 +291,34 @@ class PAPO_Cart
         }
 
         return $pairs;
+    }
+
+    /**
+     * Mirror of the pricing engine's normalizeQuantity (packages/pricing-engine
+     * src/quantity.ts): snapped to the step grid anchored at min, clamped to
+     * [min, max], unreadable → the field's default. A client that posts 333
+     * on a step-25 field is charged for 325, so the line must say 325.
+     *
+     * @param array<string, mixed> $field Quantity field from the blueprint.
+     * @param mixed                $raw   Posted selection.
+     */
+    private static function normalize_quantity(array $field, $raw): int
+    {
+        $min  = isset($field['min']) && is_numeric($field['min']) ? (float) $field['min'] : 1.0;
+        $step = isset($field['step']) && is_numeric($field['step']) && (float) $field['step'] > 0 ? (float) $field['step'] : 1.0;
+        $fallback = isset($field['defaultValue']) && is_numeric($field['defaultValue']) ? (float) $field['defaultValue'] : 1.0;
+
+        $value = is_numeric($raw) ? (float) $raw : $fallback;
+        // JS Math.round: halves round up, also for negatives.
+        $quantity = floor($value + 0.5);
+        $quantity = $min + floor(($quantity - $min) / $step + 0.5) * $step;
+        if ($quantity < $min) {
+            $quantity = $min;
+        }
+        if (isset($field['max']) && is_numeric($field['max']) && $quantity > (float) $field['max']) {
+            $quantity = $min + floor(((float) $field['max'] - $min) / $step) * $step;
+        }
+        return (int) $quantity;
     }
 
     /**

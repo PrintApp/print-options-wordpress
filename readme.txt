@@ -4,7 +4,7 @@ Tags: woocommerce, product options, printing, web-to-print, price calculator
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 0.4.8
+Stable tag: 0.4.9
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -171,6 +171,13 @@ truth.
 4. Every price is recomputed and signed on the server before it can reach the cart.
 
 == Changelog ==
+
+= 0.4.9 =
+* Fix: the quantity shown on the product page, the cart line and the order
+  is always the quantity that is charged. On an option sold in steps (25,
+  50, 75…), a typed or script-set number such as 333 was priced as 325 but
+  still listed as 333; it now snaps to 325 when the customer leaves the
+  field, and every line says 325.
 
 = 0.4.8 =
 * New: real quantities, an opt-in setting on each option set (Product panel,
