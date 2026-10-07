@@ -4,7 +4,7 @@ Tags: woocommerce, product options, printing, web-to-print, price calculator
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 0.4.9
+Stable tag: 0.4.10
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -171,6 +171,11 @@ truth.
 4. Every price is recomputed and signed on the server before it can reach the cart.
 
 == Changelog ==
+
+= 0.4.10 =
+* Fix: a product priced entirely by its options (for example a price per
+  size, with the base price left at 0) no longer shows a "Base price 0,00"
+  line in the summary. A base price with an amount is still listed.
 
 = 0.4.9 =
 * Fix: the quantity shown on the product page, the cart line and the order

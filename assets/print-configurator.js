@@ -17,7 +17,7 @@ const we = {}, sn = [], vt = () => {
 (e.charCodeAt(2) > 122 || e.charCodeAt(2) < 97), yi = (e) => e.startsWith("onUpdate:"), Ce = Object.assign, _r = (e, t) => {
   const n = e.indexOf(t);
   n > -1 && e.splice(n, 1);
-}, Wo = Object.prototype.hasOwnProperty, pe = (e, t) => Wo.call(e, t), X = Array.isArray, an = (e) => Un(e) === "[object Map]", sa = (e) => Un(e) === "[object Set]", es = (e) => Un(e) === "[object Date]", te = (e) => typeof e == "function", Se = (e) => typeof e == "string", rt = (e) => typeof e == "symbol", ve = (e) => e !== null && typeof e == "object", aa = (e) => (ve(e) || te(e)) && te(e.then) && te(e.catch), oa = Object.prototype.toString, Un = (e) => oa.call(e), Ko = (e) => Un(e).slice(8, -1), bi = (e) => Un(e) === "[object Object]", xr = (e) => Se(e) && e !== "NaN" && e[0] !== "-" && "" + parseInt(e, 10) === e, An = /* @__PURE__ */ br(
+}, Wo = Object.prototype.hasOwnProperty, pe = (e, t) => Wo.call(e, t), X = Array.isArray, an = (e) => Un(e) === "[object Map]", sa = (e) => Un(e) === "[object Set]", es = (e) => Un(e) === "[object Date]", ne = (e) => typeof e == "function", Se = (e) => typeof e == "string", rt = (e) => typeof e == "symbol", ve = (e) => e !== null && typeof e == "object", aa = (e) => (ve(e) || ne(e)) && ne(e.then) && ne(e.catch), oa = Object.prototype.toString, Un = (e) => oa.call(e), Ko = (e) => Un(e).slice(8, -1), bi = (e) => Un(e) === "[object Object]", xr = (e) => Se(e) && e !== "NaN" && e[0] !== "-" && "" + parseInt(e, 10) === e, An = /* @__PURE__ */ br(
   // the leading comma is intentional so empty string "" is also included
   ",key,ref,ref_for,ref_key,onVnodeBeforeMount,onVnodeMounted,onVnodeBeforeUpdate,onVnodeUpdated,onVnodeBeforeUnmount,onVnodeUnmounted"
 ), _i = (e) => {
@@ -119,7 +119,7 @@ function wr(e, t) {
   }
   return String(e) === String(t);
 }
-const ua = (e) => !!(e && e.__v_isRef === !0), V = (e) => Se(e) ? e : e == null ? "" : X(e) || ve(e) && (e.toString === oa || !te(e.toString)) ? ua(e) ? V(e.value) : JSON.stringify(e, da, 2) : String(e), da = (e, t) => ua(t) ? da(e, t.value) : an(t) ? {
+const ua = (e) => !!(e && e.__v_isRef === !0), V = (e) => Se(e) ? e : e == null ? "" : X(e) || ve(e) && (e.toString === oa || !ne(e.toString)) ? ua(e) ? V(e.value) : JSON.stringify(e, da, 2) : String(e), da = (e, t) => ua(t) ? da(e, t.value) : an(t) ? {
   [`Map(${t.size})`]: [...t.entries()].reduce(
     (n, [i, r], s) => (n[Fi(i, s) + " =>"] = r, n),
     {}
@@ -1012,7 +1012,7 @@ class Il {
 // @__NO_SIDE_EFFECTS__
 function El(e, t, n = !1) {
   let i, r;
-  return te(e) ? i = e : (i = e.get, r = e.set), new Il(i, r, n);
+  return ne(e) ? i = e : (i = e.get, r = e.set), new Il(i, r, n);
 }
 const Gn = {}, Qn = /* @__PURE__ */ new WeakMap();
 let Wt;
@@ -1030,9 +1030,9 @@ function Pl(e, t, n = we) {
       return B.value;
     if (/* @__PURE__ */ Yt(B))
       return c(B);
-    if (te(B))
+    if (ne(B))
       return l ? l(B, 2) : B();
-  })) : te(e) ? t ? d = l ? () => l(e, 2) : e : d = () => {
+  })) : ne(e) ? t ? d = l ? () => l(e, 2) : e : d = () => {
     if (p) {
       It();
       try {
@@ -1132,7 +1132,7 @@ function qn(e, t, n, i) {
   }
 }
 function at(e, t, n, i) {
-  if (te(e)) {
+  if (ne(e)) {
     const r = qn(e, t, n, i);
     return r && aa(r) && r.catch((s) => {
       Ci(s, t, n);
@@ -1300,7 +1300,7 @@ function Lt(e, t, n = !1) {
     if (r && e in r)
       return r[e];
     if (arguments.length > 1)
-      return n && te(t) ? t.call(i && i.proxy) : t;
+      return n && ne(t) ? t.call(i && i.proxy) : t;
   }
 }
 const Fl = /* @__PURE__ */ Symbol.for("v-scx"), jl = () => Lt(Fl);
@@ -1336,7 +1336,7 @@ function Na(e, t, n = we) {
 function Dl(e, t, n) {
   const i = this.proxy, r = Se(e) ? e.includes(".") ? Ra(i, e) : () => i[e] : e.bind(i, i);
   let s;
-  te(t) ? s = t : (s = t.handler, n = t);
+  ne(t) ? s = t : (s = t.handler, n = t);
   const a = Zn(this), o = Na(r, s.bind(i), n);
   return a(), o;
 }
@@ -1355,7 +1355,7 @@ function Or(e, t) {
 }
 // @__NO_SIDE_EFFECTS__
 function Te(e, t) {
-  return te(e) ? (
+  return ne(e) ? (
     // #8236: extend call and options.name access are considered side-effects
     // by Rollup, so we have to wrap it in a pure-annotated IIFE.
     Ce({ name: e.name }, t, { setup: e })
@@ -1395,7 +1395,7 @@ function En(e, t, n, i, r = !1) {
       E(c, w.k) && (c.value = null), w.k && (u[w.k] = null);
     }
   }
-  if (te(l))
+  if (ne(l))
     qn(l, o, 12, [a, u]);
   else {
     const w = Se(l), O = /* @__PURE__ */ je(l);
@@ -1709,7 +1709,7 @@ function nc(e) {
   if (c && ic(c, i, null), a)
     for (const _e in a) {
       const he = a[_e];
-      te(he) && (i[_e] = he.bind(n));
+      ne(he) && (i[_e] = he.bind(n));
     }
   if (r) {
     const _e = r.call(n, n);
@@ -1717,7 +1717,7 @@ function nc(e) {
   }
   if (er = !0, s)
     for (const _e in s) {
-      const he = s[_e], qt = te(he) ? he.bind(n, n) : te(he.get) ? he.get.bind(n, n) : vt, Hn = !te(he) && te(he.set) ? he.set.bind(n) : vt, Zt = ne({
+      const he = s[_e], qt = ne(he) ? he.bind(n, n) : ne(he.get) ? he.get.bind(n, n) : vt, Hn = !ne(he) && ne(he.set) ? he.set.bind(n) : vt, Zt = te({
         get: qt,
         set: Hn
       });
@@ -1732,7 +1732,7 @@ function nc(e) {
     for (const _e in o)
       Ua(o[_e], i, n, _e);
   if (l) {
-    const _e = te(l) ? l.call(n) : l;
+    const _e = ne(l) ? l.call(n) : l;
     Reflect.ownKeys(_e).forEach((he) => {
       Ji(he, _e[he]);
     });
@@ -1782,15 +1782,15 @@ function Ua(e, t, n, i) {
   let r = i.includes(".") ? Ra(n, i) : () => n[i];
   if (Se(e)) {
     const s = t[e];
-    te(s) && yt(r, s);
-  } else if (te(e))
+    ne(s) && yt(r, s);
+  } else if (ne(e))
     yt(r, e.bind(n));
   else if (ve(e))
     if (X(e))
       e.forEach((s) => Ua(s, t, n, i));
     else {
-      const s = te(e.handler) ? e.handler.bind(n) : t[e.handler];
-      te(s) && yt(r, s, e);
+      const s = ne(e.handler) ? e.handler.bind(n) : t[e.handler];
+      ne(s) && yt(r, s, e);
     }
 }
 function qa(e) {
@@ -1850,8 +1850,8 @@ const rc = {
 function ds(e, t) {
   return t ? e ? function() {
     return Ce(
-      te(e) ? e.call(this, this) : e,
-      te(t) ? t.call(this, this) : t
+      ne(e) ? e.call(this, this) : e,
+      ne(t) ? t.call(this, this) : t
     );
   } : t : e;
 }
@@ -1912,7 +1912,7 @@ function Za() {
 let oc = 0;
 function lc(e, t) {
   return function(i, r = null) {
-    te(i) || (i = Ce({}, i)), r != null && !ve(r) && (r = null);
+    ne(i) || (i = Ce({}, i)), r != null && !ve(r) && (r = null);
     const s = Za(), a = /* @__PURE__ */ new WeakSet(), o = [];
     let l = !1;
     const c = s.app = {
@@ -1929,7 +1929,7 @@ function lc(e, t) {
       set config(u) {
       },
       use(u, ...d) {
-        return a.has(u) || (u && te(u.install) ? (a.add(u), u.install(c, ...d)) : te(u) && (a.add(u), u(c, ...d))), c;
+        return a.has(u) || (u && ne(u.install) ? (a.add(u), u.install(c, ...d)) : ne(u) && (a.add(u), u(c, ...d))), c;
       },
       mixin(u) {
         return s.mixins.includes(u) || s.mixins.push(u), c;
@@ -2009,7 +2009,7 @@ function Ha(e, t, n = !1) {
     return r;
   const s = e.emits;
   let a = {}, o = !1;
-  if (!te(e)) {
+  if (!ne(e)) {
     const l = (c) => {
       const u = Ha(c, t, !0);
       u && (o = !0, Ce(a, u));
@@ -2238,7 +2238,7 @@ function nr(e, t, n, i, r, s) {
     const o = pe(a, "default");
     if (o && i === void 0) {
       const l = a.default;
-      if (a.type !== Function && !a.skipFactory && te(l)) {
+      if (a.type !== Function && !a.skipFactory && ne(l)) {
         const { propsDefaults: c } = r;
         if (n in c)
           i = c[n];
@@ -2270,7 +2270,7 @@ function Qa(e, t, n = !1) {
     return r;
   const s = e.props, a = {}, o = [];
   let l = !1;
-  if (!te(e)) {
+  if (!ne(e)) {
     const u = (d) => {
       l = !0;
       const [p, m] = Qa(d, t, !0);
@@ -2289,18 +2289,18 @@ function Qa(e, t, n = !1) {
     for (const u in s) {
       const d = Ee(u);
       if (ms(d)) {
-        const p = s[u], m = a[d] = X(p) || te(p) ? { type: p } : Ce({}, p), E = m.type;
+        const p = s[u], m = a[d] = X(p) || ne(p) ? { type: p } : Ce({}, p), E = m.type;
         let w = !1, O = !0;
         if (X(E))
           for (let Z = 0; Z < E.length; ++Z) {
-            const z = E[Z], G = te(z) && z.name;
+            const z = E[Z], G = ne(z) && z.name;
             if (G === "Boolean") {
               w = !0;
               break;
             } else G === "String" && (O = !1);
           }
         else
-          w = te(E) && E.name === "Boolean";
+          w = ne(E) && E.name === "Boolean";
         m[
           0
           /* shouldCast */
@@ -2326,7 +2326,7 @@ const Nr = (e) => e === "_" || e === "_ctx" || e === "$stable", Rr = (e) => X(e)
   for (const r in e) {
     if (Nr(r)) continue;
     const s = e[r];
-    if (te(s))
+    if (ne(s))
       t[r] = bc(r, s, i);
     else if (s != null) {
       const a = Rr(s);
@@ -3288,7 +3288,7 @@ const ao = ({ key: e }) => e ?? null, Yn = ({
   ref: e,
   ref_key: t,
   ref_for: n
-}) => (typeof e == "number" && (e = "" + e), e != null ? Se(e) || /* @__PURE__ */ je(e) || te(e) ? { i: Ve, r: e, k: t, f: !!n } : e : null);
+}) => (typeof e == "number" && (e = "" + e), e != null ? Se(e) || /* @__PURE__ */ je(e) || ne(e) ? { i: Ve, r: e, k: t, f: !!n } : e : null);
 function L(e, t = null, n = null, i = 0, r = null, s = e === oe ? 0 : 1, a = !1, o = !1) {
   const l = {
     __v_isVNode: !0,
@@ -3345,7 +3345,7 @@ function $c(e, t = null, n = null, i = 0, r = null, s = !1) {
     let { class: o, style: l } = t;
     o && !Se(o) && (t.class = et(o)), ve(l) && (/* @__PURE__ */ Ir(l) && !X(l) && (l = Ce({}, l)), t.style = ki(l));
   }
-  const a = Se(e) ? 1 : ro(e) ? 128 : zl(e) ? 64 : ve(e) ? 4 : te(e) ? 2 : 0;
+  const a = Se(e) ? 1 : ro(e) ? 128 : zl(e) ? 64 : ve(e) ? 4 : ne(e) ? 2 : 0;
   return L(
     e,
     t,
@@ -3444,7 +3444,7 @@ function jr(e, t) {
       const r = t._;
       !r && !Ga(t) ? t._ctx = Ve : r === 3 && Ve && (Ve.slots._ === 1 ? t._ = 1 : (t._ = 2, e.patchFlag |= 1024));
     }
-  else te(t) ? (t = { default: t, _ctx: Ve }, n = 32) : (t = String(t), i & 64 ? (n = 16, t = [Fr(t)]) : n = 8);
+  else ne(t) ? (t = { default: t, _ctx: Ve }, n = 32) : (t = String(t), i & 64 ? (n = 16, t = [Fr(t)]) : n = 8);
   e.children = t, e.shapeFlag |= n;
 }
 function Ec(...e) {
@@ -3618,7 +3618,7 @@ function Mc(e, t) {
     co(e);
 }
 function bs(e, t, n) {
-  te(t) ? e.type.__ssrInlineRender ? e.ssrRender = t : e.render = t : ve(t) && (e.setupState = Ta(t)), co(e);
+  ne(t) ? e.type.__ssrInlineRender ? e.ssrRender = t : e.render = t : ve(t) && (e.setupState = Ta(t)), co(e);
 }
 function co(e, t, n) {
   const i = e.type;
@@ -3663,12 +3663,12 @@ function Dr(e) {
   })) : e.proxy;
 }
 function Dc(e, t = !0) {
-  return te(e) ? e.displayName || e.name : e.name || t && e.__name;
+  return ne(e) ? e.displayName || e.name : e.name || t && e.__name;
 }
 function Lc(e) {
-  return te(e) && "__vccOpts" in e;
+  return ne(e) && "__vccOpts" in e;
 }
-const ne = (e, t) => /* @__PURE__ */ El(e, t, jn), zc = "3.5.35";
+const te = (e, t) => /* @__PURE__ */ El(e, t, jn), zc = "3.5.35";
 /**
 * @vue/runtime-dom v3.5.35
 * (c) 2018-present Yuxi (Evan) You and Vue contributors
@@ -3919,7 +3919,7 @@ e.charCodeAt(2) > 96 && e.charCodeAt(2) < 123, su = (e, t, n, i, r, s) => {
 };
 function au(e, t, n, i) {
   if (i)
-    return !!(t === "innerHTML" || t === "textContent" || t in e && Es(t) && te(n));
+    return !!(t === "innerHTML" || t === "textContent" || t in e && Es(t) && ne(n));
   if (t === "spellcheck" || t === "draggable" || t === "translate" || t === "autocorrect" || t === "sandbox" && e.tagName === "IFRAME" || t === "form" || t === "list" && e.tagName === "INPUT" || t === "type" && e.tagName === "TEXTAREA")
     return !1;
   if (t === "width" || t === "height") {
@@ -4250,7 +4250,7 @@ const mu = (...e) => {
     const r = vu(i);
     if (!r) return;
     const s = t._component;
-    !te(s) && !s.render && !s.template && (s.template = r.innerHTML), r.nodeType === 1 && (r.textContent = "");
+    !ne(s) && !s.render && !s.template && (s.template = r.innerHTML), r.nodeType === 1 && (r.textContent = "");
     const a = n(r, !1, gu(r));
     return r instanceof Element && (r.removeAttribute("v-cloak"), r.setAttribute("data-v-app", "")), a;
   }, t;
@@ -8428,9 +8428,9 @@ function bf(e) {
   return new Promise((t) => setTimeout(t, e));
 }
 function _f(e) {
-  const t = { ...e }, n = /* @__PURE__ */ Ze(null), i = /* @__PURE__ */ Ze(!1), r = /* @__PURE__ */ Ze(null), s = /* @__PURE__ */ Ze(!1), a = /* @__PURE__ */ Vt({}), o = /* @__PURE__ */ Ze(void 0), l = /* @__PURE__ */ Ze(!1), c = ne(
+  const t = { ...e }, n = /* @__PURE__ */ Ze(null), i = /* @__PURE__ */ Ze(!1), r = /* @__PURE__ */ Ze(null), s = /* @__PURE__ */ Ze(!1), a = /* @__PURE__ */ Vt({}), o = /* @__PURE__ */ Ze(void 0), l = /* @__PURE__ */ Ze(!1), c = te(
     () => n.value ? Ro(n.value, a, o.value) : 1
-  ), u = ne(() => ({
+  ), u = te(() => ({
     selections: a,
     file: o.value,
     quantity: c.value
@@ -8464,14 +8464,14 @@ function _f(e) {
       delete a[N];
     o.value = void 0, await d();
   }
-  const m = ne(() => n.value ? n.value.sections.map((y) => ({
+  const m = te(() => n.value ? n.value.sections.map((y) => ({
     section: y,
     fields: y.fields.filter(
       (N) => Br(N, u.value)
     )
-  })).filter((y) => y.fields.length > 0) : []), E = ne(
+  })).filter((y) => y.fields.length > 0) : []), E = te(
     () => m.value.flatMap((y) => y.fields)
-  ), w = ne(() => n.value ? of(n.value, {
+  ), w = te(() => n.value ? of(n.value, {
     selections: a,
     file: o.value
   }) : null);
@@ -8585,9 +8585,9 @@ function xf(e, t) {
         }
 }
 function wf() {
-  const e = /* @__PURE__ */ Vt(/* @__PURE__ */ new Map()), t = ne(
+  const e = /* @__PURE__ */ Vt(/* @__PURE__ */ new Map()), t = te(
     () => Array.from(e, ([s, a]) => ({ key: s, message: a.message }))
-  ), n = ne(() => e.size > 0);
+  ), n = te(() => e.size > 0);
   function i(s, a) {
     const o = e.get(s);
     o && o.message === a || e.set(s, { message: a });
@@ -8603,7 +8603,7 @@ function kf(e) {
   function a(T) {
     return T === void 0 ? T : JSON.parse(JSON.stringify(T));
   }
-  const o = ne(() => !n.schema.value || !n.price.value ? null : {
+  const o = te(() => !n.schema.value || !n.price.value ? null : {
     apiVersion: gr,
     selections: a({ ...n.selections }),
     quantity: n.quantity.value,
@@ -8809,7 +8809,7 @@ function Kt(e, t) {
 }
 const Xs = "[print-configurator]", vr = 10;
 function Cf(e) {
-  const t = /* @__PURE__ */ Vt(/* @__PURE__ */ new Map()), n = ne(
+  const t = /* @__PURE__ */ Vt(/* @__PURE__ */ new Map()), n = te(
     () => Array.from(t.values()).sort((o, l) => o.order - l.order)
   );
   function i(o, l) {
@@ -8979,14 +8979,14 @@ function xt() {
   return Lt(Vo, Wr);
 }
 function Pf(e, t, n, i = Wr.t) {
-  const r = /* @__PURE__ */ Vt(/* @__PURE__ */ new Set()), s = { value: !1 }, a = ne(() => {
+  const r = /* @__PURE__ */ Vt(/* @__PURE__ */ new Set()), s = { value: !1 }, a = te(() => {
     const p = [];
     for (const m of e.value) {
       const E = Nf(m, t, i);
       E && p.push({ fieldId: m.id, message: E });
     }
     return p;
-  }), o = ne(
+  }), o = te(
     () => {
       var p;
       return a.value.length === 0 && !(((p = n.value) == null ? void 0 : p.unavailable) ?? !1);
@@ -9401,7 +9401,7 @@ const Lf = ["role", "aria-labelledby", "aria-describedby", "aria-invalid"], zf =
     function o(u) {
       return n.unavailableIds.includes(u);
     }
-    const l = ne(
+    const l = te(
       () => n.field.options.filter((u) => n.selectedIds.includes(u.id)).map((u) => u.label).join(", ")
     );
     function c(u, d) {
@@ -9500,9 +9500,9 @@ const Lf = ["role", "aria-labelledby", "aria-describedby", "aria-invalid"], zf =
   },
   emits: ["select", "touch"],
   setup(e, { emit: t }) {
-    const n = e, i = t, r = ne(
+    const n = e, i = t, r = te(
       () => typeof n.value == "number" ? n.value : n.field.defaultValue
-    ), { t: s } = xt(), a = ne(() => n.field.label ?? s("quantity.label"));
+    ), { t: s } = xt(), a = te(() => n.field.label ?? s("quantity.label"));
     function o(p) {
       i("select", Vn(n.field, p)), i("touch");
     }
@@ -9619,9 +9619,9 @@ const Lf = ["role", "aria-labelledby", "aria-describedby", "aria-invalid"], zf =
   },
   emits: ["select", "touch"],
   setup(e, { emit: t }) {
-    const n = e, i = t, r = ne(
+    const n = e, i = t, r = te(
       () => typeof n.value == "number" ? n.value : n.field.defaultValue ?? 0
-    ), { t: s } = xt(), a = ne(() => n.field.label ?? n.field.id);
+    ), { t: s } = xt(), a = te(() => n.field.label ?? n.field.id);
     function o(l) {
       Number.isNaN(l) || (i("select", l), i("touch"));
     }
@@ -9854,7 +9854,7 @@ const Qp = ["aria-busy"], Jp = ["id", "accept", "aria-labelledby", "aria-describ
   },
   emits: ["file", "touch"],
   setup(e, { emit: t }) {
-    const n = e, i = t, { t: r } = xt(), s = /* @__PURE__ */ Ze(!1), a = ne(() => n.field.accept.join(","));
+    const n = e, i = t, { t: r } = xt(), s = /* @__PURE__ */ Ze(!1), a = te(() => n.field.accept.join(","));
     function o(c) {
       var p;
       const d = (p = c.target.files) == null ? void 0 : p[0];
@@ -9996,7 +9996,7 @@ const fh = {
       n.provider.publishableKey ? "loading" : "unconfigured"
     ), o = /* @__PURE__ */ Ze("");
     let l = null, c = null;
-    const u = Lt(Pi, null), d = ne(() => {
+    const u = Lt(Pi, null), d = te(() => {
       var O;
       if (!u)
         return null;
@@ -10132,12 +10132,12 @@ const fh = {
     const t = e, n = Lt(Pi);
     if (!n)
       throw new Error("ArtworkField must be rendered inside <print-configurator>.");
-    const { cfg: i, validation: r, producers: s } = n, { t: a } = xt(), o = ne(
+    const { cfg: i, validation: r, producers: s } = n, { t: a } = xt(), o = te(
       () => {
         var y, N, A;
         return t.field.providerId === "filecheck" && !!((y = t.field.filecheck) != null && y.workflowId || (N = t.field.filecheck) != null && N.workflow) && ((A = i.provider) == null ? void 0 : A.mode) === "element";
       }
-    ), l = ne(() => {
+    ), l = te(() => {
       const y = i.schema.value;
       if (!y)
         return !1;
@@ -10146,23 +10146,23 @@ const fh = {
           if (A.type === "file")
             return A.id === t.field.id;
       return !1;
-    }), c = ne(
+    }), c = te(
       () => s.forField(t.field.id, l.value)
-    ), u = ne(() => {
+    ), u = te(() => {
       const y = i.selections[t.field.id];
       return typeof y == "string" && y !== "";
-    }), d = ne(() => {
+    }), d = te(() => {
       var N;
       const y = (N = i.file.value) == null ? void 0 : N.source;
       return y ? c.value.find((A) => A.id === y) ?? null : null;
-    }), p = ne(() => u.value && !d.value), m = ne(() => t.field.display === "producer"), E = ne(
+    }), p = te(() => u.value && !d.value), m = te(() => t.field.display === "producer"), E = te(
       () => m.value ? c.value : c.value.filter((y) => y.order < vr)
-    ), w = ne(
+    ), w = te(
       () => m.value ? [] : c.value.filter((y) => y.order >= vr)
-    ), O = ne(() => {
+    ), O = te(() => {
       const y = i.file.value;
       return y ? y.fileName ? y.fileName : d.value ? a("artwork.designName") : y.fileId : "";
-    }), Z = ne(() => {
+    }), Z = te(() => {
       const y = i.file.value;
       if (!y)
         return "";
@@ -10267,7 +10267,7 @@ const fh = {
     file: { type: null }
   },
   setup(e) {
-    const t = e, { t: n } = xt(), i = ne(
+    const t = e, { t: n } = xt(), i = te(
       () => jo(t.sections, t.selections, t.file, {
         quantityLabel: n("quantity.label")
       })
@@ -10304,10 +10304,10 @@ const fh = {
     const t = e, n = Lt(Pi);
     if (!n)
       throw new Error("FieldHost must be rendered inside <print-configurator>.");
-    const { cfg: i, validation: r } = n, s = ne(() => i.selections[t.field.id]), a = ne(() => r.errorFor(t.field.id)), o = ne(() => {
+    const { cfg: i, validation: r } = n, s = te(() => i.selections[t.field.id]), a = te(() => r.errorFor(t.field.id)), o = te(() => {
       const u = s.value;
       return Array.isArray(u) ? u : typeof u == "string" && u !== "" ? [u] : [];
-    }), l = ne(() => {
+    }), l = te(() => {
       if (!Ye(t.field) || !i.schema.value)
         return [];
       const u = i.schema.value;
@@ -10421,7 +10421,7 @@ const fh = {
         a.value > w - 1 && (a.value = Math.max(0, w - 1));
       }
     );
-    const l = ne(() => i.sections[a.value]), c = ne(() => a.value >= i.sections.length - 1);
+    const l = te(() => i.sections[a.value]), c = te(() => a.value >= i.sections.length - 1);
     function u(w) {
       const O = i.sections[w];
       if (!O)
@@ -10532,27 +10532,34 @@ const fh = {
   emits: ["submit"],
   setup(e, { emit: t }) {
     const n = e, i = t, { t: r } = xt();
-    function s(o) {
-      var l;
+    function s(l) {
+      var c;
       return jf(
-        o,
-        ((l = n.price) == null ? void 0 : l.currency) ?? "USD",
+        l,
+        ((c = n.price) == null ? void 0 : c.currency) ?? "USD",
         n.locale,
         n.priceFormat
       );
     }
-    const a = ne(
+    const a = te(
       () => {
-        var o, l;
-        return (((o = n.price) == null ? void 0 : o.quantity) ?? 1) > 1 && !((l = n.price) != null && l.unavailable);
+        var l;
+        return (((l = n.price) == null ? void 0 : l.lines) ?? []).filter(
+          (c) => !(c.stage === "base" && c.amount === 0)
+        );
+      }
+    ), o = te(
+      () => {
+        var l, c;
+        return (((l = n.price) == null ? void 0 : l.quantity) ?? 1) > 1 && !((c = n.price) != null && c.unavailable);
       }
     );
-    return (o, l) => {
-      var c, u, d, p, m;
+    return (l, c) => {
+      var u, d, p, m;
       return v(), S("aside", em, [
         L("h3", tm, V(P(r)("summary.title")), 1),
         L("ul", nm, [
-          (v(!0), S(oe, null, Re(((c = e.price) == null ? void 0 : c.lines) ?? [], (E, w) => (v(), S("li", {
+          (v(!0), S(oe, null, Re(a.value, (E, w) => (v(), S("li", {
             key: w,
             part: "summary-line"
           }, [
@@ -10564,7 +10571,7 @@ const fh = {
           L("span", am, V(P(r)("summary.total")), 1),
           L("strong", om, V(s(((u = e.price) == null ? void 0 : u.total) ?? 0)), 1)
         ]),
-        a.value ? (v(), S("p", lm, V(P(r)("summary.unitPrice", {
+        o.value ? (v(), S("p", lm, V(P(r)("summary.unitPrice", {
           quantity: ((d = e.price) == null ? void 0 : d.quantity) ?? 0,
           unitPrice: s(((p = e.price) == null ? void 0 : p.unitPrice) ?? 0)
         })), 1)) : ue("", !0),
@@ -10581,7 +10588,7 @@ const fh = {
           class: "cta",
           part: "cta",
           disabled: e.holds.length > 0,
-          onClick: l[0] || (l[0] = (E) => i("submit"))
+          onClick: c[0] || (c[0] = (E) => i("submit"))
         }, V(P(r)("summary.addToCart")), 9, dm),
         L("span", fm, V(e.issueCount > 0 ? P(r)("summary.issues", { count: e.issueCount }) : ""), 1)
       ]);
@@ -10630,9 +10637,9 @@ const fh = {
       turnstileUrl: i.turnstileUrl,
       provider: s(i.provider),
       inlineConfig: i.config
-    }), o = ne(() => Of(i.strings)), l = zo(() => o.value);
+    }), o = te(() => Of(i.strings)), l = zo(() => o.value);
     Ji(Vo, l);
-    const c = ne(() => Mf(i.priceFormat)), u = Pf(
+    const c = te(() => Mf(i.priceFormat)), u = Pf(
       a.visibleFields,
       a.selections,
       a.price,
@@ -10657,7 +10664,7 @@ const fh = {
         }));
       }
     );
-    const Z = ne(() => {
+    const Z = te(() => {
       const N = {}, A = a.schema.value;
       if (!A)
         return N;
