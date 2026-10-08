@@ -1066,20 +1066,20 @@ function Pl(e, t, n = we) {
     if (!(!(u.flags & 1) || !u.dirty && !B))
       if (t) {
         const y = u.run();
-        if (r || E || (w ? y.some((N, A) => gt(N, z[A])) : gt(y, z))) {
+        if (r || E || (w ? y.some((N, T) => gt(N, z[T])) : gt(y, z))) {
           p && p();
           const N = Wt;
           Wt = u;
           try {
-            const A = [
+            const T = [
               y,
               // pass undefined as the old value when it's changed for the first time
               z === Gn ? void 0 : w && z[0] === Gn ? [] : z,
               m
             ];
-            z = y, l ? l(t, 3, A) : (
+            z = y, l ? l(t, 3, T) : (
               // @ts-expect-error
-              t(...A)
+              t(...T)
             );
           } finally {
             Wt = N;
@@ -1695,12 +1695,12 @@ function nc(e) {
     unmounted: B,
     render: y,
     renderTracked: N,
-    renderTriggered: A,
+    renderTriggered: T,
     errorCaptured: ee,
     serverPrefetch: le,
     // public API
     expose: De,
-    inheritAttrs: T,
+    inheritAttrs: A,
     // assets
     components: j,
     directives: re,
@@ -1741,7 +1741,7 @@ function nc(e) {
   function Oe(_e, he) {
     X(he) ? he.forEach((qt) => _e(qt.bind(n))) : he && _e(he.bind(n));
   }
-  if (Oe(Zl, d), Oe(Pr, p), Oe(Hl, m), Oe(Bl, E), Oe(Vl, w), Oe(Ul, O), Oe(Yl, ee), Oe(Gl, N), Oe(Kl, A), Oe(Da, z), Oe(La, B), Oe(Wl, le), X(De))
+  if (Oe(Zl, d), Oe(Pr, p), Oe(Hl, m), Oe(Bl, E), Oe(Vl, w), Oe(Ul, O), Oe(Yl, ee), Oe(Gl, N), Oe(Kl, T), Oe(Da, z), Oe(La, B), Oe(Wl, le), X(De))
     if (De.length) {
       const _e = e.exposed || (e.exposed = {});
       De.forEach((he) => {
@@ -1752,7 +1752,7 @@ function nc(e) {
         });
       });
     } else e.exposed || (e.exposed = {});
-  y && e.render === vt && (e.render = y), T != null && (e.inheritAttrs = T), j && (e.components = j), re && (e.directives = re), le && Ma(e);
+  y && e.render === vt && (e.render = y), A != null && (e.inheritAttrs = A), j && (e.components = j), re && (e.directives = re), le && Ma(e);
 }
 function ic(e, t, n = vt) {
   X(e) && (e = tr(e));
@@ -2519,7 +2519,7 @@ function kc(e, t) {
       Ui(f, b),
       R,
       I
-    ), J && Ht(f, null, k, "created"), A($, f, f.scopeId, R, k), K) {
+    ), J && Ht(f, null, k, "created"), T($, f, f.scopeId, R, k), K) {
       for (const ye in K)
         ye !== "value" && !An(ye) && s($, ye, null, K[ye], b, k);
       "value" in K && s($, "value", null, K.value, b), (x = K.onVnodeBeforeMount) && ft(x, k, f);
@@ -2532,7 +2532,7 @@ function kc(e, t) {
       } finally {
       }
     }, _);
-  }, A = (f, h, g, k, _) => {
+  }, T = (f, h, g, k, _) => {
     if (g && m(f, g), k)
       for (let b = 0; b < k.length; b++)
         m(f, k[b]);
@@ -2540,7 +2540,7 @@ function kc(e, t) {
       let b = _.subTree;
       if (h === b || ro(b.type) && (b.ssContent === h || b.ssFallback === h)) {
         const R = _.vnode;
-        A(
+        T(
           f,
           R,
           R.scopeId,
@@ -2590,7 +2590,7 @@ function kc(e, t) {
       !1
     ), $ > 0) {
       if ($ & 16)
-        T(I, F, W, g, _);
+        A(I, F, W, g, _);
       else if ($ & 2 && F.class !== W.class && s(I, "class", null, W.class, _), $ & 4 && s(I, "style", F.style, W.style, _), $ & 8) {
         const ce = h.dynamicProps;
         for (let ye = 0; ye < ce.length; ye++) {
@@ -2599,7 +2599,7 @@ function kc(e, t) {
         }
       }
       $ & 1 && f.children !== h.children && u(I, h.children);
-    } else !R && x == null && T(I, F, W, g, _);
+    } else !R && x == null && A(I, F, W, g, _);
     ((J = W.onVnodeUpdated) || K) && qe(() => {
       J && ft(J, g, h, f), K && Ht(h, f, g, "updated");
     }, k);
@@ -2631,7 +2631,7 @@ function kc(e, t) {
         !0
       );
     }
-  }, T = (f, h, g, k, _) => {
+  }, A = (f, h, g, k, _) => {
     if (h !== g) {
       if (h !== we)
         for (const b in h)
@@ -8321,15 +8321,15 @@ function jo(e, t, n, i = {}) {
       const l = t[o.id];
       let c;
       if (Ye(o)) {
-        const u = Array.isArray(l) ? l : typeof l == "string" ? [l] : [], d = o.options.filter((p) => u.includes(p.id)).map((p) => p.label);
-        c = d.length ? d.join(", ") : void 0;
+        const d = Array.isArray(l) ? l : typeof l == "string" ? [l] : [], p = o.options.filter((m) => d.includes(m.id)).map((m) => m.label);
+        c = p.length ? p.join(", ") : void 0;
       } else if (o.type === "file")
         c = (n == null ? void 0 : n.fileName) ?? (n == null ? void 0 : n.fileId);
       else if (Qe(l))
         c = `${l.w} × ${l.h} ${l.unit}`;
       else if (o.type === "quantity" && l !== void 0 && l !== "") {
-        const u = Vn(o, l), d = (s = o.unit) == null ? void 0 : s.trim();
-        c = d ? `${u} ${d}` : String(u);
+        const d = Vn(o, l), p = (s = o.unit) == null ? void 0 : s.trim();
+        c = p ? `${d} ${p}` : String(d);
       } else l !== void 0 && l !== "" && (c = String(l));
       c !== void 0 && r.push({
         fieldId: o.id,
@@ -8338,11 +8338,18 @@ function jo(e, t, n, i = {}) {
         label: o.label ?? (o.type === "quantity" ? i.quantityLabel ?? "Quantity" : o.id),
         value: c
       });
+      const u = o.type === "file" ? mf(n) : void 0;
+      u && i.fileLinkLabel && c !== void 0 && r.push({ fieldId: o.id, label: i.fileLinkLabel, value: u });
     }
   return r;
 }
-async function mf(e, t, n) {
-  const i = n ? await gf(n) : void 0, r = await fetch(e, {
+function mf(e) {
+  var n;
+  const t = (n = e == null ? void 0 : e.raw) == null ? void 0 : n.downloadUrl;
+  return typeof t == "string" && t.startsWith("https://") ? t : void 0;
+}
+async function gf(e, t, n) {
+  const i = n ? await vf(n) : void 0, r = await fetch(e, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -8355,28 +8362,30 @@ async function mf(e, t, n) {
     })
   });
   if (!r.ok) {
-    const u = await r.text();
-    throw new Error(`Upload authorization failed: ${u || r.status}`);
+    const d = await r.text();
+    throw new Error(`Upload authorization failed: ${d || r.status}`);
   }
-  const { url: s, fields: a, fileId: o } = await r.json(), l = new FormData();
-  for (const [u, d] of Object.entries(a))
-    l.append(u, d);
-  l.append("file", t);
-  const c = await fetch(s, {
+  const { url: s, fields: a, fileId: o, downloadUrl: l } = await r.json(), c = new FormData();
+  for (const [d, p] of Object.entries(a))
+    c.append(d, p);
+  c.append("file", t);
+  const u = await fetch(s, {
     method: "POST",
-    body: l
+    body: c
   });
-  if (!c.ok) {
-    const u = await c.text();
-    throw new Error(`Storage upload failed: ${u || c.status}`);
+  if (!u.ok) {
+    const d = await u.text();
+    throw new Error(`Storage upload failed: ${d || u.status}`);
   }
   return {
     fileId: o ?? crypto.randomUUID(),
     fileName: t.name,
-    fileSizeBytes: t.size
+    fileSizeBytes: t.size,
+    // Only a real web link: it ends up as a clickable link on the order.
+    ...typeof l == "string" && /^https:\/\//.test(l) ? { downloadUrl: l } : {}
   };
 }
-function gf(e) {
+function vf(e) {
   return new Promise((t, n) => {
     const i = new URL(e, window.location.href).origin;
     let r = document.getElementById("turnstile-challenge-iframe"), s = !1;
@@ -8397,7 +8406,7 @@ function gf(e) {
     s && c();
   });
 }
-async function vf(e, t) {
+async function yf(e, t) {
   if (!e.endpoint)
     throw new Error(`Provider "${e.id}" has no endpoint for pull mode.`);
   const n = `${e.endpoint.replace(/\/$/, "")}/${encodeURIComponent(t)}`, i = await fetch(n);
@@ -8405,7 +8414,7 @@ async function vf(e, t) {
     throw new Error(`Metadata fetch failed: ${i.status}`);
   return Hr.parse(await i.json());
 }
-async function yf(e, t, n = {}) {
+async function bf(e, t, n = {}) {
   const i = n.intervalMs ?? 1500, r = n.maxAttempts ?? 20;
   let s = {
     version: "1.0",
@@ -8416,18 +8425,18 @@ async function yf(e, t, n = {}) {
   };
   for (let a = 0; a < r; a++) {
     try {
-      if (s = await vf(e, t), s.status === "ready" || s.status === "failed")
+      if (s = await yf(e, t), s.status === "ready" || s.status === "failed")
         return s;
     } catch {
     }
-    await bf(i);
+    await _f(i);
   }
   return s;
 }
-function bf(e) {
+function _f(e) {
   return new Promise((t) => setTimeout(t, e));
 }
-function _f(e) {
+function xf(e) {
   const t = { ...e }, n = /* @__PURE__ */ Ze(null), i = /* @__PURE__ */ Ze(!1), r = /* @__PURE__ */ Ze(null), s = /* @__PURE__ */ Ze(!1), a = /* @__PURE__ */ Vt({}), o = /* @__PURE__ */ Ze(void 0), l = /* @__PURE__ */ Ze(!1), c = te(
     () => n.value ? Ro(n.value, a, o.value) : 1
   ), u = te(() => ({
@@ -8451,7 +8460,7 @@ function _f(e) {
         n.value = Hs(await y.json());
       } else
         throw new Error("No config-url or inline config provided.");
-      xf(n.value, a);
+      wf(n.value, a);
     } catch (y) {
       r.value = y instanceof Error ? y.message : String(y);
     } finally {
@@ -8477,15 +8486,15 @@ function _f(e) {
   }) : null);
   function O(y, N) {
     var ee;
-    const A = (ee = n.value) == null ? void 0 : ee.sections.flatMap((le) => le.fields).find((le) => le.id === y);
-    a[y] = (A == null ? void 0 : A.type) === "quantity" && typeof N == "number" ? Vn(A, N) : N;
+    const T = (ee = n.value) == null ? void 0 : ee.sections.flatMap((le) => le.fields).find((le) => le.id === y);
+    a[y] = (T == null ? void 0 : T.type) === "quantity" && typeof N == "number" ? Vn(T, N) : N;
   }
   function Z(y, N) {
     if (y.type !== "select-many") {
       O(y.id, N);
       return;
     }
-    const A = a[y.id], ee = Array.isArray(A) ? [...A] : [], le = ee.indexOf(N);
+    const T = a[y.id], ee = Array.isArray(T) ? [...T] : [], le = ee.indexOf(N);
     if (le >= 0)
       ee.splice(le, 1);
     else {
@@ -8502,23 +8511,24 @@ function _f(e) {
     }
     l.value = !0;
     try {
-      const A = await mf(t.uploadEndpoint, N, t.turnstileUrl);
+      const T = await gf(t.uploadEndpoint, N, t.turnstileUrl);
       o.value = {
         version: "1.0",
-        fileId: A.fileId,
+        fileId: T.fileId,
         source: "uploader",
         status: "ready",
-        fileName: A.fileName,
-        fileSizeBytes: A.fileSizeBytes,
-        issues: []
-      }, a[y.id] = A.fileId;
+        fileName: T.fileName,
+        fileSizeBytes: T.fileSizeBytes,
+        issues: [],
+        ...T.downloadUrl ? { raw: { downloadUrl: T.downloadUrl } } : {}
+      }, a[y.id] = T.fileId;
       const ee = t.provider;
       if (ee && ee.mode === "pull") {
-        const le = await yf(ee, A.fileId);
+        const le = await bf(ee, T.fileId);
         o.value = le;
       }
-    } catch (A) {
-      r.value = A instanceof Error ? A.message : String(A);
+    } catch (T) {
+      r.value = T instanceof Error ? T.message : String(T);
     } finally {
       l.value = !1;
     }
@@ -8555,7 +8565,7 @@ function _f(e) {
     setFile: B
   };
 }
-function xf(e, t) {
+function wf(e, t) {
   for (const n of e.sections)
     for (const i of n.fields)
       if (t[i.id] === void 0)
@@ -8584,7 +8594,7 @@ function xf(e, t) {
             break;
         }
 }
-function wf() {
+function kf() {
   const e = /* @__PURE__ */ Vt(/* @__PURE__ */ new Map()), t = te(
     () => Array.from(e, ([s, a]) => ({ key: s, message: a.message }))
   ), n = te(() => e.size > 0);
@@ -8598,10 +8608,10 @@ function wf() {
   return { list: t, held: n, add: i, release: r };
 }
 const gr = 1, _n = "[print-configurator]";
-function kf(e) {
+function Sf(e) {
   const { host: t, cfg: n, validation: i, holds: r, producers: s } = e;
-  function a(T) {
-    return T === void 0 ? T : JSON.parse(JSON.stringify(T));
+  function a(A) {
+    return A === void 0 ? A : JSON.parse(JSON.stringify(A));
   }
   const o = te(() => !n.schema.value || !n.price.value ? null : {
     apiVersion: gr,
@@ -8615,35 +8625,35 @@ function kf(e) {
     valid: i.valid.value && !r.held.value
   });
   let l = null, c = !1;
-  function u(T, j) {
-    if (!T)
+  function u(A, j) {
+    if (!A)
       return ["selections", "quantity", "price", "file", "holds", "valid"];
     const re = [], ke = /* @__PURE__ */ new Set([
-      ...Object.keys(T.selections),
+      ...Object.keys(A.selections),
       ...Object.keys(j.selections)
     ]);
     for (const He of ke)
-      Kt(T.selections[He], j.selections[He]) || re.push(`selections.${He}`);
-    return T.quantity !== j.quantity && re.push("quantity"), Kt(T.price, j.price) || re.push("price"), Kt(T.file, j.file) || re.push("file"), Kt(T.holds, j.holds) || re.push("holds"), T.valid !== j.valid && re.push("valid"), re;
+      Kt(A.selections[He], j.selections[He]) || re.push(`selections.${He}`);
+    return A.quantity !== j.quantity && re.push("quantity"), Kt(A.price, j.price) || re.push("price"), Kt(A.file, j.file) || re.push("file"), Kt(A.holds, j.holds) || re.push("holds"), A.valid !== j.valid && re.push("valid"), re;
   }
   let d = null;
-  function p(T) {
-    d = (T == null ? void 0 : T.source) ?? "api";
+  function p(A) {
+    d = (A == null ? void 0 : A.source) ?? "api";
   }
   function m() {
     Ti(() => {
       d = null;
     });
   }
-  yt(o, (T) => {
-    if (!c || !T)
+  yt(o, (A) => {
+    if (!c || !A)
       return;
-    const j = u(l, T), re = d ?? "user";
-    l = T, j.length !== 0 && E("change", { ...T, source: re, changed: j });
+    const j = u(l, A), re = d ?? "user";
+    l = A, j.length !== 0 && E("change", { ...A, source: re, changed: j });
   });
-  function E(T, j) {
+  function E(A, j) {
     t == null || t.dispatchEvent(
-      new CustomEvent(T, { detail: j, bubbles: !0, composed: !0 })
+      new CustomEvent(A, { detail: j, bubbles: !0, composed: !0 })
     );
   }
   function w() {
@@ -8652,27 +8662,27 @@ function kf(e) {
       source: "user"
     });
   }
-  function O(T) {
-    return T.sections.flatMap((j) => j.fields);
+  function O(A) {
+    return A.sections.flatMap((j) => j.fields);
   }
-  function Z(T) {
+  function Z(A) {
     const j = n.schema.value;
     if (!j)
       return null;
     const re = O(j);
-    return re.find((ke) => ke.id === T) ?? re.find((ke) => ke.role === T) ?? /* Several quantity fields may exist (one per paper group, say);
+    return re.find((ke) => ke.id === A) ?? re.find((ke) => ke.role === A) ?? /* Several quantity fields may exist (one per paper group, say);
     "the quantity field" is the one currently in play. */
-    (T === "quantity" ? No(j, n.selections, n.file.value) : void 0) ?? re.find(
-      (ke) => (T === "quantity" || T === "dimensions" || T === "file") && ke.type === T
+    (A === "quantity" ? No(j, n.selections, n.file.value) : void 0) ?? re.find(
+      (ke) => (A === "quantity" || A === "dimensions" || A === "file") && ke.type === A
     ) ?? null;
   }
-  function z(T, j) {
-    switch (T.type) {
+  function z(A, j) {
+    switch (A.type) {
       case "select-one":
-        return typeof j == "string" && T.options.some((re) => re.id === j);
+        return typeof j == "string" && A.options.some((re) => re.id === j);
       case "select-many":
         return Array.isArray(j) && j.every(
-          (re) => typeof re == "string" && T.options.some((ke) => ke.id === re)
+          (re) => typeof re == "string" && A.options.some((ke) => ke.id === re)
         );
       case "quantity":
       case "number":
@@ -8685,40 +8695,40 @@ function kf(e) {
         return !1;
     }
   }
-  function G(T, j) {
-    const re = n.schema.value, ke = re ? O(re).find((He) => He.id === T) : null;
-    return ke ? z(ke, j) ? Kt(n.selections[T], j) ? !1 : (n.select(T, j), i.touch(T), !0) : (console.warn(
-      `${_n} setSelection: invalid value for "${T}" (${ke.type})`,
+  function G(A, j) {
+    const re = n.schema.value, ke = re ? O(re).find((He) => He.id === A) : null;
+    return ke ? z(ke, j) ? Kt(n.selections[A], j) ? !1 : (n.select(A, j), i.touch(A), !0) : (console.warn(
+      `${_n} setSelection: invalid value for "${A}" (${ke.type})`,
       j
-    ), !1) : (console.warn(`${_n} setSelection: unknown field "${T}"`), !1);
+    ), !1) : (console.warn(`${_n} setSelection: unknown field "${A}"`), !1);
   }
-  function B(T, j, re) {
-    p(re), G(T, j), m();
+  function B(A, j, re) {
+    p(re), G(A, j), m();
   }
-  function y(T, j) {
-    if (typeof T != "object" || T === null) {
+  function y(A, j) {
+    if (typeof A != "object" || A === null) {
       console.warn(`${_n} setSelections: expected an object map`);
       return;
     }
     p(j);
-    for (const [re, ke] of Object.entries(T))
+    for (const [re, ke] of Object.entries(A))
       G(re, ke);
     m();
   }
   function N() {
-    const T = n.schema.value;
-    return T ? O(T).find((j) => j.type === "file") ?? null : null;
+    const A = n.schema.value;
+    return A ? O(A).find((j) => j.type === "file") ?? null : null;
   }
-  function A(T) {
+  function T(A) {
     const j = N();
-    !j || n.selections[j.id] === T || (n.select(j.id, T), i.touch(j.id));
+    !j || n.selections[j.id] === A || (n.select(j.id, A), i.touch(j.id));
   }
-  function ee(T, j) {
-    if (T === null) {
-      const _e = N(), he = _e ? !Sf(n.selections[_e.id]) : !1;
+  function ee(A, j) {
+    if (A === null) {
+      const _e = N(), he = _e ? !Cf(n.selections[_e.id]) : !1;
       if (n.file.value === void 0 && !he)
         return;
-      p(j), n.setFile(void 0), A(""), m();
+      p(j), n.setFile(void 0), T(""), m();
       return;
     }
     const re = Hr.safeParse({
@@ -8726,24 +8736,24 @@ function kf(e) {
       source: "custom",
       status: "ready",
       issues: [],
-      ...T
+      ...A
     });
     if (!re.success) {
       console.warn(`${_n} setFile: invalid file record`, re.error.issues);
       return;
     }
     const ke = N(), He = Kt(n.file.value, re.data), Oe = !ke || n.selections[ke.id] === re.data.fileId;
-    He && Oe || (p(j), He || n.setFile(re.data), A(re.data.fileId), m());
+    He && Oe || (p(j), He || n.setFile(re.data), T(re.data.fileId), m());
   }
-  function le(T, j) {
-    if (typeof T != "string" || T === "") {
+  function le(A, j) {
+    if (typeof A != "string" || A === "") {
       console.warn(`${_n} addHold: a non-empty string key is required`);
       return;
     }
-    p(j), r.add(T, j == null ? void 0 : j.message), m();
+    p(j), r.add(A, j == null ? void 0 : j.message), m();
   }
-  function De(T, j) {
-    p(j), r.release(T), m();
+  function De(A, j) {
+    p(j), r.release(A), m();
   }
   return {
     notifyReady: w,
@@ -8764,8 +8774,8 @@ function kf(e) {
       get schema() {
         return n.schema.value ? a(n.schema.value) : null;
       },
-      field(T) {
-        const j = Z(T);
+      field(A) {
+        const j = Z(A);
         return j ? a(j) : null;
       },
       setSelection: B,
@@ -8777,21 +8787,21 @@ function kf(e) {
          of `state`: a producer is an offer available on the page, not
          an answer the customer has given, and nothing about the
          configuration changes when one appears. */
-      registerProducer(T, j) {
-        s.register(T, j);
+      registerProducer(A, j) {
+        s.register(A, j);
       },
-      unregisterProducer(T) {
-        s.unregister(T);
+      unregisterProducer(A) {
+        s.unregister(A);
       },
       /** Push-mode provider feed (pre-Page-API method, kept). */
-      feedMetadata(T) {
-        n.feedMetadata(T);
+      feedMetadata(A) {
+        n.feedMetadata(A);
       },
       apiVersion: gr
     }
   };
 }
-function Sf(e) {
+function Cf(e) {
   return e === void 0 || e === "";
 }
 function Kt(e, t) {
@@ -8808,7 +8818,7 @@ function Kt(e, t) {
   );
 }
 const Xs = "[print-configurator]", vr = 10;
-function Cf(e) {
+function Tf(e) {
   const t = /* @__PURE__ */ Vt(/* @__PURE__ */ new Map()), n = te(
     () => Array.from(t.values()).sort((o, l) => o.order - l.order)
   );
@@ -8858,7 +8868,7 @@ function Cf(e) {
   return { list: n, register: i, unregister: r, forField: s, activate: a };
 }
 const yr = "__artwork", Do = "__artwork-section";
-function Tf(e) {
+function Af(e) {
   return { id: Do, title: e, fields: [{
     id: yr,
     type: "file",
@@ -8868,7 +8878,7 @@ function Tf(e) {
     priceModifiers: []
   }] };
 }
-function Af(e, t) {
+function $f(e, t) {
   yt(
     [() => e.schema.value, () => t.list.value],
     ([n, i]) => {
@@ -8881,7 +8891,7 @@ function Af(e, t) {
       ), s = n.sections.findIndex(
         (o) => o.id === Do
       ), a = i.length > 0 && !r;
-      a && s === -1 ? n.sections.push(Tf(i[0].label)) : !a && s !== -1 && (n.sections.splice(s, 1), e.select(yr, ""));
+      a && s === -1 ? n.sections.push(Af(i[0].label)) : !a && s !== -1 && (n.sections.splice(s, 1), e.select(yr, ""));
     },
     { immediate: !0, deep: !0 }
   );
@@ -8914,6 +8924,8 @@ const Lo = {
   "upload.secureLoading": "Loading secure upload…",
   "upload.unavailable": "Upload is unavailable",
   "upload.retry": "Retry",
+  /** Label of the file's download link on the cart line and order. */
+  "upload.downloadLink": "Download file",
   "artwork.or": "or",
   "artwork.change": "Change",
   "artwork.remove": "Remove",
@@ -8932,16 +8944,16 @@ const Lo = {
   "validation.width": "Width must be between {min} and {max} {unit}.",
   "validation.height": "Height must be between {min} and {max} {unit}.",
   "validation.range": "Enter a value between {min} and {max}."
-}, $f = {
+}, If = {
   base: "summary.basePrice",
   "setup-fee": "summary.setupFee",
   "adjustment:minimum": "summary.minimumAdjustment"
 };
-function If(e, t) {
-  const n = $f[t.sourceId];
+function Ef(e, t) {
+  const n = If[t.sourceId];
   return n ? e(n) : t.label;
 }
-function Ef(e, t) {
+function Of(e, t) {
   return t ? e.replace(
     /\{(\w+)\}/g,
     (n, i) => i in t ? String(t[i]) : n
@@ -8953,11 +8965,11 @@ function zo(e) {
     t(n, i) {
       var a;
       const r = (a = t()) == null ? void 0 : a[n], s = typeof r == "string" && r !== "" ? r : Lo[n];
-      return Ef(s, i);
+      return Of(s, i);
     }
   };
 }
-function Of(e) {
+function Pf(e) {
   if (!e)
     return;
   let t = e;
@@ -8978,11 +8990,11 @@ const Wr = zo(), Vo = Symbol("print-configurator-strings");
 function xt() {
   return Lt(Vo, Wr);
 }
-function Pf(e, t, n, i = Wr.t) {
+function Nf(e, t, n, i = Wr.t) {
   const r = /* @__PURE__ */ Vt(/* @__PURE__ */ new Set()), s = { value: !1 }, a = te(() => {
     const p = [];
     for (const m of e.value) {
-      const E = Nf(m, t, i);
+      const E = Rf(m, t, i);
       E && p.push({ fieldId: m.id, message: E });
     }
     return p;
@@ -9011,7 +9023,7 @@ function Pf(e, t, n, i = Wr.t) {
   }
   return { issues: a, valid: o, errorFor: l, touch: c, touchAll: u, reset: d };
 }
-function Nf(e, t, n = Wr.t) {
+function Rf(e, t, n = Wr.t) {
   const i = t[e.id], r = i === void 0 || i === "" || Array.isArray(i) && i.length === 0;
   if (e.required && e.type !== "info" && r)
     switch (e.type) {
@@ -9061,13 +9073,13 @@ function ea(e) {
       return 25.4;
   }
 }
-const Rf = /* @__PURE__ */ new Set([
+const Mf = /* @__PURE__ */ new Set([
   "left",
   "right",
   "left_space",
   "right_space"
 ]);
-function Mf(e) {
+function Ff(e) {
   if (!e)
     return;
   let t = e;
@@ -9083,9 +9095,9 @@ function Mf(e) {
   if (typeof n.symbol != "string")
     return;
   const i = { symbol: n.symbol };
-  return typeof n.position == "string" && Rf.has(n.position) && (i.position = n.position), typeof n.decimals == "number" && Number.isInteger(n.decimals) && n.decimals >= 0 && n.decimals <= 8 && (i.decimals = n.decimals), typeof n.thousandSeparator == "string" && (i.thousandSeparator = n.thousandSeparator), typeof n.decimalSeparator == "string" && (i.decimalSeparator = n.decimalSeparator), i;
+  return typeof n.position == "string" && Mf.has(n.position) && (i.position = n.position), typeof n.decimals == "number" && Number.isInteger(n.decimals) && n.decimals >= 0 && n.decimals <= 8 && (i.decimals = n.decimals), typeof n.thousandSeparator == "string" && (i.thousandSeparator = n.thousandSeparator), typeof n.decimalSeparator == "string" && (i.decimalSeparator = n.decimalSeparator), i;
 }
-function Ff(e) {
+function jf(e) {
   if (!e)
     return;
   const t = e.trim().replace(/_/g, "-");
@@ -9096,11 +9108,11 @@ function Ff(e) {
       return;
     }
 }
-function jf(e, t, n, i) {
+function Df(e, t, n, i) {
   if (i)
-    return Df(e, i);
+    return Lf(e, i);
   try {
-    return new Intl.NumberFormat(Ff(n) ?? "en", {
+    return new Intl.NumberFormat(jf(n) ?? "en", {
       style: "currency",
       currency: t
     }).format(e);
@@ -9108,7 +9120,7 @@ function jf(e, t, n, i) {
     return `${t} ${e.toFixed(2)}`;
   }
 }
-function Df(e, t) {
+function Lf(e, t) {
   const n = t.decimals ?? 2, i = e < 0, r = Math.abs(e).toFixed(n), [s = "0", a] = r.split("."), o = s.replace(/\B(?=(\d{3})+(?!\d))/g, t.thousandSeparator ?? ","), l = a !== void 0 ? `${o}${t.decimalSeparator ?? "."}${a}` : o, c = i ? "-" : "";
   switch (t.position ?? "left") {
     case "right":
@@ -9156,11 +9168,11 @@ function Oi(e, t) {
     }
   };
 }
-const Lf = ["role", "aria-labelledby", "aria-describedby", "aria-invalid"], zf = ["part", "role", "aria-checked", "aria-pressed", "aria-label", "aria-disabled", "tabindex", "onClick", "onKeydown"], Vf = {
+const zf = ["role", "aria-labelledby", "aria-describedby", "aria-invalid"], Vf = ["part", "role", "aria-checked", "aria-pressed", "aria-label", "aria-disabled", "tabindex", "onClick", "onKeydown"], Uf = {
   key: 0,
   class: "check",
   "aria-hidden": "true"
-}, Uf = ["src"], qf = { class: "card-label" }, Zf = {
+}, qf = ["src"], Zf = { class: "card-label" }, Hf = {
   key: 2,
   class: "card-description"
 }, ta = /* @__PURE__ */ Te({
@@ -9210,22 +9222,22 @@ const Lf = ["role", "aria-labelledby", "aria-describedby", "aria-invalid"], zf =
         onClick: (m) => !o(d.id) && i("pick", d.id),
         onKeydown: (m) => l(m, p)
       }, [
-        a(d.id) ? (v(), S("span", Vf, "✓")) : ue("", !0),
+        a(d.id) ? (v(), S("span", Uf, "✓")) : ue("", !0),
         d.image ? (v(), S("img", {
           key: 1,
           src: d.image,
           alt: ""
-        }, null, 8, Uf)) : ue("", !0),
-        L("span", qf, V(d.label), 1),
-        d.description ? (v(), S("span", Zf, V(d.description), 1)) : ue("", !0)
-      ], 42, zf))), 128))
-    ], 10, Lf));
+        }, null, 8, qf)) : ue("", !0),
+        L("span", Zf, V(d.label), 1),
+        d.description ? (v(), S("span", Hf, V(d.description), 1)) : ue("", !0)
+      ], 42, Vf))), 128))
+    ], 10, zf));
   }
-}), Hf = ["id", "value", "aria-labelledby", "aria-describedby", "aria-invalid"], Bf = {
+}), Bf = ["id", "value", "aria-labelledby", "aria-describedby", "aria-invalid"], Wf = {
   key: 0,
   value: "",
   disabled: ""
-}, Wf = ["value", "disabled"], Kf = /* @__PURE__ */ Te({
+}, Kf = ["value", "disabled"], Gf = /* @__PURE__ */ Te({
   __name: "ChoiceDropdown",
   props: {
     field: { type: null },
@@ -9249,18 +9261,18 @@ const Lf = ["role", "aria-labelledby", "aria-describedby", "aria-invalid"], zf =
       "aria-invalid": e.error ? "true" : void 0,
       onChange: s
     }, [
-      e.selectedIds.length ? ue("", !0) : (v(), S("option", Bf, V(e.field.label ? P(r)("choice.placeholder", { label: e.field.label.toLowerCase() }) : P(r)("choice.placeholderBare")), 1)),
+      e.selectedIds.length ? ue("", !0) : (v(), S("option", Wf, V(e.field.label ? P(r)("choice.placeholder", { label: e.field.label.toLowerCase() }) : P(r)("choice.placeholderBare")), 1)),
       (v(!0), S(oe, null, Re(e.field.options, (l) => (v(), S("option", {
         key: l.id,
         value: l.id,
         disabled: n.unavailableIds.includes(l.id)
-      }, V(l.label), 9, Wf))), 128))
-    ], 40, Hf));
+      }, V(l.label), 9, Kf))), 128))
+    ], 40, Bf));
   }
-}), Gf = ["role", "aria-labelledby", "aria-describedby", "aria-invalid"], Yf = ["part", "role", "aria-checked", "aria-pressed", "aria-disabled", "tabindex", "onClick", "onKeydown"], Qf = { key: 0 }, Jf = { class: "choice-body" }, Xf = { class: "choice-title" }, ep = {
+}), Yf = ["role", "aria-labelledby", "aria-describedby", "aria-invalid"], Qf = ["part", "role", "aria-checked", "aria-pressed", "aria-disabled", "tabindex", "onClick", "onKeydown"], Jf = { key: 0 }, Xf = { class: "choice-body" }, ep = { class: "choice-title" }, tp = {
   key: 0,
   class: "choice-description"
-}, tp = /* @__PURE__ */ Te({
+}, np = /* @__PURE__ */ Te({
   __name: "ChoiceList",
   props: {
     field: { type: null },
@@ -9310,19 +9322,19 @@ const Lf = ["role", "aria-labelledby", "aria-describedby", "aria-invalid"], zf =
           class: et(["choice-indicator", { multi: r }]),
           "aria-hidden": "true"
         }, [
-          a(d.id) ? (v(), S("span", Qf, "✓")) : ue("", !0)
+          a(d.id) ? (v(), S("span", Jf, "✓")) : ue("", !0)
         ], 2),
-        L("span", Jf, [
-          L("span", Xf, V(d.label), 1),
-          d.description ? (v(), S("span", ep, V(d.description), 1)) : ue("", !0)
+        L("span", Xf, [
+          L("span", ep, V(d.label), 1),
+          d.description ? (v(), S("span", tp, V(d.description), 1)) : ue("", !0)
         ])
-      ], 42, Yf))), 128))
-    ], 8, Gf));
+      ], 42, Qf))), 128))
+    ], 8, Yf));
   }
-}), np = ["role", "aria-labelledby", "aria-describedby", "aria-invalid"], ip = ["part", "role", "aria-checked", "aria-pressed", "aria-disabled", "tabindex", "onClick", "onKeydown"], rp = {
+}), ip = ["role", "aria-labelledby", "aria-describedby", "aria-invalid"], rp = ["part", "role", "aria-checked", "aria-pressed", "aria-disabled", "tabindex", "onClick", "onKeydown"], sp = {
   key: 0,
   "aria-hidden": "true"
-}, sp = /* @__PURE__ */ Te({
+}, ap = /* @__PURE__ */ Te({
   __name: "ChoicePills",
   props: {
     field: { type: null },
@@ -9369,19 +9381,19 @@ const Lf = ["role", "aria-labelledby", "aria-describedby", "aria-invalid"], zf =
         onKeydown: (m) => l(m, p)
       }, [
         Fr(V(d.label) + " ", 1),
-        a(d.id) ? (v(), S("span", rp, "✓")) : ue("", !0)
-      ], 42, ip))), 128))
-    ], 8, np));
+        a(d.id) ? (v(), S("span", sp, "✓")) : ue("", !0)
+      ], 42, rp))), 128))
+    ], 8, ip));
   }
-}), ap = ["role", "aria-labelledby", "aria-describedby", "aria-invalid"], op = ["part", "role", "aria-checked", "aria-pressed", "aria-label", "aria-disabled", "tabindex", "onClick", "onKeydown"], lp = {
+}), op = ["role", "aria-labelledby", "aria-describedby", "aria-invalid"], lp = ["part", "role", "aria-checked", "aria-pressed", "aria-label", "aria-disabled", "tabindex", "onClick", "onKeydown"], cp = {
   key: 0,
   class: "swatch-check",
   "aria-hidden": "true"
-}, cp = {
+}, up = {
   key: 0,
   class: "swatch-selected-label",
   "aria-hidden": "true"
-}, up = /* @__PURE__ */ Te({
+}, dp = /* @__PURE__ */ Te({
   __name: "ChoiceSwatches",
   props: {
     field: { type: null },
@@ -9433,28 +9445,28 @@ const Lf = ["role", "aria-labelledby", "aria-describedby", "aria-invalid"], zf =
           onClick: (E) => !o(p.id) && i("pick", p.id),
           onKeydown: (E) => c(E, m)
         }, [
-          a(p.id) ? (v(), S("span", lp, "✓")) : ue("", !0)
-        ], 46, op))), 128))
-      ], 8, ap),
-      l.value ? (v(), S("p", cp, V(l.value), 1)) : ue("", !0)
+          a(p.id) ? (v(), S("span", cp, "✓")) : ue("", !0)
+        ], 46, lp))), 128))
+      ], 8, op),
+      l.value ? (v(), S("p", up, V(l.value), 1)) : ue("", !0)
     ]));
   }
 }), na = {
   cards: ta,
   grid: ta,
-  swatches: up,
-  pills: sp,
-  dropdown: Kf,
-  list: tp
-}, Pi = Symbol("print-configurator"), dp = ["data-field-id", "data-type"], fp = ["id"], pp = {
+  swatches: dp,
+  pills: ap,
+  dropdown: Gf,
+  list: np
+}, Pi = Symbol("print-configurator"), fp = ["data-field-id", "data-type"], pp = ["id"], hp = {
   key: 0,
   class: "req",
   "aria-hidden": "true"
-}, hp = {
+}, mp = {
   key: 1,
   class: "help",
   part: "field-help"
-}, mp = ["id"], gp = /* @__PURE__ */ Te({
+}, gp = ["id"], vp = /* @__PURE__ */ Te({
   __name: "FieldShell",
   props: {
     field: { type: null },
@@ -9474,9 +9486,9 @@ const Lf = ["role", "aria-labelledby", "aria-describedby", "aria-invalid"], zf =
         part: "field-label"
       }, [
         Fr(V(e.field.label) + " ", 1),
-        e.field.required ? (v(), S("span", pp, "*")) : ue("", !0)
-      ], 8, fp)) : ue("", !0),
-      e.field.helpText ? (v(), S("p", hp, V(e.field.helpText), 1)) : ue("", !0),
+        e.field.required ? (v(), S("span", hp, "*")) : ue("", !0)
+      ], 8, pp)) : ue("", !0),
+      e.field.helpText ? (v(), S("p", mp, V(e.field.helpText), 1)) : ue("", !0),
       ec(i.$slots, "default"),
       e.error ? (v(), S("p", {
         key: 2,
@@ -9484,14 +9496,14 @@ const Lf = ["role", "aria-labelledby", "aria-describedby", "aria-invalid"], zf =
         class: "field-error",
         part: "field-error",
         role: "status"
-      }, V(e.error), 9, mp)) : ue("", !0)
-    ], 8, dp));
+      }, V(e.error), 9, gp)) : ue("", !0)
+    ], 8, fp));
   }
-}), vp = ["aria-labelledby"], yp = ["part", "aria-checked", "onClick"], bp = ["value", "aria-label"], _p = ["value"], xp = ["value", "min", "max", "step", "aria-label", "aria-describedby", "onKeydown"], wp = {
+}), yp = ["aria-labelledby"], bp = ["part", "aria-checked", "onClick"], _p = ["value", "aria-label"], xp = ["value"], wp = ["value", "min", "max", "step", "aria-label", "aria-describedby", "onKeydown"], kp = {
   key: 3,
   class: "stepper",
   part: "stepper"
-}, kp = ["aria-label", "disabled"], Sp = ["value", "min", "max", "step", "aria-label", "aria-describedby", "onKeydown"], Cp = ["aria-label", "disabled"], Tp = /* @__PURE__ */ Te({
+}, Sp = ["aria-label", "disabled"], Cp = ["value", "min", "max", "step", "aria-label", "aria-describedby", "onKeydown"], Tp = ["aria-label", "disabled"], Ap = /* @__PURE__ */ Te({
   __name: "QuantityInput",
   props: {
     field: { type: null },
@@ -9539,8 +9551,8 @@ const Lf = ["role", "aria-labelledby", "aria-describedby", "aria-invalid"], zf =
           role: "radio",
           "aria-checked": r.value === O,
           onClick: (Z) => o(O)
-        }, V(O), 11, yp))), 128))
-      ], 8, vp)) : e.field.display === "dropdown" && ((w = e.field.presets) != null && w.length) ? (v(), S("select", {
+        }, V(O), 11, bp))), 128))
+      ], 8, yp)) : e.field.display === "dropdown" && ((w = e.field.presets) != null && w.length) ? (v(), S("select", {
         key: 1,
         class: "dropdown",
         part: "dropdown",
@@ -9551,8 +9563,8 @@ const Lf = ["role", "aria-labelledby", "aria-describedby", "aria-invalid"], zf =
         (v(!0), S(oe, null, Re(e.field.presets, (O) => (v(), S("option", {
           key: O,
           value: String(O)
-        }, V(O), 9, _p))), 128))
-      ], 40, bp)) : e.field.display === "input" ? (v(), S("input", {
+        }, V(O), 9, xp))), 128))
+      ], 40, _p)) : e.field.display === "input" ? (v(), S("input", {
         key: 2,
         class: "number-input",
         part: "stepper-input",
@@ -9567,14 +9579,14 @@ const Lf = ["role", "aria-labelledby", "aria-describedby", "aria-invalid"], zf =
         onInput: c,
         onBlur: u,
         onKeydown: Ps(ii(d, ["prevent"]), ["enter"])
-      }, null, 40, xp)) : (v(), S("div", wp, [
+      }, null, 40, wp)) : (v(), S("div", kp, [
         L("button", {
           type: "button",
           part: "stepper-decrement",
           "aria-label": P(s)("stepper.decrease", { label: a.value.toLowerCase() }),
           disabled: r.value <= e.field.min,
           onClick: m[1] || (m[1] = (O) => l(-1))
-        }, " − ", 8, kp),
+        }, " − ", 8, Sp),
         L("input", {
           class: "stepper-value",
           part: "stepper-input",
@@ -9589,28 +9601,28 @@ const Lf = ["role", "aria-labelledby", "aria-describedby", "aria-invalid"], zf =
           onInput: c,
           onBlur: u,
           onKeydown: Ps(ii(d, ["prevent"]), ["enter"])
-        }, null, 40, Sp),
+        }, null, 40, Cp),
         L("button", {
           type: "button",
           part: "stepper-increment",
           "aria-label": P(s)("stepper.increase", { label: a.value.toLowerCase() }),
           disabled: e.field.max !== void 0 && r.value >= e.field.max,
           onClick: m[2] || (m[2] = (O) => l(1))
-        }, " + ", 8, Cp)
+        }, " + ", 8, Tp)
       ]));
     };
   }
-}), Ap = {
+}), $p = {
   key: 0,
   class: "slider-row"
-}, $p = ["value", "min", "max", "step", "aria-label"], Ip = {
+}, Ip = ["value", "min", "max", "step", "aria-label"], Ep = {
   class: "slider-value",
   "aria-hidden": "true"
-}, Ep = {
+}, Op = {
   key: 1,
   class: "stepper",
   part: "stepper"
-}, Op = ["aria-label", "disabled"], Pp = ["value", "min", "max", "step", "aria-label"], Np = ["aria-label", "disabled"], Rp = ["value", "min", "max", "step", "aria-label", "aria-describedby", "aria-invalid"], Mp = /* @__PURE__ */ Te({
+}, Pp = ["aria-label", "disabled"], Np = ["value", "min", "max", "step", "aria-label"], Rp = ["aria-label", "disabled"], Mp = ["value", "min", "max", "step", "aria-label", "aria-describedby", "aria-invalid"], Fp = /* @__PURE__ */ Te({
   __name: "NumberInput",
   props: {
     field: { type: null },
@@ -9625,7 +9637,7 @@ const Lf = ["role", "aria-labelledby", "aria-describedby", "aria-invalid"], zf =
     function o(l) {
       Number.isNaN(l) || (i("select", l), i("touch"));
     }
-    return (l, c) => e.field.display === "slider" ? (v(), S("div", Ap, [
+    return (l, c) => e.field.display === "slider" ? (v(), S("div", $p, [
       L("input", {
         type: "range",
         class: "slider",
@@ -9636,16 +9648,16 @@ const Lf = ["role", "aria-labelledby", "aria-describedby", "aria-invalid"], zf =
         step: e.field.step,
         "aria-label": a.value,
         onInput: c[0] || (c[0] = (u) => o(Number(u.target.value)))
-      }, null, 40, $p),
-      L("span", Ip, V(r.value), 1)
-    ])) : e.field.display === "stepper" ? (v(), S("div", Ep, [
+      }, null, 40, Ip),
+      L("span", Ep, V(r.value), 1)
+    ])) : e.field.display === "stepper" ? (v(), S("div", Op, [
       L("button", {
         type: "button",
         part: "stepper-decrement",
         "aria-label": P(s)("stepper.decrease", { label: a.value.toLowerCase() }),
         disabled: e.field.min !== void 0 && r.value <= e.field.min,
         onClick: c[1] || (c[1] = (u) => o(r.value - (e.field.step ?? 1)))
-      }, " − ", 8, Op),
+      }, " − ", 8, Pp),
       L("input", {
         class: "stepper-value",
         part: "stepper-input",
@@ -9657,14 +9669,14 @@ const Lf = ["role", "aria-labelledby", "aria-describedby", "aria-invalid"], zf =
         "aria-label": a.value,
         onInput: c[2] || (c[2] = (u) => o(Number(u.target.value))),
         onBlur: c[3] || (c[3] = (u) => i("touch"))
-      }, null, 40, Pp),
+      }, null, 40, Np),
       L("button", {
         type: "button",
         part: "stepper-increment",
         "aria-label": P(s)("stepper.increase", { label: a.value.toLowerCase() }),
         disabled: e.field.max !== void 0 && r.value >= e.field.max,
         onClick: c[4] || (c[4] = (u) => o(r.value + (e.field.step ?? 1)))
-      }, " + ", 8, Np)
+      }, " + ", 8, Rp)
     ])) : (v(), S("input", {
       key: 2,
       class: "number-input",
@@ -9679,9 +9691,9 @@ const Lf = ["role", "aria-labelledby", "aria-describedby", "aria-invalid"], zf =
       "aria-invalid": e.error ? "true" : void 0,
       onInput: c[5] || (c[5] = (u) => o(Number(u.target.value))),
       onBlur: c[6] || (c[6] = (u) => i("touch"))
-    }, null, 40, Rp));
+    }, null, 40, Mp));
   }
-}), Fp = ["value", "placeholder", "maxlength", "aria-labelledby", "aria-describedby", "aria-invalid"], jp = ["value", "placeholder", "maxlength", "aria-labelledby", "aria-describedby", "aria-invalid"], Dp = /* @__PURE__ */ Te({
+}), jp = ["value", "placeholder", "maxlength", "aria-labelledby", "aria-describedby", "aria-invalid"], Dp = ["value", "placeholder", "maxlength", "aria-labelledby", "aria-describedby", "aria-invalid"], Lp = /* @__PURE__ */ Te({
   __name: "TextInput",
   props: {
     field: { type: null },
@@ -9708,7 +9720,7 @@ const Lf = ["role", "aria-labelledby", "aria-describedby", "aria-invalid"], zf =
       "aria-invalid": e.error ? "true" : void 0,
       onInput: r,
       onBlur: o[0] || (o[0] = (l) => i("touch"))
-    }, null, 40, Fp)) : (v(), S("input", {
+    }, null, 40, jp)) : (v(), S("input", {
       key: 1,
       class: "text-input",
       part: "text-input",
@@ -9721,15 +9733,15 @@ const Lf = ["role", "aria-labelledby", "aria-describedby", "aria-invalid"], zf =
       "aria-invalid": e.error ? "true" : void 0,
       onInput: r,
       onBlur: o[1] || (o[1] = (l) => i("touch"))
-    }, null, 40, jp));
+    }, null, 40, Dp));
   }
-}), Lp = {
+}), zp = {
   class: "dimensions",
   part: "dimensions"
-}, zp = { class: "dim-input" }, Vp = { class: "dim-label" }, Up = ["value", "aria-describedby", "aria-invalid"], qp = { class: "dim-input" }, Zp = { class: "dim-label" }, Hp = ["value", "aria-describedby", "aria-invalid"], Bp = ["value", "aria-label"], Wp = ["value"], Kp = {
+}, Vp = { class: "dim-input" }, Up = { class: "dim-label" }, qp = ["value", "aria-describedby", "aria-invalid"], Zp = { class: "dim-input" }, Hp = { class: "dim-label" }, Bp = ["value", "aria-describedby", "aria-invalid"], Wp = ["value", "aria-label"], Kp = ["value"], Gp = {
   key: 1,
   class: "dim-unit-static"
-}, Gp = /* @__PURE__ */ Te({
+}, Yp = /* @__PURE__ */ Te({
   __name: "DimensionsInput",
   props: {
     field: { type: null },
@@ -9756,9 +9768,9 @@ const Lf = ["role", "aria-labelledby", "aria-describedby", "aria-invalid"], zf =
     function l(c) {
       return Number(c.target.value);
     }
-    return (c, u) => (v(), S("div", Lp, [
-      L("label", zp, [
-        L("span", Vp, V(P(r)("dimensions.width")), 1),
+    return (c, u) => (v(), S("div", zp, [
+      L("label", Vp, [
+        L("span", Up, V(P(r)("dimensions.width")), 1),
         L("input", {
           type: "number",
           inputmode: "decimal",
@@ -9768,14 +9780,14 @@ const Lf = ["role", "aria-labelledby", "aria-describedby", "aria-invalid"], zf =
           "aria-describedby": e.error ? `pc-error-${e.field.id}` : void 0,
           "aria-invalid": e.error ? "true" : void 0,
           onChange: u[0] || (u[0] = (d) => o({ w: l(d) }))
-        }, null, 40, Up)
+        }, null, 40, qp)
       ]),
       u[3] || (u[3] = L("span", {
         class: "dim-times",
         "aria-hidden": "true"
       }, "×", -1)),
-      L("label", qp, [
-        L("span", Zp, V(P(r)("dimensions.height")), 1),
+      L("label", Zp, [
+        L("span", Hp, V(P(r)("dimensions.height")), 1),
         L("input", {
           type: "number",
           inputmode: "decimal",
@@ -9785,7 +9797,7 @@ const Lf = ["role", "aria-labelledby", "aria-describedby", "aria-invalid"], zf =
           "aria-describedby": e.error ? `pc-error-${e.field.id}` : void 0,
           "aria-invalid": e.error ? "true" : void 0,
           onChange: u[1] || (u[1] = (d) => o({ h: l(d) }))
-        }, null, 40, Hp)
+        }, null, 40, Bp)
       ]),
       e.field.units.length > 1 ? (v(), S("select", {
         key: 0,
@@ -9798,12 +9810,12 @@ const Lf = ["role", "aria-labelledby", "aria-describedby", "aria-invalid"], zf =
         (v(!0), S(oe, null, Re(e.field.units, (d) => (v(), S("option", {
           key: d,
           value: d
-        }, V(d), 9, Wp))), 128))
-      ], 40, Bp)) : (v(), S("span", Kp, V(e.field.defaultUnit), 1))
+        }, V(d), 9, Kp))), 128))
+      ], 40, Wp)) : (v(), S("span", Gp, V(e.field.defaultUnit), 1))
     ]));
   }
 });
-function Yp(e) {
+function Qp(e) {
   if (!e.jobId)
     return;
   const t = e.facts, n = t == null ? void 0 : t.aggregate, i = e.files[0], r = [];
@@ -9841,10 +9853,10 @@ function Yp(e) {
   };
   return Hr.parse(s);
 }
-const Qp = ["aria-busy"], Jp = ["id", "accept", "aria-labelledby", "aria-describedby", "aria-invalid"], Xp = ["for"], eh = {
+const Jp = ["aria-busy"], Xp = ["id", "accept", "aria-labelledby", "aria-describedby", "aria-invalid"], eh = ["for"], th = {
   key: 0,
   class: "upload-status"
-}, th = { class: "upload-filename" }, nh = { class: "upload-hint" }, ih = { class: "upload-title" }, rh = { class: "upload-hint" }, sh = /* @__PURE__ */ Te({
+}, nh = { class: "upload-filename" }, ih = { class: "upload-hint" }, rh = { class: "upload-title" }, sh = { class: "upload-hint" }, ah = /* @__PURE__ */ Te({
   __name: "FileUpload",
   props: {
     field: { type: null },
@@ -9884,24 +9896,24 @@ const Qp = ["aria-busy"], Jp = ["id", "accept", "aria-labelledby", "aria-describ
         "aria-describedby": e.error ? `pc-error-${e.field.id}` : void 0,
         "aria-invalid": e.error ? "true" : void 0,
         onChange: o
-      }, null, 40, Jp),
+      }, null, 40, Xp),
       L("label", {
         class: "upload-zone",
         for: `pc-control-${e.field.id}`
       }, [
-        e.analyzing ? (v(), S("span", eh, V(P(r)("upload.analyzing")), 1)) : e.file ? (v(), S(oe, { key: 1 }, [
-          L("span", th, V(e.file.fileName ?? e.file.fileId), 1),
-          L("span", nh, V(P(r)("upload.replace")), 1)
+        e.analyzing ? (v(), S("span", th, V(P(r)("upload.analyzing")), 1)) : e.file ? (v(), S(oe, { key: 1 }, [
+          L("span", nh, V(e.file.fileName ?? e.file.fileId), 1),
+          L("span", ih, V(P(r)("upload.replace")), 1)
         ], 64)) : (v(), S(oe, { key: 2 }, [
-          L("span", ih, V(P(r)("upload.drop")), 1),
-          L("span", rh, V(a.value), 1)
+          L("span", rh, V(P(r)("upload.drop")), 1),
+          L("span", sh, V(a.value), 1)
         ], 64))
-      ], 8, Xp)
-    ], 42, Qp));
+      ], 8, eh)
+    ], 42, Jp));
   }
-}), ah = "https://cdn.filecheck.io/element/v1/filecheck.js", oh = 1e4;
+}), oh = "https://cdn.filecheck.io/element/v1/filecheck.js", lh = 1e4;
 let xn = null;
-function lh(e = ah) {
+function ch(e = oh) {
   return typeof window < "u" && window.Filecheck ? Promise.resolve(window.Filecheck) : xn || (xn = new Promise((t, n) => {
     const i = (a) => {
       xn = null, r.remove(), n(new Error(a));
@@ -9909,7 +9921,7 @@ function lh(e = ah) {
     r.src = e, r.async = !0;
     const s = setTimeout(
       () => i("Filecheck SDK load timed out."),
-      oh
+      lh
     );
     r.addEventListener("load", () => {
       clearTimeout(s), window.Filecheck ? t(window.Filecheck) : i("Filecheck SDK loaded but window.Filecheck is missing.");
@@ -9918,21 +9930,21 @@ function lh(e = ah) {
     }), document.head.appendChild(r);
   }), xn);
 }
-const ch = { mm: 1, cm: 10, in: 25.4 }, uh = [
+const uh = { mm: 1, cm: 10, in: 25.4 }, dh = [
   "artworkSize",
   "pageCount",
   "fileCount",
   "bleed",
   "safety"
 ];
-function dh(e, t) {
+function fh(e, t) {
   var r, s;
   const n = [];
   for (const a of e) {
     const o = t[a.id];
     if (!(o === void 0 || o === "")) {
       if (a.type === "dimensions" && Qe(o)) {
-        const l = ch[o.unit] ?? 1;
+        const l = uh[o.unit] ?? 1;
         n.push({
           artworkSize: {
             width_mm: ia(o.w * l),
@@ -9958,7 +9970,7 @@ function dh(e, t) {
     return null;
   const i = {};
   for (const a of n)
-    for (const o of uh) {
+    for (const o of dh) {
       const l = a[o];
       l && (i[o] = { ...i[o] ?? {}, ...l });
     }
@@ -9967,24 +9979,24 @@ function dh(e, t) {
 function ia(e) {
   return Math.round(e * 10) / 10;
 }
-const fh = {
+const ph = {
   class: "fc-upload",
   part: "upload"
-}, ph = {
+}, hh = {
   key: 0,
   class: "fc-panel fc-unconfigured"
-}, hh = {
+}, mh = {
   key: 1,
   class: "fc-panel fc-error",
   role: "alert"
-}, mh = { class: "fc-panel-title" }, gh = { class: "fc-panel-hint" }, vh = {
+}, gh = { class: "fc-panel-title" }, vh = { class: "fc-panel-hint" }, yh = {
   key: 0,
   class: "fc-loading"
-}, yh = {
+}, bh = {
   key: 1,
   class: "field-error",
   role: "status"
-}, bh = /* @__PURE__ */ Te({
+}, _h = /* @__PURE__ */ Te({
   __name: "FilecheckUpload",
   props: {
     field: { type: null },
@@ -10001,7 +10013,7 @@ const fh = {
       if (!u)
         return null;
       const w = ((O = u.cfg.visibleFields) == null ? void 0 : O.value) ?? [];
-      return dh(w, u.cfg.selections);
+      return fh(w, u.cfg.selections);
     });
     yt(d, (w) => {
       var O;
@@ -10016,7 +10028,7 @@ const fh = {
       }
       a.value = "loading", o.value = "";
       try {
-        const y = await lh(n.provider.scriptUrl);
+        const y = await ch(n.provider.scriptUrl);
         if (!s.value)
           return;
         l = y(w, {
@@ -10034,8 +10046,8 @@ const fh = {
           const le = ee;
           o.value = (le == null ? void 0 : le.message) ?? "Filecheck reported an error.";
         });
-        const A = d.value;
-        A && ((B = l.setContext) == null || B.call(l, A)), l.mount(s.value), a.value = "active";
+        const T = d.value;
+        T && ((B = l.setContext) == null || B.call(l, T)), l.mount(s.value), a.value = "active";
       } catch (y) {
         a.value = "error", o.value = y instanceof Error ? y.message : "Filecheck failed to load.";
       }
@@ -10068,61 +10080,61 @@ const fh = {
       () => {
         m(), p();
       }
-    ), Da(m), (w, O) => (v(), S("div", fh, [
-      a.value === "unconfigured" ? (v(), S("div", ph, [...O[0] || (O[0] = [
+    ), Da(m), (w, O) => (v(), S("div", ph, [
+      a.value === "unconfigured" ? (v(), S("div", hh, [...O[0] || (O[0] = [
         L("span", { class: "fc-panel-title" }, "Filecheck upload", -1),
         L("span", { class: "fc-panel-hint" }, " Add your Filecheck publishable key in the store settings (or preview settings) to activate validated uploads for this field. ", -1)
-      ])])) : a.value === "error" ? (v(), S("div", hh, [
-        L("span", mh, V(P(r)("upload.unavailable")), 1),
-        L("span", gh, V(o.value), 1),
+      ])])) : a.value === "error" ? (v(), S("div", mh, [
+        L("span", gh, V(P(r)("upload.unavailable")), 1),
+        L("span", vh, V(o.value), 1),
         L("button", {
           type: "button",
           class: "fc-retry",
           onClick: E
         }, V(P(r)("upload.retry")), 1)
       ])) : (v(), S(oe, { key: 2 }, [
-        a.value === "loading" ? (v(), S("p", vh, V(P(r)("upload.secureLoading")), 1)) : ue("", !0),
+        a.value === "loading" ? (v(), S("p", yh, V(P(r)("upload.secureLoading")), 1)) : ue("", !0),
         L("div", {
           ref_key: "slot",
           ref: s,
           class: "fc-slot"
         }, null, 512),
-        o.value ? (v(), S("p", yh, V(o.value), 1)) : ue("", !0)
+        o.value ? (v(), S("p", bh, V(o.value), 1)) : ue("", !0)
       ], 64))
     ]));
   }
-}), _h = {
+}), xh = {
   key: 0,
   class: "artwork",
   part: "artwork"
-}, xh = { class: "artwork-body" }, wh = {
+}, wh = { class: "artwork-body" }, kh = {
   class: "artwork-name",
   part: "artwork-name"
-}, kh = {
+}, Sh = {
   key: 0,
   class: "artwork-meta",
   part: "artwork-meta"
-}, Sh = { class: "artwork-actions" }, Ch = {
+}, Ch = { class: "artwork-actions" }, Th = {
   key: 1,
   class: "producers"
-}, Th = {
+}, Ah = {
   key: 0,
   class: "producer-or",
   "aria-hidden": "true"
-}, Ah = ["onClick"], $h = { class: "producer-label" }, Ih = {
+}, $h = ["onClick"], Ih = { class: "producer-label" }, Eh = {
   key: 0,
   class: "producer-description"
-}, Eh = {
+}, Oh = {
   key: 1,
   class: "producer-or",
   "aria-hidden": "true"
-}, Oh = {
+}, Ph = {
   class: "producer-or",
   "aria-hidden": "true"
-}, Ph = ["onClick"], Nh = { class: "producer-label" }, Rh = {
+}, Nh = ["onClick"], Rh = { class: "producer-label" }, Mh = {
   key: 0,
   class: "producer-description"
-}, Mh = /* @__PURE__ */ Te({
+}, Fh = /* @__PURE__ */ Te({
   __name: "ArtworkField",
   props: {
     field: { type: null },
@@ -10134,17 +10146,17 @@ const fh = {
       throw new Error("ArtworkField must be rendered inside <print-configurator>.");
     const { cfg: i, validation: r, producers: s } = n, { t: a } = xt(), o = te(
       () => {
-        var y, N, A;
-        return t.field.providerId === "filecheck" && !!((y = t.field.filecheck) != null && y.workflowId || (N = t.field.filecheck) != null && N.workflow) && ((A = i.provider) == null ? void 0 : A.mode) === "element";
+        var y, N, T;
+        return t.field.providerId === "filecheck" && !!((y = t.field.filecheck) != null && y.workflowId || (N = t.field.filecheck) != null && N.workflow) && ((T = i.provider) == null ? void 0 : T.mode) === "element";
       }
     ), l = te(() => {
       const y = i.schema.value;
       if (!y)
         return !1;
       for (const N of y.sections)
-        for (const A of N.fields)
-          if (A.type === "file")
-            return A.id === t.field.id;
+        for (const T of N.fields)
+          if (T.type === "file")
+            return T.id === t.field.id;
       return !1;
     }), c = te(
       () => s.forField(t.field.id, l.value)
@@ -10154,7 +10166,7 @@ const fh = {
     }), d = te(() => {
       var N;
       const y = (N = i.file.value) == null ? void 0 : N.source;
-      return y ? c.value.find((A) => A.id === y) ?? null : null;
+      return y ? c.value.find((T) => T.id === y) ?? null : null;
     }), p = te(() => u.value && !d.value), m = te(() => t.field.display === "producer"), E = te(
       () => m.value ? c.value : c.value.filter((y) => y.order < vr)
     ), w = te(
@@ -10166,13 +10178,13 @@ const fh = {
       const y = i.file.value;
       if (!y)
         return "";
-      const N = [], A = i.schema.value;
-      return y.pages !== void 0 && A && hf(A) && N.push(
+      const N = [], T = i.schema.value;
+      return y.pages !== void 0 && T && hf(T) && N.push(
         y.pages === 1 ? a("artwork.pageCountOne") : a("artwork.pageCount", { count: y.pages })
       ), y.canvas && N.push(`${y.canvas.w} × ${y.canvas.h} ${y.canvas.unit}`), N.join(" · ");
     });
     function z(y) {
-      i.setFile(Yp(y)), y.canProceed && y.jobId ? i.select(t.field.id, y.jobId) : i.select(t.field.id, "");
+      i.setFile(Qp(y)), y.canProceed && y.jobId ? i.select(t.field.id, y.jobId) : i.select(t.field.id, "");
     }
     function G(y) {
       s.activate(y, t.field.id), r.touch(t.field.id);
@@ -10180,17 +10192,17 @@ const fh = {
     function B() {
       i.setFile(void 0), i.select(t.field.id, ""), r.touch(t.field.id);
     }
-    return (y, N) => d.value ? (v(), S("div", _h, [
-      L("div", xh, [
-        L("span", wh, V(O.value), 1),
-        Z.value ? (v(), S("span", kh, V(Z.value), 1)) : ue("", !0)
+    return (y, N) => d.value ? (v(), S("div", xh, [
+      L("div", wh, [
+        L("span", kh, V(O.value), 1),
+        Z.value ? (v(), S("span", Sh, V(Z.value), 1)) : ue("", !0)
       ]),
-      L("div", Sh, [
+      L("div", Ch, [
         L("button", {
           type: "button",
           class: "artwork-action",
           part: "artwork-change",
-          onClick: N[0] || (N[0] = (A) => G(d.value.id))
+          onClick: N[0] || (N[0] = (T) => G(d.value.id))
         }, V(P(a)("artwork.change")), 1),
         L("button", {
           type: "button",
@@ -10199,67 +10211,67 @@ const fh = {
           onClick: B
         }, V(P(a)("artwork.remove")), 1)
       ])
-    ])) : (v(), S("div", Ch, [
-      p.value ? ue("", !0) : (v(!0), S(oe, { key: 0 }, Re(E.value, (A, ee) => (v(), S(oe, {
-        key: A.id
+    ])) : (v(), S("div", Th, [
+      p.value ? ue("", !0) : (v(!0), S(oe, { key: 0 }, Re(E.value, (T, ee) => (v(), S(oe, {
+        key: T.id
       }, [
-        m.value && ee > 0 ? (v(), S("p", Th, [
+        m.value && ee > 0 ? (v(), S("p", Ah, [
           L("span", null, V(P(a)("artwork.or")), 1)
         ])) : ue("", !0),
         L("button", {
           type: "button",
           class: "producer",
           part: "producer",
-          onClick: (le) => G(A.id)
+          onClick: (le) => G(T.id)
         }, [
-          L("span", $h, V(A.label), 1),
-          A.description ? (v(), S("span", Ih, V(A.description), 1)) : ue("", !0)
-        ], 8, Ah),
-        m.value ? ue("", !0) : (v(), S("p", Eh, [
+          L("span", Ih, V(T.label), 1),
+          T.description ? (v(), S("span", Eh, V(T.description), 1)) : ue("", !0)
+        ], 8, $h),
+        m.value ? ue("", !0) : (v(), S("p", Oh, [
           L("span", null, V(P(a)("artwork.or")), 1)
         ]))
       ], 64))), 128)),
-      !m.value && o.value && P(i).provider ? (v(), Ie(bh, {
+      !m.value && o.value && P(i).provider ? (v(), Ie(_h, {
         key: 1,
         field: e.field,
         provider: P(i).provider,
         onMetadata: z,
-        onTouch: N[1] || (N[1] = (A) => P(r).touch(e.field.id))
-      }, null, 8, ["field", "provider"])) : m.value ? ue("", !0) : (v(), Ie(sh, {
+        onTouch: N[1] || (N[1] = (T) => P(r).touch(e.field.id))
+      }, null, 8, ["field", "provider"])) : m.value ? ue("", !0) : (v(), Ie(ah, {
         key: 2,
         field: e.field,
         file: P(i).file.value,
         analyzing: P(i).fileAnalyzing.value,
         error: e.error,
-        onFile: N[2] || (N[2] = (A, ee) => P(i).handleFile(A, ee)),
-        onTouch: N[3] || (N[3] = (A) => P(r).touch(e.field.id))
+        onFile: N[2] || (N[2] = (T, ee) => P(i).handleFile(T, ee)),
+        onTouch: N[3] || (N[3] = (T) => P(r).touch(e.field.id))
       }, null, 8, ["field", "file", "analyzing", "error"])),
-      p.value ? ue("", !0) : (v(!0), S(oe, { key: 3 }, Re(w.value, (A) => (v(), S(oe, {
-        key: A.id
+      p.value ? ue("", !0) : (v(!0), S(oe, { key: 3 }, Re(w.value, (T) => (v(), S(oe, {
+        key: T.id
       }, [
-        L("p", Oh, [
+        L("p", Ph, [
           L("span", null, V(P(a)("artwork.or")), 1)
         ]),
         L("button", {
           type: "button",
           class: "producer",
           part: "producer",
-          onClick: (ee) => G(A.id)
+          onClick: (ee) => G(T.id)
         }, [
-          L("span", Nh, V(A.label), 1),
-          A.description ? (v(), S("span", Rh, V(A.description), 1)) : ue("", !0)
-        ], 8, Ph)
+          L("span", Rh, V(T.label), 1),
+          T.description ? (v(), S("span", Mh, V(T.description), 1)) : ue("", !0)
+        ], 8, Nh)
       ], 64))), 128))
     ]));
   }
-}), Fh = {
+}), jh = {
   key: 0,
   class: "recap",
   part: "summary-recap"
-}, jh = { part: "recap-label" }, Dh = { part: "recap-value" }, Lh = {
+}, Dh = { part: "recap-label" }, Lh = { part: "recap-value" }, zh = {
   key: 1,
   class: "recap-empty"
-}, zh = /* @__PURE__ */ Te({
+}, Vh = /* @__PURE__ */ Te({
   __name: "SummaryPanel",
   props: {
     sections: { type: Array },
@@ -10272,28 +10284,28 @@ const fh = {
         quantityLabel: n("quantity.label")
       })
     );
-    return (r, s) => i.value.length ? (v(), S("dl", Fh, [
+    return (r, s) => i.value.length ? (v(), S("dl", jh, [
       (v(!0), S(oe, null, Re(i.value, (a) => (v(), S("div", {
         key: a.fieldId,
         class: "recap-row",
         part: "recap-row"
       }, [
-        L("dt", jh, V(a.label), 1),
-        L("dd", Dh, V(a.value), 1)
+        L("dt", Dh, V(a.label), 1),
+        L("dd", Lh, V(a.value), 1)
       ]))), 128))
-    ])) : (v(), S("p", Lh, V(P(n)("recap.empty")), 1));
+    ])) : (v(), S("p", zh, V(P(n)("recap.empty")), 1));
   }
-}), Vh = {
+}), Uh = {
   key: 0,
   class: "info-note",
   part: "field-help"
-}, Uh = /* @__PURE__ */ Te({
+}, qh = /* @__PURE__ */ Te({
   __name: "InfoBlock",
   props: {
     field: { type: null }
   },
   setup(e) {
-    return (t, n) => e.field.body ? (v(), S("p", Vh, V(e.field.body), 1)) : ue("", !0);
+    return (t, n) => e.field.body ? (v(), S("p", Uh, V(e.field.body), 1)) : ue("", !0);
   }
 }), Uo = /* @__PURE__ */ Te({
   __name: "FieldHost",
@@ -10318,7 +10330,7 @@ const fh = {
     function c(u) {
       t.field.type === "select-many" ? i.toggle(t.field, u) : i.select(t.field.id, u), r.touch(t.field.id);
     }
-    return (u, d) => (v(), Ie(gp, {
+    return (u, d) => (v(), Ie(vp, {
       field: e.field,
       error: a.value
     }, {
@@ -10330,44 +10342,44 @@ const fh = {
           "unavailable-ids": l.value,
           error: a.value,
           onPick: c
-        }, null, 40, ["field", "selected-ids", "unavailable-ids", "error"])) : e.field.type === "quantity" ? (v(), Ie(Tp, {
+        }, null, 40, ["field", "selected-ids", "unavailable-ids", "error"])) : e.field.type === "quantity" ? (v(), Ie(Ap, {
           key: 1,
           field: e.field,
           value: s.value,
           error: a.value,
           onSelect: d[0] || (d[0] = (p) => P(i).select(e.field.id, p)),
           onTouch: d[1] || (d[1] = (p) => P(r).touch(e.field.id))
-        }, null, 8, ["field", "value", "error"])) : e.field.type === "number" ? (v(), Ie(Mp, {
+        }, null, 8, ["field", "value", "error"])) : e.field.type === "number" ? (v(), Ie(Fp, {
           key: 2,
           field: e.field,
           value: s.value,
           error: a.value,
           onSelect: d[2] || (d[2] = (p) => P(i).select(e.field.id, p)),
           onTouch: d[3] || (d[3] = (p) => P(r).touch(e.field.id))
-        }, null, 8, ["field", "value", "error"])) : e.field.type === "text" ? (v(), Ie(Dp, {
+        }, null, 8, ["field", "value", "error"])) : e.field.type === "text" ? (v(), Ie(Lp, {
           key: 3,
           field: e.field,
           value: s.value,
           error: a.value,
           onSelect: d[4] || (d[4] = (p) => P(i).select(e.field.id, p)),
           onTouch: d[5] || (d[5] = (p) => P(r).touch(e.field.id))
-        }, null, 8, ["field", "value", "error"])) : e.field.type === "dimensions" ? (v(), Ie(Gp, {
+        }, null, 8, ["field", "value", "error"])) : e.field.type === "dimensions" ? (v(), Ie(Yp, {
           key: 4,
           field: e.field,
           value: s.value,
           error: a.value,
           onSelect: d[6] || (d[6] = (p) => P(i).select(e.field.id, p)),
           onTouch: d[7] || (d[7] = (p) => P(r).touch(e.field.id))
-        }, null, 8, ["field", "value", "error"])) : e.field.type === "file" ? (v(), Ie(Mh, {
+        }, null, 8, ["field", "value", "error"])) : e.field.type === "file" ? (v(), Ie(Fh, {
           key: 5,
           field: e.field,
           error: a.value
-        }, null, 8, ["field", "error"])) : e.field.type === "info" && e.field.display === "summary" ? (v(), Ie(zh, {
+        }, null, 8, ["field", "error"])) : e.field.type === "info" && e.field.display === "summary" ? (v(), Ie(Vh, {
           key: 6,
           sections: P(i).visibleSections.value,
           selections: P(i).selections,
           file: P(i).file.value
-        }, null, 8, ["sections", "selections", "file"])) : e.field.type === "info" ? (v(), Ie(Uh, {
+        }, null, 8, ["sections", "selections", "file"])) : e.field.type === "info" ? (v(), Ie(qh, {
           key: 7,
           field: e.field
         }, null, 8, ["field"])) : ue("", !0)
@@ -10375,10 +10387,10 @@ const fh = {
       _: 1
     }, 8, ["field", "error"]));
   }
-}), qh = {
+}), Zh = {
   class: "section-title",
   part: "section-title"
-}, Zh = /* @__PURE__ */ Te({
+}, Hh = /* @__PURE__ */ Te({
   __name: "SectionStack",
   props: {
     sections: { type: Array }
@@ -10389,24 +10401,24 @@ const fh = {
       class: "section",
       part: "section"
     }, [
-      L("h3", qh, V(i.section.title), 1),
+      L("h3", Zh, V(i.section.title), 1),
       (v(!0), S(oe, null, Re(i.fields, (r) => (v(), Ie(Uo, {
         key: r.id,
         field: r
       }, null, 8, ["field"]))), 128))
     ]))), 128));
   }
-}), Hh = { class: "wizard" }, Bh = {
+}), Bh = { class: "wizard" }, Wh = {
   class: "wizard-nav",
   part: "wizard-nav"
-}, Wh = ["part", "aria-current"], Kh = ["onClick"], Gh = {
+}, Kh = ["part", "aria-current"], Gh = ["onClick"], Yh = {
   class: "wizard-step-index",
   "aria-hidden": "true"
-}, Yh = { class: "wizard-step-title" }, Qh = {
+}, Qh = { class: "wizard-step-title" }, Jh = {
   key: 0,
   class: "section",
   part: "section"
-}, Jh = { class: "wizard-actions" }, Xh = /* @__PURE__ */ Te({
+}, Xh = { class: "wizard-actions" }, em = /* @__PURE__ */ Te({
   __name: "SectionWizard",
   props: {
     sections: { type: Array },
@@ -10447,8 +10459,8 @@ const fh = {
     function E() {
       p(a.value - 1);
     }
-    return t({ goTo: p, current: a }), (w, O) => (v(), S("div", Hh, [
-      L("ol", Bh, [
+    return t({ goTo: p, current: a }), (w, O) => (v(), S("div", Bh, [
+      L("ol", Wh, [
         (v(!0), S(oe, null, Re(e.sections, (Z, z) => (v(), S("li", {
           key: Z.section.id,
           class: et(["wizard-step", d(z)]),
@@ -10460,12 +10472,12 @@ const fh = {
             class: "wizard-step-button",
             onClick: (G) => p(z)
           }, [
-            L("span", Gh, V(d(z) === "done" ? "✓" : z + 1), 1),
-            L("span", Yh, V(Z.section.title), 1)
-          ], 8, Kh)
-        ], 10, Wh))), 128))
+            L("span", Yh, V(d(z) === "done" ? "✓" : z + 1), 1),
+            L("span", Qh, V(Z.section.title), 1)
+          ], 8, Gh)
+        ], 10, Kh))), 128))
       ]),
-      l.value ? (v(), S("section", Qh, [
+      l.value ? (v(), S("section", Jh, [
         L("h3", {
           ref_key: "heading",
           ref: o,
@@ -10478,7 +10490,7 @@ const fh = {
           field: Z
         }, null, 8, ["field"]))), 128))
       ])) : ue("", !0),
-      L("div", Jh, [
+      L("div", Xh, [
         a.value > 0 ? (v(), S("button", {
           key: 0,
           type: "button",
@@ -10496,30 +10508,30 @@ const fh = {
       ])
     ]));
   }
-}), em = {
+}), tm = {
   class: "summary",
   part: "summary"
-}, tm = { part: "summary-title" }, nm = { class: "lines" }, im = { part: "summary-line-label" }, rm = { part: "summary-line-value" }, sm = {
+}, nm = { part: "summary-title" }, im = { class: "lines" }, rm = { part: "summary-line-label" }, sm = { part: "summary-line-value" }, am = {
   class: "total",
   part: "summary-total",
   "aria-live": "polite",
   "aria-atomic": "true"
-}, am = { part: "summary-total-label" }, om = { part: "price" }, lm = {
+}, om = { part: "summary-total-label" }, lm = { part: "price" }, cm = {
   key: 0,
   class: "unit-price",
   part: "summary-unit"
-}, cm = {
+}, um = {
   key: 1,
   class: "price-note",
   part: "summary-note"
-}, um = {
+}, dm = {
   key: 2,
   class: "unavailable",
   role: "status"
-}, dm = ["disabled"], fm = {
+}, fm = ["disabled"], pm = {
   class: "visually-hidden",
   role: "status"
-}, pm = /* @__PURE__ */ Te({
+}, hm = /* @__PURE__ */ Te({
   __name: "PriceSummary",
   props: {
     price: { type: [Object, null] },
@@ -10534,7 +10546,7 @@ const fh = {
     const n = e, i = t, { t: r } = xt();
     function s(l) {
       var c;
-      return jf(
+      return Df(
         l,
         ((c = n.price) == null ? void 0 : c.currency) ?? "USD",
         n.locale,
@@ -10556,27 +10568,27 @@ const fh = {
     );
     return (l, c) => {
       var u, d, p, m;
-      return v(), S("aside", em, [
-        L("h3", tm, V(P(r)("summary.title")), 1),
-        L("ul", nm, [
+      return v(), S("aside", tm, [
+        L("h3", nm, V(P(r)("summary.title")), 1),
+        L("ul", im, [
           (v(!0), S(oe, null, Re(a.value, (E, w) => (v(), S("li", {
             key: w,
             part: "summary-line"
           }, [
-            L("span", im, V(P(If)(P(r), E)), 1),
-            L("span", rm, V(s(E.amount)), 1)
+            L("span", rm, V(P(Ef)(P(r), E)), 1),
+            L("span", sm, V(s(E.amount)), 1)
           ]))), 128))
         ]),
-        L("div", sm, [
-          L("span", am, V(P(r)("summary.total")), 1),
-          L("strong", om, V(s(((u = e.price) == null ? void 0 : u.total) ?? 0)), 1)
+        L("div", am, [
+          L("span", om, V(P(r)("summary.total")), 1),
+          L("strong", lm, V(s(((u = e.price) == null ? void 0 : u.total) ?? 0)), 1)
         ]),
-        o.value ? (v(), S("p", lm, V(P(r)("summary.unitPrice", {
+        o.value ? (v(), S("p", cm, V(P(r)("summary.unitPrice", {
           quantity: ((d = e.price) == null ? void 0 : d.quantity) ?? 0,
           unitPrice: s(((p = e.price) == null ? void 0 : p.unitPrice) ?? 0)
         })), 1)) : ue("", !0),
-        e.priceNote ? (v(), S("p", cm, V(e.priceNote), 1)) : ue("", !0),
-        (m = e.price) != null && m.unavailable ? (v(), S("p", um, V(P(r)("summary.unavailable")), 1)) : ue("", !0),
+        e.priceNote ? (v(), S("p", um, V(e.priceNote), 1)) : ue("", !0),
+        (m = e.price) != null && m.unavailable ? (v(), S("p", dm, V(P(r)("summary.unavailable")), 1)) : ue("", !0),
         (v(!0), S(oe, null, Re(e.holds.filter((E) => E.message), (E) => (v(), S("p", {
           key: E.key,
           class: "hold-message",
@@ -10589,22 +10601,22 @@ const fh = {
           part: "cta",
           disabled: e.holds.length > 0,
           onClick: c[0] || (c[0] = (E) => i("submit"))
-        }, V(P(r)("summary.addToCart")), 9, dm),
-        L("span", fm, V(e.issueCount > 0 ? P(r)("summary.issues", { count: e.issueCount }) : ""), 1)
+        }, V(P(r)("summary.addToCart")), 9, fm),
+        L("span", pm, V(e.issueCount > 0 ? P(r)("summary.issues", { count: e.issueCount }) : ""), 1)
       ]);
     };
   }
-}), hm = {
+}), mm = {
   key: 0,
   class: "state"
-}, mm = {
+}, gm = {
   key: 1,
   class: "state error",
   role: "alert"
-}, gm = {
+}, vm = {
   key: 2,
   class: "layout"
-}, vm = { class: "main" }, ym = /* @__PURE__ */ Te({
+}, ym = { class: "main" }, bm = /* @__PURE__ */ Te({
   __name: "PrintConfigurator.ce",
   props: {
     productId: { type: String },
@@ -10625,29 +10637,29 @@ const fh = {
     function s(N) {
       if (N)
         try {
-          const A = typeof N == "string" ? JSON.parse(N) : N;
-          return Qd.parse(A);
+          const T = typeof N == "string" ? JSON.parse(N) : N;
+          return Qd.parse(T);
         } catch {
           return;
         }
     }
-    const a = _f({
+    const a = xf({
       configUrl: i.configUrl,
       uploadEndpoint: i.uploadEndpoint,
       turnstileUrl: i.turnstileUrl,
       provider: s(i.provider),
       inlineConfig: i.config
-    }), o = te(() => Of(i.strings)), l = zo(() => o.value);
+    }), o = te(() => Pf(i.strings)), l = zo(() => o.value);
     Ji(Vo, l);
-    const c = te(() => Mf(i.priceFormat)), u = Pf(
+    const c = te(() => Ff(i.priceFormat)), u = Nf(
       a.visibleFields,
       a.selections,
       a.price,
       l.t
-    ), d = uu(), p = wf(), m = Cf({ host: d });
+    ), d = uu(), p = kf(), m = Tf({ host: d });
     Ji(Pi, { cfg: a, validation: u, producers: m });
-    const E = kf({ host: d, cfg: a, validation: u, holds: p, producers: m });
-    Af(a, m);
+    const E = Sf({ host: d, cfg: a, validation: u, holds: p, producers: m });
+    $f(a, m);
     const w = /* @__PURE__ */ Ze(null), O = /* @__PURE__ */ Ze(null);
     Pr(() => {
       (i.config || i.configUrl) && a.load().then(() => {
@@ -10655,8 +10667,8 @@ const fh = {
       });
     }), yt(
       () => i.config,
-      (N, A) => {
-        N && N !== A && (u.reset(), a.reload({
+      (N, T) => {
+        N && N !== T && (u.reset(), a.reload({
           inlineConfig: N,
           provider: s(i.provider)
         }).then(() => {
@@ -10665,10 +10677,10 @@ const fh = {
       }
     );
     const Z = te(() => {
-      const N = {}, A = a.schema.value;
-      if (!A)
+      const N = {}, T = a.schema.value;
+      if (!T)
         return N;
-      for (const ee of A.sections)
+      for (const ee of T.sections)
         for (const le of ee.fields)
           if (N[le.id] = le.label ?? le.id, Ye(le))
             for (const De of le.options)
@@ -10688,14 +10700,17 @@ const fh = {
           a.visibleSections.value,
           a.selections,
           a.file.value,
-          { quantityLabel: l.t("quantity.label") }
+          {
+            quantityLabel: l.t("quantity.label"),
+            fileLinkLabel: l.t("upload.downloadLink")
+          }
         )
       };
     }
     function G(N) {
       var ee, le;
-      const A = (ee = w.value) == null ? void 0 : ee.querySelector(`[data-field-id="${N}"]`);
-      A && (A.scrollIntoView({ behavior: "smooth", block: "center" }), (le = A.querySelector(
+      const T = (ee = w.value) == null ? void 0 : ee.querySelector(`[data-field-id="${N}"]`);
+      T && (T.scrollIntoView({ behavior: "smooth", block: "center" }), (le = T.querySelector(
         "button, input, select, textarea, [tabindex]"
       )) == null || le.focus({ preventScroll: !0 }));
     }
@@ -10712,18 +10727,18 @@ const fh = {
         });
         return;
       }
-      const A = u.touchAll();
-      if (A.length > 0 || (ee = a.price.value) != null && ee.unavailable) {
-        const T = A[0];
-        if (T) {
+      const T = u.touchAll();
+      if (T.length > 0 || (ee = a.price.value) != null && ee.unavailable) {
+        const A = T[0];
+        if (A) {
           const re = a.visibleSections.value.findIndex(
-            (ke) => ke.fields.some((He) => He.id === T.fieldId)
+            (ke) => ke.fields.some((He) => He.id === A.fieldId)
           );
-          ((le = a.schema.value) == null ? void 0 : le.layout) === "wizard" && re >= 0 && ((De = O.value) == null || De.goTo(re)), G(T.fieldId);
+          ((le = a.schema.value) == null ? void 0 : le.layout) === "wizard" && re >= 0 && ((De = O.value) == null || De.goTo(re)), G(A.fieldId);
         }
         r("invalid", {
           productId: N.productId,
-          issues: A
+          issues: T
         });
         return;
       }
@@ -10732,31 +10747,31 @@ const fh = {
     function y(N) {
       for (const ee of N)
         u.touch(ee.fieldId);
-      const A = N[0];
-      A && G(A.fieldId);
+      const T = N[0];
+      T && G(T.fieldId);
     }
-    return t(E.exposed), (N, A) => P(a).unconfigured.value ? ue("", !0) : (v(), S("div", {
+    return t(E.exposed), (N, T) => P(a).unconfigured.value ? ue("", !0) : (v(), S("div", {
       key: 0,
       ref_key: "root",
       ref: w,
       class: "configurator",
       part: "base"
     }, [
-      P(a).loading.value ? (v(), S("p", hm, V(P(l).t("state.loading")), 1)) : P(a).error.value ? (v(), S("p", mm, V(P(a).error.value), 1)) : P(a).schema.value ? (v(), S("div", gm, [
-        L("div", vm, [
-          P(a).schema.value.layout === "wizard" ? (v(), Ie(Xh, {
+      P(a).loading.value ? (v(), S("p", mm, V(P(l).t("state.loading")), 1)) : P(a).error.value ? (v(), S("p", gm, V(P(a).error.value), 1)) : P(a).schema.value ? (v(), S("div", vm, [
+        L("div", ym, [
+          P(a).schema.value.layout === "wizard" ? (v(), Ie(em, {
             key: 0,
             ref_key: "wizard",
             ref: O,
             sections: P(a).visibleSections.value,
             issues: P(u).issues.value,
             onBlocked: y
-          }, null, 8, ["sections", "issues"])) : (v(), Ie(Zh, {
+          }, null, 8, ["sections", "issues"])) : (v(), Ie(Hh, {
             key: 1,
             sections: P(a).visibleSections.value
           }, null, 8, ["sections"]))
         ]),
-        Xe(pm, {
+        Xe(hm, {
           price: P(a).price.value,
           locale: i.locale,
           "price-format": c.value,
@@ -10768,19 +10783,19 @@ const fh = {
       ])) : ue("", !0)
     ], 512));
   }
-}), bm = ":host{--pc-color-accent: #1a1a1a;--pc-color-accent-contrast: #ffffff;--pc-color-accent-soft: #f6f6f4;--pc-color-surface: #ffffff;--pc-color-surface-alt: #fafafa;--pc-color-border: #e0e0dc;--pc-color-text: #1a1a1a;--pc-color-text-muted: #6b7280;--pc-color-danger: #c0392b;--pc-color-focus: var(--pc-color-accent);--pc-font-family: inherit;--pc-font-size: 1em;--pc-label-weight: 600;--pc-radius-control: 8px;--pc-radius-card: 12px;--pc-space: 4px;--pc-shadow-card: none;--pc-cta-bg: var(--pc-color-accent);--pc-cta-color: var(--pc-color-accent-contrast);--pc-swatch-size: 44px;--pc-card-image-height: 90px;display:block;container:pc-root / inline-size;font-family:var(--pc-font-family);font-size:var(--pc-font-size);color:var(--pc-color-text)}", _m = '*{box-sizing:border-box}.visually-hidden{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}.state{padding:calc(var(--pc-space) * 8);text-align:center;color:var(--pc-color-text-muted)}.state.error{color:var(--pc-color-danger)}.layout{display:grid;grid-template-columns:1fr 300px;gap:calc(var(--pc-space) * 6);align-items:start}.section{margin-bottom:calc(var(--pc-space) * 6);padding:calc(var(--pc-space) * 5);border:1px solid var(--pc-color-border);border-radius:var(--pc-radius-card);background:var(--pc-color-surface);box-shadow:var(--pc-shadow-card)}.section-title{margin:0 0 calc(var(--pc-space) * 4);text-transform:uppercase;letter-spacing:.04em;font-size:.95em;color:var(--pc-color-text);outline:none}.field{margin-bottom:calc(var(--pc-space) * 5)}.field:last-child{margin-bottom:0}.field-label{display:block;font-weight:var(--pc-label-weight);margin-bottom:calc(var(--pc-space) * 2)}.req{color:var(--pc-color-danger)}.help{margin:0 0 calc(var(--pc-space) * 2);font-size:.85em;color:var(--pc-color-text-muted)}.field-error{margin:calc(var(--pc-space) * 2) 0 0;font-size:.85em;color:var(--pc-color-danger)}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--pc-color-focus);outline-offset:2px}.grid{display:grid;gap:calc(var(--pc-space) * 3);grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}.grid.cards{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}.card{position:relative;display:flex;flex-direction:column;align-items:center;gap:calc(var(--pc-space) * 2);padding:calc(var(--pc-space) * 4);border:2px solid var(--pc-color-border);border-radius:var(--pc-radius-card);background:var(--pc-color-surface);color:var(--pc-color-text);font:inherit;cursor:pointer;transition:border-color .15s ease}.card:hover{border-color:var(--pc-color-accent-soft)}.card.active{border-color:var(--pc-color-accent);background:var(--pc-color-accent-soft)}.card img{max-width:100%;height:var(--pc-card-image-height);object-fit:contain}.card-label{font-size:.9em}.card-description{font-size:.8em;color:var(--pc-color-text-muted)}.check{position:absolute;top:-10px;right:-10px;width:24px;height:24px;border-radius:50%;background:var(--pc-color-accent);color:var(--pc-color-accent-contrast);display:grid;place-items:center;font-size:.8em}.swatches{display:flex;gap:calc(var(--pc-space) * 3);flex-wrap:wrap}.swatch{width:var(--pc-swatch-size);height:var(--pc-swatch-size);border-radius:50%;border:3px solid transparent;cursor:pointer;display:grid;place-items:center}.swatch.active{border-color:var(--pc-color-accent);box-shadow:0 0 0 2px var(--pc-color-surface) inset}.swatch-check{color:#fff;text-shadow:0 0 3px rgb(0 0 0 / .8);font-size:.9em}.swatch-selected-label{margin:calc(var(--pc-space) * 2) 0 0;font-size:.85em;color:var(--pc-color-text-muted)}.pills{display:flex;gap:calc(var(--pc-space) * 3);flex-wrap:wrap}.pill{padding:calc(var(--pc-space) * 2.5) calc(var(--pc-space) * 5);border:2px solid var(--pc-color-border);border-radius:var(--pc-radius-control);background:var(--pc-color-surface);font:inherit;font-weight:var(--pc-label-weight);color:var(--pc-color-text);cursor:pointer}.pill.active{background:var(--pc-color-accent);border-color:var(--pc-color-accent);color:var(--pc-color-accent-contrast)}.choice-list{display:flex;flex-direction:column;gap:calc(var(--pc-space) * 2)}.choice-row{display:flex;align-items:center;gap:calc(var(--pc-space) * 3);padding:calc(var(--pc-space) * 3);border:2px solid var(--pc-color-border);border-radius:var(--pc-radius-control);background:var(--pc-color-surface);color:var(--pc-color-text);font:inherit;text-align:left;cursor:pointer}.choice-row.active{border-color:var(--pc-color-accent);background:var(--pc-color-accent-soft)}.choice-indicator{flex:none;width:20px;height:20px;border:2px solid var(--pc-color-border);border-radius:50%;display:grid;place-items:center;font-size:.7em;color:var(--pc-color-accent-contrast)}.choice-indicator.multi{border-radius:4px}.choice-row.active .choice-indicator{background:var(--pc-color-accent);border-color:var(--pc-color-accent)}.choice-body{display:flex;flex-direction:column}.choice-title{font-weight:var(--pc-label-weight)}.choice-description{font-size:.85em;color:var(--pc-color-text-muted)}.card.unavailable,.pill.unavailable,.swatch.unavailable,.choice-row.unavailable{opacity:.4;cursor:not-allowed;text-decoration:line-through}.dropdown{padding:calc(var(--pc-space) * 2.5);border:1px solid var(--pc-color-border);border-radius:var(--pc-radius-control);background:var(--pc-color-surface);color:var(--pc-color-text);font:inherit;min-width:200px}.stepper{display:inline-flex;align-items:stretch;border:1px solid var(--pc-color-border);border-radius:var(--pc-radius-control);overflow:hidden}.stepper button{width:40px;border:none;background:var(--pc-color-surface-alt);color:var(--pc-color-text);font-size:1.2em;cursor:pointer}.stepper button:disabled{opacity:.4;cursor:not-allowed}.stepper-value{width:4.5em;border:none;text-align:center;font:inherit;font-weight:var(--pc-label-weight);color:var(--pc-color-text);background:var(--pc-color-surface);-moz-appearance:textfield;-webkit-appearance:textfield;appearance:textfield}.stepper-value::-webkit-outer-spin-button,.stepper-value::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}.number-input,.text-input{padding:calc(var(--pc-space) * 2.5);border:1px solid var(--pc-color-border);border-radius:var(--pc-radius-control);background:var(--pc-color-surface);color:var(--pc-color-text);font:inherit;min-width:200px}.textarea{width:100%;resize:vertical}.slider-row{display:flex;align-items:center;gap:calc(var(--pc-space) * 3)}.slider{flex:1;accent-color:var(--pc-color-accent)}.slider-value{min-width:3em;text-align:right;font-weight:var(--pc-label-weight)}.dimensions{display:flex;align-items:flex-end;gap:calc(var(--pc-space) * 2);flex-wrap:wrap}.dim-input{display:flex;flex-direction:column;gap:calc(var(--pc-space) * 1)}.dim-label{font-size:.8em;color:var(--pc-color-text-muted)}.dim-input input{width:6em;padding:calc(var(--pc-space) * 2.5);border:1px solid var(--pc-color-border);border-radius:var(--pc-radius-control);font:inherit;color:var(--pc-color-text);background:var(--pc-color-surface)}.dim-times{padding-bottom:calc(var(--pc-space) * 2.5);color:var(--pc-color-text-muted)}.dim-unit{min-width:5em}.dim-unit-static{padding-bottom:calc(var(--pc-space) * 2.5);color:var(--pc-color-text-muted)}.upload-input{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden}.upload-zone{display:flex;flex-direction:column;align-items:center;gap:calc(var(--pc-space) * 1);padding:calc(var(--pc-space) * 6);border:2px dashed var(--pc-color-border);border-radius:var(--pc-radius-card);background:var(--pc-color-surface-alt);cursor:pointer;text-align:center}.upload.dragging .upload-zone{border-color:var(--pc-color-accent);background:var(--pc-color-accent-soft)}.upload.done .upload-zone{border-style:solid;border-color:var(--pc-color-accent)}.upload-title{font-weight:var(--pc-label-weight)}.upload-hint{font-size:.8em;color:var(--pc-color-text-muted)}.upload-filename{font-weight:var(--pc-label-weight);color:var(--pc-color-accent);word-break:break-all}.upload-status{color:var(--pc-color-accent);font-weight:var(--pc-label-weight)}.producers{display:flex;flex-direction:column}.producer{display:flex;flex-direction:column;align-items:center;gap:calc(var(--pc-space) * 1);padding:calc(var(--pc-space) * 5);border:2px solid var(--pc-color-border);border-radius:var(--pc-radius-card);background:var(--pc-color-surface);color:var(--pc-color-text);font:inherit;cursor:pointer;text-align:center;transition:border-color .15s ease}.producer:hover{border-color:var(--pc-color-accent)}.producer-label{font-weight:var(--pc-label-weight)}.producer-description{font-size:.8em;color:var(--pc-color-text-muted)}.producer-or{display:flex;align-items:center;gap:calc(var(--pc-space) * 3);margin:calc(var(--pc-space) * 3) 0;font-size:.8em;text-transform:uppercase;letter-spacing:.06em;color:var(--pc-color-text-muted)}.producer-or:before,.producer-or:after{content:"";flex:1;height:1px;background:var(--pc-color-border)}.artwork{display:flex;align-items:center;justify-content:space-between;gap:calc(var(--pc-space) * 4);flex-wrap:wrap;padding:calc(var(--pc-space) * 4) calc(var(--pc-space) * 5);border:2px solid var(--pc-color-accent);border-radius:var(--pc-radius-card);background:var(--pc-color-accent-soft)}.artwork-body{display:flex;flex-direction:column;min-width:0}.artwork-name{font-weight:var(--pc-label-weight);word-break:break-all}.artwork-meta{font-size:.85em;color:var(--pc-color-text-muted)}.artwork-actions{display:flex;gap:calc(var(--pc-space) * 2)}.artwork-action{padding:calc(var(--pc-space) * 2) calc(var(--pc-space) * 4);border:2px solid var(--pc-color-border);border-radius:var(--pc-radius-control);background:var(--pc-color-surface);color:var(--pc-color-text);font:inherit;font-size:.9em;cursor:pointer}.artwork-action:hover{border-color:var(--pc-color-accent)}.fc-slot{min-height:40px}.fc-loading{margin:0 0 calc(var(--pc-space) * 2);font-size:.85em;color:var(--pc-color-text-muted)}.fc-panel{display:flex;flex-direction:column;gap:calc(var(--pc-space) * 1);padding:calc(var(--pc-space) * 5);border:2px dashed var(--pc-color-border);border-radius:var(--pc-radius-card);background:var(--pc-color-surface-alt);text-align:center;align-items:center}.fc-panel.fc-error{border-color:var(--pc-color-danger)}.fc-panel-title{font-weight:var(--pc-label-weight)}.fc-panel-hint{font-size:.85em;color:var(--pc-color-text-muted)}.fc-retry{margin-top:calc(var(--pc-space) * 2);padding:calc(var(--pc-space) * 2) calc(var(--pc-space) * 5);border:2px solid var(--pc-color-border);border-radius:var(--pc-radius-control);background:var(--pc-color-surface);color:var(--pc-color-text);font:inherit;font-weight:var(--pc-label-weight);cursor:pointer}.recap{margin:0;display:flex;flex-direction:column;gap:calc(var(--pc-space) * 2)}.recap-row{display:flex;justify-content:space-between;gap:calc(var(--pc-space) * 4);font-size:.9em}.recap-row dt{color:var(--pc-color-text-muted)}.recap-row dd{margin:0;text-align:right}.recap-empty,.info-note{margin:0;font-size:.9em;color:var(--pc-color-text-muted)}.summary{position:sticky;top:calc(var(--pc-space) * 4);padding:calc(var(--pc-space) * 5);border:1px solid var(--pc-color-border);border-radius:var(--pc-radius-card);background:var(--pc-color-surface-alt)}.summary h3{margin:0 0 calc(var(--pc-space) * 4)}.lines{list-style:none;margin:0 0 calc(var(--pc-space) * 4);padding:0}.lines li{display:flex;justify-content:space-between;font-size:.9em;padding:calc(var(--pc-space) * 1) 0;color:var(--pc-color-text-muted)}.total{display:flex;justify-content:space-between;padding-top:calc(var(--pc-space) * 3);border-top:1px solid var(--pc-color-border);font-size:1.1em}.unit-price{margin:calc(var(--pc-space) * 1) 0 0;text-align:right;font-size:.85em;color:var(--pc-color-text-muted)}.price-note{margin:calc(var(--pc-space) * 2) 0 0;font-size:.85em;color:var(--pc-color-text-muted)}.unavailable{margin:calc(var(--pc-space) * 2) 0 0;font-size:.85em;color:var(--pc-color-danger)}.hold-message{margin:calc(var(--pc-space) * 2) 0 0;font-size:.85em;color:var(--pc-color-text-muted)}.cta{width:100%;margin-top:calc(var(--pc-space) * 4);padding:calc(var(--pc-space) * 3.5);border:none;border-radius:var(--pc-radius-control);background:var(--pc-cta-bg);color:var(--pc-cta-color);font:inherit;font-weight:var(--pc-label-weight);cursor:pointer}.cta:disabled{opacity:.5;cursor:not-allowed}.wizard-nav{list-style:none;display:flex;gap:calc(var(--pc-space) * 2);margin:0 0 calc(var(--pc-space) * 5);padding:0;flex-wrap:wrap}.wizard-step-button{display:flex;align-items:center;gap:calc(var(--pc-space) * 2);padding:calc(var(--pc-space) * 2) calc(var(--pc-space) * 3);border:none;border-radius:var(--pc-radius-control);background:transparent;font:inherit;color:var(--pc-color-text-muted);cursor:pointer}.wizard-step.active .wizard-step-button{background:var(--pc-color-accent-soft);color:var(--pc-color-text);font-weight:var(--pc-label-weight)}.wizard-step-index{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--pc-color-border);color:var(--pc-color-text);font-size:.75em}.wizard-step.active .wizard-step-index,.wizard-step.done .wizard-step-index{background:var(--pc-color-accent);color:var(--pc-color-accent-contrast)}.wizard-actions{display:flex;justify-content:space-between;gap:calc(var(--pc-space) * 3)}.wizard-back,.wizard-next{padding:calc(var(--pc-space) * 2.5) calc(var(--pc-space) * 6);border-radius:var(--pc-radius-control);font:inherit;font-weight:var(--pc-label-weight);cursor:pointer}.wizard-back{border:2px solid var(--pc-color-border);background:var(--pc-color-surface);color:var(--pc-color-text)}.wizard-next{border:none;background:var(--pc-color-accent);color:var(--pc-color-accent-contrast);margin-left:auto}@container pc-root (max-width: 640px){.layout{grid-template-columns:1fr}.summary{position:sticky;bottom:0;top:auto;z-index:2;border-radius:var(--pc-radius-card) var(--pc-radius-card) 0 0;box-shadow:0 -4px 12px #0000000f}}', xm = (e, t) => {
+}), _m = ":host{--pc-color-accent: #1a1a1a;--pc-color-accent-contrast: #ffffff;--pc-color-accent-soft: #f6f6f4;--pc-color-surface: #ffffff;--pc-color-surface-alt: #fafafa;--pc-color-border: #e0e0dc;--pc-color-text: #1a1a1a;--pc-color-text-muted: #6b7280;--pc-color-danger: #c0392b;--pc-color-focus: var(--pc-color-accent);--pc-font-family: inherit;--pc-font-size: 1em;--pc-label-weight: 600;--pc-radius-control: 8px;--pc-radius-card: 12px;--pc-space: 4px;--pc-shadow-card: none;--pc-cta-bg: var(--pc-color-accent);--pc-cta-color: var(--pc-color-accent-contrast);--pc-swatch-size: 44px;--pc-card-image-height: 90px;display:block;container:pc-root / inline-size;font-family:var(--pc-font-family);font-size:var(--pc-font-size);color:var(--pc-color-text)}", xm = '*{box-sizing:border-box}.visually-hidden{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}.state{padding:calc(var(--pc-space) * 8);text-align:center;color:var(--pc-color-text-muted)}.state.error{color:var(--pc-color-danger)}.layout{display:grid;grid-template-columns:1fr 300px;gap:calc(var(--pc-space) * 6);align-items:start}.section{margin-bottom:calc(var(--pc-space) * 6);padding:calc(var(--pc-space) * 5);border:1px solid var(--pc-color-border);border-radius:var(--pc-radius-card);background:var(--pc-color-surface);box-shadow:var(--pc-shadow-card)}.section-title{margin:0 0 calc(var(--pc-space) * 4);text-transform:uppercase;letter-spacing:.04em;font-size:.95em;color:var(--pc-color-text);outline:none}.field{margin-bottom:calc(var(--pc-space) * 5)}.field:last-child{margin-bottom:0}.field-label{display:block;font-weight:var(--pc-label-weight);margin-bottom:calc(var(--pc-space) * 2)}.req{color:var(--pc-color-danger)}.help{margin:0 0 calc(var(--pc-space) * 2);font-size:.85em;color:var(--pc-color-text-muted)}.field-error{margin:calc(var(--pc-space) * 2) 0 0;font-size:.85em;color:var(--pc-color-danger)}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--pc-color-focus);outline-offset:2px}.grid{display:grid;gap:calc(var(--pc-space) * 3);grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}.grid.cards{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}.card{position:relative;display:flex;flex-direction:column;align-items:center;gap:calc(var(--pc-space) * 2);padding:calc(var(--pc-space) * 4);border:2px solid var(--pc-color-border);border-radius:var(--pc-radius-card);background:var(--pc-color-surface);color:var(--pc-color-text);font:inherit;cursor:pointer;transition:border-color .15s ease}.card:hover{border-color:var(--pc-color-accent-soft)}.card.active{border-color:var(--pc-color-accent);background:var(--pc-color-accent-soft)}.card img{max-width:100%;height:var(--pc-card-image-height);object-fit:contain}.card-label{font-size:.9em}.card-description{font-size:.8em;color:var(--pc-color-text-muted)}.check{position:absolute;top:-10px;right:-10px;width:24px;height:24px;border-radius:50%;background:var(--pc-color-accent);color:var(--pc-color-accent-contrast);display:grid;place-items:center;font-size:.8em}.swatches{display:flex;gap:calc(var(--pc-space) * 3);flex-wrap:wrap}.swatch{width:var(--pc-swatch-size);height:var(--pc-swatch-size);border-radius:50%;border:3px solid transparent;cursor:pointer;display:grid;place-items:center}.swatch.active{border-color:var(--pc-color-accent);box-shadow:0 0 0 2px var(--pc-color-surface) inset}.swatch-check{color:#fff;text-shadow:0 0 3px rgb(0 0 0 / .8);font-size:.9em}.swatch-selected-label{margin:calc(var(--pc-space) * 2) 0 0;font-size:.85em;color:var(--pc-color-text-muted)}.pills{display:flex;gap:calc(var(--pc-space) * 3);flex-wrap:wrap}.pill{padding:calc(var(--pc-space) * 2.5) calc(var(--pc-space) * 5);border:2px solid var(--pc-color-border);border-radius:var(--pc-radius-control);background:var(--pc-color-surface);font:inherit;font-weight:var(--pc-label-weight);color:var(--pc-color-text);cursor:pointer}.pill.active{background:var(--pc-color-accent);border-color:var(--pc-color-accent);color:var(--pc-color-accent-contrast)}.choice-list{display:flex;flex-direction:column;gap:calc(var(--pc-space) * 2)}.choice-row{display:flex;align-items:center;gap:calc(var(--pc-space) * 3);padding:calc(var(--pc-space) * 3);border:2px solid var(--pc-color-border);border-radius:var(--pc-radius-control);background:var(--pc-color-surface);color:var(--pc-color-text);font:inherit;text-align:left;cursor:pointer}.choice-row.active{border-color:var(--pc-color-accent);background:var(--pc-color-accent-soft)}.choice-indicator{flex:none;width:20px;height:20px;border:2px solid var(--pc-color-border);border-radius:50%;display:grid;place-items:center;font-size:.7em;color:var(--pc-color-accent-contrast)}.choice-indicator.multi{border-radius:4px}.choice-row.active .choice-indicator{background:var(--pc-color-accent);border-color:var(--pc-color-accent)}.choice-body{display:flex;flex-direction:column}.choice-title{font-weight:var(--pc-label-weight)}.choice-description{font-size:.85em;color:var(--pc-color-text-muted)}.card.unavailable,.pill.unavailable,.swatch.unavailable,.choice-row.unavailable{opacity:.4;cursor:not-allowed;text-decoration:line-through}.dropdown{padding:calc(var(--pc-space) * 2.5);border:1px solid var(--pc-color-border);border-radius:var(--pc-radius-control);background:var(--pc-color-surface);color:var(--pc-color-text);font:inherit;min-width:200px}.stepper{display:inline-flex;align-items:stretch;border:1px solid var(--pc-color-border);border-radius:var(--pc-radius-control);overflow:hidden}.stepper button{width:40px;border:none;background:var(--pc-color-surface-alt);color:var(--pc-color-text);font-size:1.2em;cursor:pointer}.stepper button:disabled{opacity:.4;cursor:not-allowed}.stepper-value{width:4.5em;border:none;text-align:center;font:inherit;font-weight:var(--pc-label-weight);color:var(--pc-color-text);background:var(--pc-color-surface);-moz-appearance:textfield;-webkit-appearance:textfield;appearance:textfield}.stepper-value::-webkit-outer-spin-button,.stepper-value::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}.number-input,.text-input{padding:calc(var(--pc-space) * 2.5);border:1px solid var(--pc-color-border);border-radius:var(--pc-radius-control);background:var(--pc-color-surface);color:var(--pc-color-text);font:inherit;min-width:200px}.textarea{width:100%;resize:vertical}.slider-row{display:flex;align-items:center;gap:calc(var(--pc-space) * 3)}.slider{flex:1;accent-color:var(--pc-color-accent)}.slider-value{min-width:3em;text-align:right;font-weight:var(--pc-label-weight)}.dimensions{display:flex;align-items:flex-end;gap:calc(var(--pc-space) * 2);flex-wrap:wrap}.dim-input{display:flex;flex-direction:column;gap:calc(var(--pc-space) * 1)}.dim-label{font-size:.8em;color:var(--pc-color-text-muted)}.dim-input input{width:6em;padding:calc(var(--pc-space) * 2.5);border:1px solid var(--pc-color-border);border-radius:var(--pc-radius-control);font:inherit;color:var(--pc-color-text);background:var(--pc-color-surface)}.dim-times{padding-bottom:calc(var(--pc-space) * 2.5);color:var(--pc-color-text-muted)}.dim-unit{min-width:5em}.dim-unit-static{padding-bottom:calc(var(--pc-space) * 2.5);color:var(--pc-color-text-muted)}.upload-input{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden}.upload-zone{display:flex;flex-direction:column;align-items:center;gap:calc(var(--pc-space) * 1);padding:calc(var(--pc-space) * 6);border:2px dashed var(--pc-color-border);border-radius:var(--pc-radius-card);background:var(--pc-color-surface-alt);cursor:pointer;text-align:center}.upload.dragging .upload-zone{border-color:var(--pc-color-accent);background:var(--pc-color-accent-soft)}.upload.done .upload-zone{border-style:solid;border-color:var(--pc-color-accent)}.upload-title{font-weight:var(--pc-label-weight)}.upload-hint{font-size:.8em;color:var(--pc-color-text-muted)}.upload-filename{font-weight:var(--pc-label-weight);color:var(--pc-color-accent);word-break:break-all}.upload-status{color:var(--pc-color-accent);font-weight:var(--pc-label-weight)}.producers{display:flex;flex-direction:column}.producer{display:flex;flex-direction:column;align-items:center;gap:calc(var(--pc-space) * 1);padding:calc(var(--pc-space) * 5);border:2px solid var(--pc-color-border);border-radius:var(--pc-radius-card);background:var(--pc-color-surface);color:var(--pc-color-text);font:inherit;cursor:pointer;text-align:center;transition:border-color .15s ease}.producer:hover{border-color:var(--pc-color-accent)}.producer-label{font-weight:var(--pc-label-weight)}.producer-description{font-size:.8em;color:var(--pc-color-text-muted)}.producer-or{display:flex;align-items:center;gap:calc(var(--pc-space) * 3);margin:calc(var(--pc-space) * 3) 0;font-size:.8em;text-transform:uppercase;letter-spacing:.06em;color:var(--pc-color-text-muted)}.producer-or:before,.producer-or:after{content:"";flex:1;height:1px;background:var(--pc-color-border)}.artwork{display:flex;align-items:center;justify-content:space-between;gap:calc(var(--pc-space) * 4);flex-wrap:wrap;padding:calc(var(--pc-space) * 4) calc(var(--pc-space) * 5);border:2px solid var(--pc-color-accent);border-radius:var(--pc-radius-card);background:var(--pc-color-accent-soft)}.artwork-body{display:flex;flex-direction:column;min-width:0}.artwork-name{font-weight:var(--pc-label-weight);word-break:break-all}.artwork-meta{font-size:.85em;color:var(--pc-color-text-muted)}.artwork-actions{display:flex;gap:calc(var(--pc-space) * 2)}.artwork-action{padding:calc(var(--pc-space) * 2) calc(var(--pc-space) * 4);border:2px solid var(--pc-color-border);border-radius:var(--pc-radius-control);background:var(--pc-color-surface);color:var(--pc-color-text);font:inherit;font-size:.9em;cursor:pointer}.artwork-action:hover{border-color:var(--pc-color-accent)}.fc-slot{min-height:40px}.fc-loading{margin:0 0 calc(var(--pc-space) * 2);font-size:.85em;color:var(--pc-color-text-muted)}.fc-panel{display:flex;flex-direction:column;gap:calc(var(--pc-space) * 1);padding:calc(var(--pc-space) * 5);border:2px dashed var(--pc-color-border);border-radius:var(--pc-radius-card);background:var(--pc-color-surface-alt);text-align:center;align-items:center}.fc-panel.fc-error{border-color:var(--pc-color-danger)}.fc-panel-title{font-weight:var(--pc-label-weight)}.fc-panel-hint{font-size:.85em;color:var(--pc-color-text-muted)}.fc-retry{margin-top:calc(var(--pc-space) * 2);padding:calc(var(--pc-space) * 2) calc(var(--pc-space) * 5);border:2px solid var(--pc-color-border);border-radius:var(--pc-radius-control);background:var(--pc-color-surface);color:var(--pc-color-text);font:inherit;font-weight:var(--pc-label-weight);cursor:pointer}.recap{margin:0;display:flex;flex-direction:column;gap:calc(var(--pc-space) * 2)}.recap-row{display:flex;justify-content:space-between;gap:calc(var(--pc-space) * 4);font-size:.9em}.recap-row dt{color:var(--pc-color-text-muted)}.recap-row dd{margin:0;text-align:right}.recap-empty,.info-note{margin:0;font-size:.9em;color:var(--pc-color-text-muted)}.summary{position:sticky;top:calc(var(--pc-space) * 4);padding:calc(var(--pc-space) * 5);border:1px solid var(--pc-color-border);border-radius:var(--pc-radius-card);background:var(--pc-color-surface-alt)}.summary h3{margin:0 0 calc(var(--pc-space) * 4)}.lines{list-style:none;margin:0 0 calc(var(--pc-space) * 4);padding:0}.lines li{display:flex;justify-content:space-between;font-size:.9em;padding:calc(var(--pc-space) * 1) 0;color:var(--pc-color-text-muted)}.total{display:flex;justify-content:space-between;padding-top:calc(var(--pc-space) * 3);border-top:1px solid var(--pc-color-border);font-size:1.1em}.unit-price{margin:calc(var(--pc-space) * 1) 0 0;text-align:right;font-size:.85em;color:var(--pc-color-text-muted)}.price-note{margin:calc(var(--pc-space) * 2) 0 0;font-size:.85em;color:var(--pc-color-text-muted)}.unavailable{margin:calc(var(--pc-space) * 2) 0 0;font-size:.85em;color:var(--pc-color-danger)}.hold-message{margin:calc(var(--pc-space) * 2) 0 0;font-size:.85em;color:var(--pc-color-text-muted)}.cta{width:100%;margin-top:calc(var(--pc-space) * 4);padding:calc(var(--pc-space) * 3.5);border:none;border-radius:var(--pc-radius-control);background:var(--pc-cta-bg);color:var(--pc-cta-color);font:inherit;font-weight:var(--pc-label-weight);cursor:pointer}.cta:disabled{opacity:.5;cursor:not-allowed}.wizard-nav{list-style:none;display:flex;gap:calc(var(--pc-space) * 2);margin:0 0 calc(var(--pc-space) * 5);padding:0;flex-wrap:wrap}.wizard-step-button{display:flex;align-items:center;gap:calc(var(--pc-space) * 2);padding:calc(var(--pc-space) * 2) calc(var(--pc-space) * 3);border:none;border-radius:var(--pc-radius-control);background:transparent;font:inherit;color:var(--pc-color-text-muted);cursor:pointer}.wizard-step.active .wizard-step-button{background:var(--pc-color-accent-soft);color:var(--pc-color-text);font-weight:var(--pc-label-weight)}.wizard-step-index{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--pc-color-border);color:var(--pc-color-text);font-size:.75em}.wizard-step.active .wizard-step-index,.wizard-step.done .wizard-step-index{background:var(--pc-color-accent);color:var(--pc-color-accent-contrast)}.wizard-actions{display:flex;justify-content:space-between;gap:calc(var(--pc-space) * 3)}.wizard-back,.wizard-next{padding:calc(var(--pc-space) * 2.5) calc(var(--pc-space) * 6);border-radius:var(--pc-radius-control);font:inherit;font-weight:var(--pc-label-weight);cursor:pointer}.wizard-back{border:2px solid var(--pc-color-border);background:var(--pc-color-surface);color:var(--pc-color-text)}.wizard-next{border:none;background:var(--pc-color-accent);color:var(--pc-color-accent-contrast);margin-left:auto}@container pc-root (max-width: 640px){.layout{grid-template-columns:1fr}.summary{position:sticky;bottom:0;top:auto;z-index:2;border-radius:var(--pc-radius-card) var(--pc-radius-card) 0 0;box-shadow:0 -4px 12px #0000000f}}', wm = (e, t) => {
   const n = e.__vccOpts || e;
   for (const [i, r] of t)
     n[i] = r;
   return n;
-}, wm = /* @__PURE__ */ xm(ym, [["styles", [bm, _m]]]), km = /* @__PURE__ */ lu(wm);
-function Sm(e = "print-configurator") {
-  typeof customElements < "u" && !customElements.get(e) && customElements.define(e, km);
+}, km = /* @__PURE__ */ wm(bm, [["styles", [_m, xm]]]), Sm = /* @__PURE__ */ lu(km);
+function Cm(e = "print-configurator") {
+  typeof customElements < "u" && !customElements.get(e) && customElements.define(e, Sm);
 }
-Sm();
+Cm();
 export {
   Lo as DEFAULT_STRINGS,
   gr as PAGE_API_VERSION,
-  km as PrintConfiguratorElement,
-  Sm as registerPrintConfigurator
+  Sm as PrintConfiguratorElement,
+  Cm as registerPrintConfigurator
 };

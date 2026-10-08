@@ -4,7 +4,7 @@ Tags: woocommerce, product options, printing, web-to-print, price calculator
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 0.4.10
+Stable tag: 0.4.11
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -171,6 +171,12 @@ truth.
 4. Every price is recomputed and signed on the server before it can reach the cart.
 
 == Changelog ==
+
+= 0.4.11 =
+* New: a "Download file" button under each order line with an uploaded file,
+  on the order screen in the admin. It works for existing orders too, as long
+  as the file is still stored (uploads are kept for 30 days).
+* Downloads keep the customer's original file name.
 
 = 0.4.10 =
 * Fix: a product priced entirely by its options (for example a price per

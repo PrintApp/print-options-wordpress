@@ -68,6 +68,10 @@ msgstr ""
 msgid "Decrease {label}"
 msgstr ""
 
+#: includes/class-cart.php
+msgid "Download file"
+msgstr ""
+
 #: includes/class-frontend.php
 msgid "Drop your file here or click to browse"
 msgstr ""

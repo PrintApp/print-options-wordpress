@@ -79,6 +79,7 @@ class PAPO_Cart
         add_filter('woocommerce_store_api_product_quantity_minimum', [self::class, 'lock_quantity_limit'], 10, 3);
         add_filter('woocommerce_store_api_product_quantity_maximum', [self::class, 'lock_quantity_limit'], 10, 3);
         add_action('woocommerce_checkout_create_order_line_item', [self::class, 'persist'], 10, 4);
+        add_action('woocommerce_after_order_itemmeta', [self::class, 'file_download_link'], 10, 3);
     }
 
     /**
@@ -557,5 +558,53 @@ class PAPO_Cart
         if (null !== $weight) {
             $item->add_meta_data('_papo_weight', wc_format_decimal($weight));
         }
+    }
+
+    /**
+     * Download link for a basic upload, built from the fileId alone.
+     *
+     * Derived server-side rather than taken from the cart payload, so a
+     * customer cannot plant an arbitrary link in the merchant's order screen:
+     * only ids shaped like the upload API mints them (`{uuid}.{ext}`) qualify
+     * — Filecheck job ids and Print.App project ids do not. The download API
+     * sits next to the upload endpoint (`…/secure-upload` → `…/file/{id}`);
+     * a custom endpoint elsewhere gets no link unless the filter supplies one.
+     */
+    public static function file_download_url(string $file_id): ?string
+    {
+        if (!preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}\.[A-Za-z0-9]{1,16}$/', $file_id)) {
+            return null;
+        }
+        $endpoint = PAPO_Settings::get('papo_upload_endpoint');
+        $url      = null;
+        if (preg_match('#^(https://.+)/secure-upload/?$#', $endpoint, $match)) {
+            $url = $match[1] . '/file/' . $file_id;
+        }
+        $url = apply_filters('papo_file_download_url', $url, $file_id);
+        return is_string($url) && '' !== $url ? $url : null;
+    }
+
+    /**
+     * "Download file" under the line on the admin order screen. Works for
+     * orders placed before this existed too: they carry `_papo_file_id`.
+     *
+     * @param int                $item_id Order item id.
+     * @param WC_Order_Item      $item    Order item.
+     * @param WC_Product|null    $product Product, unused.
+     */
+    public static function file_download_link($item_id, $item, $product): void
+    {
+        if (!$item instanceof WC_Order_Item_Product) {
+            return;
+        }
+        $url = self::file_download_url((string) $item->get_meta('_papo_file_id'));
+        if (null === $url) {
+            return;
+        }
+        printf(
+            '<p class="papo-file-download"><a class="button button-small" href="%s" target="_blank" rel="noopener noreferrer">%s</a></p>',
+            esc_url($url),
+            esc_html__('Download file', 'print-app-product-options-for-woocommerce')
+        );
     }
 }
