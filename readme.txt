@@ -4,7 +4,7 @@ Tags: woocommerce, product options, printing, web-to-print, price calculator
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 0.4.12
+Stable tag: 0.4.13
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -171,6 +171,14 @@ truth.
 4. Every price is recomputed and signed on the server before it can reach the cart.
 
 == Changelog ==
+
+= 0.4.13 =
+* Improved: the price matrix lists the fields that cannot be one of its
+  options (only single-choice fields can), and turns a multiple-choice field
+  into a single choice in one click.
+* Fix: deleting a field used by the price matrix, or changing its type, no
+  longer leaves the option set invalid; deleting a choice also removes the
+  matrix prices set for it.
 
 = 0.4.12 =
 * New: the price matrix (Product panel, "Price matrix") now takes any number
