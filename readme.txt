@@ -4,7 +4,7 @@ Tags: woocommerce, product options, printing, web-to-print, price calculator
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 0.4.11
+Stable tag: 0.4.12
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -171,6 +171,17 @@ truth.
 4. Every price is recomputed and signed on the server before it can reach the cart.
 
 == Changelog ==
+
+= 0.4.12 =
+* New: the price matrix (Product panel, "Price matrix") now takes any number
+  of options, so a supplier price list (quantity x paper x sides x turnaround
+  x finishing, say) can price every combination exactly. One or two options
+  show as a grid; any number as a filterable list with price, availability
+  and SKU per combination.
+* New: import and export the matrix as CSV. The export lists every
+  combination, ready to fill in a spreadsheet; the import reads comma,
+  semicolon or tab files, decimal commas, and matches options and choices by
+  name, reporting any row it could not use.
 
 = 0.4.11 =
 * New: a "Download file" button under each order line with an uploaded file,
