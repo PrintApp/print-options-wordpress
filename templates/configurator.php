@@ -5,7 +5,8 @@
  * Available from the including scope (PAPO_Frontend::render):
  * $product (WC_Product), $config (array), $turnstile_url (string),
  * $provider_attr (string, may be empty), $locale (string), $price_format
- * (string, JSON), $price_note (string, may be empty), $strings (string, JSON).
+ * (string, JSON), $price_note (string, may be empty), $strings (string, JSON),
+ * $tax (array: mode/rate/name, empty for no tax breakdown).
  *
  * This template deliberately assigns nothing: variables created here would
  * sit at file scope, which static analysis reads as globals. All values are
@@ -30,6 +31,13 @@ if (!defined('ABSPATH')) {
             price-note="<?php echo esc_attr($price_note); ?>"
         <?php endif; ?>
         strings="<?php echo esc_attr($strings); ?>"
+        <?php if (!empty($tax['mode']) && !empty($tax['rate'])) : ?>
+            tax-mode="<?php echo esc_attr((string) $tax['mode']); ?>"
+            tax-rate="<?php echo esc_attr((string) $tax['rate']); ?>"
+            <?php if (!empty($tax['name'])) : ?>
+                tax-name="<?php echo esc_attr((string) $tax['name']); ?>"
+            <?php endif; ?>
+        <?php endif; ?>
         <?php if ('' !== $provider_attr) : ?>
             provider="<?php echo esc_attr($provider_attr); ?>"
         <?php endif; ?>

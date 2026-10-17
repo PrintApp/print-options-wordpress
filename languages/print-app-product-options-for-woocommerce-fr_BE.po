@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Print.App Product Options for WooCommerce\n"
-"PO-Revision-Date: 2026-10-08 05:26+0000\n"
+"PO-Revision-Date: 2026-10-17 13:52+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -90,6 +90,10 @@ msgstr "Hauteur"
 #: includes/class-frontend.php
 msgid "Height must be between {min} and {max} {unit}."
 msgstr "La hauteur doit être comprise entre {min} et {max} {unit}."
+
+#: includes/class-frontend.php
+msgid "Includes {tax} ({rate}%): {amount}"
+msgstr "Dont {tax} ({rate} %) : {amount}"
 
 #: includes/class-frontend.php
 msgid "Increase {label}"
@@ -239,6 +243,14 @@ msgid "Total"
 msgstr "Total"
 
 #: includes/class-frontend.php
+msgid "Total excl. {tax}"
+msgstr "Total HT"
+
+#: includes/class-frontend.php
+msgid "Total incl. {tax}"
+msgstr "Total TTC"
+
+#: includes/class-frontend.php
 msgid "Unit"
 msgstr "Unité"
 
@@ -253,6 +265,10 @@ msgstr "Options sans titre"
 #: includes/class-frontend.php
 msgid "Upload is unavailable"
 msgstr "Téléversement indisponible"
+
+#: includes/class-frontend.php
+msgid "VAT"
+msgstr "TVA"
 
 #: includes/class-frontend.php
 msgid "Width"
@@ -297,3 +313,7 @@ msgstr "{count} pages"
 #: includes/class-frontend.php
 msgid "{quantity} × {unitPrice}"
 msgstr "{quantity} × {unitPrice}"
+
+#: includes/class-frontend.php
+msgid "{tax} ({rate}%)"
+msgstr "{tax} ({rate} %)"

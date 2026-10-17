@@ -4,7 +4,7 @@ Tags: woocommerce, product options, printing, web-to-print, price calculator
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 0.4.13
+Stable tag: 0.4.14
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -139,6 +139,17 @@ The configurator shows the WooCommerce price display suffix (WooCommerce →
 Settings → Tax → Price display suffix) under the total. To use different
 wording, or to hide it, return your text from the `papo_price_note` filter.
 
+= Does the summary show the tax? =
+Yes, automatically, when WooCommerce taxes are on and prices are displayed
+including tax (WooCommerce → Settings → Tax → "Display prices in the shop").
+If you enter prices without tax, the summary lists the total excluding tax,
+the tax, and the total including tax. If you enter prices with tax, it shows
+the tax included under the total. The rate is the one that applies to the
+shopper's location. Shops that display prices without tax see no breakdown.
+It is for display only: the cart and checkout calculate tax as before. To
+change or hide it, use the `papo_tax_display` filter (return an empty array
+for none).
+
 = Can the cart show the real quantity instead of 1? =
 Yes. Open the option set, and on the Product panel set "Line quantity" to
 "Real quantity". The cart and order line then show the configured quantity at
@@ -171,6 +182,17 @@ truth.
 4. Every price is recomputed and signed on the server before it can reach the cart.
 
 == Changelog ==
+
+= 0.4.14 =
+* New: the summary can show the tax. With WooCommerce taxes on and prices
+  displayed including tax, it lists the total excluding tax, the tax and the
+  total including tax (or, for prices entered with tax, the tax included),
+  at the rate for the shopper's location. Display only; checkout calculates
+  tax as before. See the FAQ.
+* Improved: large price matrices. Option sets are stored in a compact form
+  (about 30 times smaller), and an option set can now be up to 1 MB, so a
+  price list across six or seven options with a few thousand combinations
+  fits.
 
 = 0.4.13 =
 * Improved: the price matrix lists the fields that cannot be one of its

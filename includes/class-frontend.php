@@ -98,6 +98,7 @@ class PAPO_Frontend
         $price_format  = self::price_format();
         $price_note    = self::price_note();
         $strings       = self::widget_strings();
+        $tax           = self::tax_display($product);
 
         include PAPO_PLUGIN_DIR . 'templates/configurator.php';
     }
@@ -143,6 +144,48 @@ class PAPO_Frontend
     }
 
     /**
+     * Tax breakdown for the summary, read from WooCommerce's own tax setup so
+     * there is nothing to configure: prices entered WITHOUT tax but shown
+     * with it → net / tax / total lines; prices entered WITH tax and shown
+     * with it → an "Includes VAT" line. A shop that displays prices without
+     * tax (B2B) gets no breakdown, nor do untaxed products, compound rates or
+     * a location with no rate.
+     *
+     * The rate is the shopper's (WC_Tax::get_rates uses the customer's
+     * location, else the shop base). Display only: the cart and checkout
+     * compute tax as they always have. Filter `papo_tax_display` to change
+     * or clear it (return [] for none).
+     *
+     * @return array{mode?: string, rate?: string, name?: string}
+     */
+    private static function tax_display(WC_Product $product): array
+    {
+        $tax = [];
+        if (wc_tax_enabled() && $product->is_taxable()
+            && 'incl' === get_option('woocommerce_tax_display_shop')) {
+            $rates    = WC_Tax::get_rates($product->get_tax_class());
+            $total    = 0.0;
+            $labels   = [];
+            $compound = false;
+            foreach ($rates as $rate) {
+                $compound = $compound || 'yes' === ($rate['compound'] ?? 'no');
+                $total   += (float) ($rate['rate'] ?? 0);
+                $labels[] = (string) ($rate['label'] ?? '');
+            }
+            if (!$compound && $total > 0 && $total < 100) {
+                $tax = [
+                    'mode' => wc_prices_include_tax() ? 'inclusive' : 'exclusive',
+                    'rate' => rtrim(rtrim(number_format($total, 4, '.', ''), '0'), '.'),
+                    // One rate: its own label ("TVA"). Several: the translated default.
+                    'name' => 1 === count($labels) ? trim($labels[0]) : '',
+                ];
+            }
+        }
+        $tax = apply_filters('papo_tax_display', $tax, $product);
+        return is_array($tax) ? $tax : [];
+    }
+
+    /**
      * Every customer-facing string the widget renders itself, run through
      * WordPress i18n so translations (translate.wordpress.org, Loco
      * Translate, a .po in wp-content/languages/plugins) apply. Filter
@@ -166,6 +209,16 @@ class PAPO_Frontend
             /* translators: keep the {count} placeholder */
             'summary.issues'            => __('{count} options need attention', 'print-app-product-options-for-woocommerce'),
             'summary.addToCart'         => __('Add to cart', 'print-app-product-options-for-woocommerce'),
+            /* translators: {tax} is the tax name (VAT); keep the placeholder or use your language's fixed term */
+            'summary.totalNet'          => __('Total excl. {tax}', 'print-app-product-options-for-woocommerce'),
+            /* translators: keep the {tax} and {rate} placeholders, e.g. "VAT (20%)" */
+            'summary.tax'               => __('{tax} ({rate}%)', 'print-app-product-options-for-woocommerce'),
+            /* translators: {tax} is the tax name (VAT); keep the placeholder or use your language's fixed term */
+            'summary.totalGross'        => __('Total incl. {tax}', 'print-app-product-options-for-woocommerce'),
+            /* translators: keep the {tax}, {rate} and {amount} placeholders */
+            'summary.taxIncluded'       => __('Includes {tax} ({rate}%): {amount}', 'print-app-product-options-for-woocommerce'),
+            /* translators: the default tax name shown in the summary */
+            'tax.name'                  => __('VAT', 'print-app-product-options-for-woocommerce'),
             'recap.empty'               => __('Your choices will appear here.', 'print-app-product-options-for-woocommerce'),
             'wizard.back'               => __('Back', 'print-app-product-options-for-woocommerce'),
             'wizard.continue'           => __('Continue', 'print-app-product-options-for-woocommerce'),
