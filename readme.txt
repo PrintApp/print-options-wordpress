@@ -4,7 +4,7 @@ Tags: woocommerce, product options, printing, web-to-print, price calculator
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 0.4.14
+Stable tag: 0.4.15
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -182,6 +182,11 @@ truth.
 4. Every price is recomputed and signed on the server before it can reach the cart.
 
 == Changelog ==
+
+= 0.4.15 =
+* Fix: on a narrow product page column, on phones and in the option set
+  preview, the summary no longer stays stuck to the bottom of the screen
+  over the options. It now follows the options and scrolls with the page.
 
 = 0.4.14 =
 * New: the summary can show the tax. With WooCommerce taxes on and prices
