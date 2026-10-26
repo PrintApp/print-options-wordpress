@@ -120,6 +120,9 @@ class PAPO_Cart
 
         $cart_item_data['papo_options'] = [
             'selections' => $payload['selections'],
+            // The order's machine-readable record, encoded the way the
+            // verifier read it (see wire_selections).
+            'selections_json' => (string) wp_json_encode(self::wire_selections($config, $payload['selections'])),
             'file'       => isset($payload['file']) && is_array($payload['file']) ? $payload['file'] : null,
             'verified'   => $verified,
             // Null unless the blueprint opted in AND the total splits exactly.
@@ -168,7 +171,7 @@ class PAPO_Cart
             'headers' => ['Content-Type' => 'application/json'],
             'body'    => wp_json_encode([
                 'productId'  => isset($config['productId']) ? (string) $config['productId'] : 'product',
-                'selections' => $payload['selections'],
+                'selections' => self::wire_selections($config, $payload['selections']),
                 'file'       => isset($payload['file']) && is_array($payload['file']) ? $payload['file'] : null,
                 'config'     => $config,
                 // set_price() applies the verified total in the store's
@@ -219,12 +222,23 @@ class PAPO_Cart
      */
     private static function display_pairs(array $config, array $selections, ?array $file): array
     {
-        $pairs  = [];
-        $fields = [];
+        $pairs          = [];
+        $fields         = [];
+        $section_titles = [];
         foreach ($config['sections'] ?? [] as $section) {
+            // A field alone in its section is titled by it on the page, so an
+            // unlabeled one takes that title rather than its internal id.
+            $answerable = array_filter(
+                $section['fields'] ?? [],
+                static fn($field) => 'info' !== ($field['type'] ?? '')
+            );
+            $title = trim((string) ($section['title'] ?? ''));
             foreach ($section['fields'] ?? [] as $field) {
                 if (isset($field['id'])) {
                     $fields[$field['id']] = $field;
+                    if (1 === count($answerable) && '' !== $title) {
+                        $section_titles[$field['id']] = $title;
+                    }
                 }
             }
         }
@@ -235,9 +249,9 @@ class PAPO_Cart
         foreach ($fields as $field_id => $field) {
             $type  = $field['type'] ?? '';
             // An unlabeled quantity never shows its internal id.
-            $fallback = 'quantity' === $type
+            $fallback = $section_titles[$field_id] ?? (in_array($type, ['quantity', 'quantities'], true)
                 ? __('Quantity', 'print-app-product-options-for-woocommerce')
-                : (string) $field_id;
+                : (string) $field_id);
             $label    = isset($field['label']) && '' !== (string) $field['label'] ? (string) $field['label'] : $fallback;
 
             if ('info' === $type) {
@@ -256,6 +270,22 @@ class PAPO_Cart
 
             $value = $selections[$field_id] ?? null;
             if (null === $value || '' === $value) {
+                continue;
+            }
+
+            // A count per option: "M × 5, L × 3" in option order.
+            if ('quantities' === $type) {
+                $counts = self::normalize_counts($field, $value);
+                $parts  = [];
+                foreach ($field['options'] ?? [] as $choice) {
+                    $id = (string) ($choice['id'] ?? '');
+                    if (isset($counts[$id])) {
+                        $parts[] = (string) ($choice['label'] ?? $id) . ' × ' . $counts[$id];
+                    }
+                }
+                if ($parts) {
+                    $pairs[] = ['label' => $label, 'value' => implode(', ', $parts)];
+                }
                 continue;
             }
 
@@ -320,6 +350,75 @@ class PAPO_Cart
             $quantity = $min + floor(((float) $field['max'] - $min) / $step) * $step;
         }
         return (int) $quantity;
+    }
+
+    /**
+     * Mirror of the pricing engine's normalizeCounts (packages/pricing-engine
+     * src/quantity.ts): the counts a count-per-option answer prices as, keyed
+     * by option id in option order. Unknown options, unreadable values and
+     * counts of 0 or less are dropped; every other count snaps to the same
+     * grid as a quantity (0, or min, min+step, … up to max).
+     *
+     * @param array<string, mixed> $field `quantities` field from the blueprint.
+     * @param mixed                $raw   Posted selection.
+     * @return array<string, int>
+     */
+    private static function normalize_counts(array $field, $raw): array
+    {
+        if (is_object($raw)) {
+            $raw = (array) $raw;
+        }
+        if (!is_array($raw)) {
+            return [];
+        }
+        $min  = isset($field['min']) && is_numeric($field['min']) ? (float) $field['min'] : 1.0;
+        $step = isset($field['step']) && is_numeric($field['step']) && (float) $field['step'] > 0 ? (float) $field['step'] : 1.0;
+
+        $counts = [];
+        foreach ($field['options'] ?? [] as $choice) {
+            $id = (string) ($choice['id'] ?? '');
+            if ('' === $id || !isset($raw[$id]) || !is_numeric($raw[$id])) {
+                continue;
+            }
+            // JS Math.round: halves round up.
+            $count = floor((float) $raw[$id] + 0.5);
+            if ($count <= 0) {
+                continue;
+            }
+            $count = $min + floor(($count - $min) / $step + 0.5) * $step;
+            if ($count < $min) {
+                $count = $min;
+            }
+            if (isset($field['max']) && is_numeric($field['max']) && $count > (float) $field['max']) {
+                $count = $min + floor(((float) $field['max'] - $min) / $step) * $step;
+            }
+            $counts[$id] = (int) $count;
+        }
+        return $counts;
+    }
+
+    /**
+     * Selections as the verifier must receive them. json_decode(…, true)
+     * makes every JSON object a PHP array, and wp_json_encode() turns one
+     * whose keys happen to be 0, 1, 2… back into a LIST: a count-per-option
+     * answer {"0": 5, "1": 3} would leave as [5, 3] and fail verification.
+     * Those answers go out as objects, whatever their option ids.
+     *
+     * @param array<string, mixed> $config     Blueprint.
+     * @param array<string, mixed> $selections Cleaned selections.
+     * @return array<string, mixed>
+     */
+    private static function wire_selections(array $config, array $selections): array
+    {
+        foreach ($config['sections'] ?? [] as $section) {
+            foreach ($section['fields'] ?? [] as $field) {
+                $id = (string) ($field['id'] ?? '');
+                if ('quantities' === ($field['type'] ?? '') && isset($selections[$id]) && is_array($selections[$id])) {
+                    $selections[$id] = (object) $selections[$id];
+                }
+            }
+        }
+        return $selections;
     }
 
     /**
@@ -549,7 +648,7 @@ class PAPO_Cart
         if (!empty($options['verified']['sku'])) {
             $item->add_meta_data('_papo_sku', sanitize_text_field((string) $options['verified']['sku']));
         }
-        $item->add_meta_data('_papo_selections', wp_json_encode($options['selections']));
+        $item->add_meta_data('_papo_selections', $options['selections_json'] ?? wp_json_encode($options['selections']));
         $item->add_meta_data('_papo_copies', (string) ($options['verified']['quantity'] ?? 1));
         /* The order line is quantity 1 as well, so label and fulfilment tools
            that multiply product weight by line quantity undercount. The real

@@ -17,6 +17,14 @@ msgid "Add to cart"
 msgstr ""
 
 #: includes/class-frontend.php
+msgid "Add {count} more for {unitPrice} each"
+msgstr ""
+
+#: includes/class-frontend.php
+msgid "Add {count} more to get {percent}% off"
+msgstr ""
+
+#: includes/class-frontend.php
 msgid "Analyzing…"
 msgstr ""
 
@@ -33,7 +41,15 @@ msgid "Change"
 msgstr ""
 
 #: includes/class-frontend.php
+msgid "Choose at least {min} in total."
+msgstr ""
+
+#: includes/class-frontend.php
 msgid "Choose at least {min}."
+msgstr ""
+
+#: includes/class-frontend.php
+msgid "Choose at most {max} in total."
 msgstr ""
 
 #: includes/class-frontend.php
@@ -236,6 +252,10 @@ msgid "This product has no configurator blueprint."
 msgstr ""
 
 #: includes/class-frontend.php
+msgid "This size can't be priced online. Please contact us."
+msgstr ""
+
+#: includes/class-frontend.php
 msgid "Total"
 msgstr ""
 
@@ -245,6 +265,10 @@ msgstr ""
 
 #: includes/class-frontend.php
 msgid "Total incl. {tax}"
+msgstr ""
+
+#: includes/class-frontend.php
+msgid "Total: {count}"
 msgstr ""
 
 #: includes/class-frontend.php

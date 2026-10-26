@@ -206,6 +206,11 @@ class PAPO_Frontend
             /* translators: keep the {quantity} and {unitPrice} placeholders */
             'summary.unitPrice'         => __('{quantity} × {unitPrice}', 'print-app-product-options-for-woocommerce'),
             'summary.unavailable'       => __('This combination is currently unavailable.', 'print-app-product-options-for-woocommerce'),
+            'summary.unpriceable'       => __('This size can\'t be priced online. Please contact us.', 'print-app-product-options-for-woocommerce'),
+            /* translators: keep the {count} and {percent} placeholders, e.g. "Add 2 more to get 10% off" */
+            'summary.nextBreakPercent'  => __('Add {count} more to get {percent}% off', 'print-app-product-options-for-woocommerce'),
+            /* translators: keep the {count} and {unitPrice} placeholders, e.g. "Add 50 more for $0.40 each" */
+            'summary.nextBreakPrice'    => __('Add {count} more for {unitPrice} each', 'print-app-product-options-for-woocommerce'),
             /* translators: keep the {count} placeholder */
             'summary.issues'            => __('{count} options need attention', 'print-app-product-options-for-woocommerce'),
             'summary.addToCart'         => __('Add to cart', 'print-app-product-options-for-woocommerce'),
@@ -230,6 +235,8 @@ class PAPO_Frontend
             'stepper.decrease'          => __('Decrease {label}', 'print-app-product-options-for-woocommerce'),
             /* translators: keep the {label} placeholder */
             'stepper.increase'          => __('Increase {label}', 'print-app-product-options-for-woocommerce'),
+            /* translators: keep the {count} placeholder; it may carry a unit, e.g. "Total: 10 shirts" */
+            'quantities.total'          => __('Total: {count}', 'print-app-product-options-for-woocommerce'),
             'dimensions.width'          => __('Width', 'print-app-product-options-for-woocommerce'),
             'dimensions.height'         => __('Height', 'print-app-product-options-for-woocommerce'),
             'dimensions.unit'           => __('Unit', 'print-app-product-options-for-woocommerce'),
@@ -262,6 +269,10 @@ class PAPO_Frontend
             'validation.height'         => __('Height must be between {min} and {max} {unit}.', 'print-app-product-options-for-woocommerce'),
             /* translators: keep the {min} and {max} placeholders */
             'validation.range'          => __('Enter a value between {min} and {max}.', 'print-app-product-options-for-woocommerce'),
+            /* translators: keep the {min} placeholder */
+            'validation.minTotal'       => __('Choose at least {min} in total.', 'print-app-product-options-for-woocommerce'),
+            /* translators: keep the {max} placeholder */
+            'validation.maxTotal'       => __('Choose at most {max} in total.', 'print-app-product-options-for-woocommerce'),
         ];
         $strings = apply_filters('papo_widget_strings', $strings);
         return (string) wp_json_encode(is_array($strings) ? $strings : []);

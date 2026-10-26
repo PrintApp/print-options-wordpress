@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Print.App Product Options for WooCommerce\n"
-"PO-Revision-Date: 2026-10-17 13:52+0000\n"
+"PO-Revision-Date: 2026-10-26 11:19+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -18,6 +18,14 @@ msgstr "1 pagina"
 #: includes/class-frontend.php
 msgid "Add to cart"
 msgstr "Aggiungi al carrello"
+
+#: includes/class-frontend.php
+msgid "Add {count} more for {unitPrice} each"
+msgstr "Aggiungine altri {count} a {unitPrice} l'uno"
+
+#: includes/class-frontend.php
+msgid "Add {count} more to get {percent}% off"
+msgstr "Aggiungine altri {count} per ottenere il {percent}% di sconto"
 
 #: includes/class-frontend.php
 msgid "Analyzing…"
@@ -36,8 +44,16 @@ msgid "Change"
 msgstr "Modifica"
 
 #: includes/class-frontend.php
+msgid "Choose at least {min} in total."
+msgstr "Scegli almeno {min} in totale."
+
+#: includes/class-frontend.php
 msgid "Choose at least {min}."
 msgstr "Scegli almeno {min}."
+
+#: includes/class-frontend.php
+msgid "Choose at most {max} in total."
+msgstr "Scegli al massimo {max} in totale."
 
 #: includes/class-frontend.php
 msgid "Choose at most {max}."
@@ -239,6 +255,10 @@ msgid "This product has no configurator blueprint."
 msgstr "Questo prodotto non ha un modello di configuratore."
 
 #: includes/class-frontend.php
+msgid "This size can't be priced online. Please contact us."
+msgstr "Non possiamo calcolare online il prezzo di questa misura. Contattaci."
+
+#: includes/class-frontend.php
 msgid "Total"
 msgstr "Totale"
 
@@ -249,6 +269,10 @@ msgstr "Totale {tax} esclusa"
 #: includes/class-frontend.php
 msgid "Total incl. {tax}"
 msgstr "Totale {tax} inclusa"
+
+#: includes/class-frontend.php
+msgid "Total: {count}"
+msgstr "Totale: {count}"
 
 #: includes/class-frontend.php
 msgid "Unit"

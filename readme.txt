@@ -4,7 +4,7 @@ Tags: woocommerce, product options, printing, web-to-print, price calculator
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 0.4.15
+Stable tag: 0.4.16
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -182,6 +182,18 @@ truth.
 4. Every price is recomputed and signed on the server before it can reach the cart.
 
 == Changelog ==
+
+= 0.4.16 =
+* New: pricing by formula. A Formula price rule works the price out from the
+  quantity, the size (width, height, area) and the page count, in named
+  steps, for prices that follow a curve rather than tiers, such as
+  custom-size signs. The builder checks the formula as you type and shows
+  the prices it gives for a sample size and a few quantities.
+* New: quantity per option. A "Quantity per option" field takes a count
+  for each option, such as the sizes of a T-shirt run. The total sets the
+  quantity for price breaks, and the cart line lists each option's count.
+* Fix: on cart lines, a field without a label is named by its section
+  title instead of its internal id.
 
 = 0.4.15 =
 * Fix: on a narrow product page column, on phones and in the option set
