@@ -4,7 +4,7 @@ Tags: woocommerce, product options, printing, web-to-print, price calculator
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 0.4.16
+Stable tag: 0.4.17
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -167,6 +167,13 @@ single cart line, and the plugin gives that line the product weight multiplied
 by the configured quantity, so weight-based shipping rates are right. Use the
 `papo_cart_item_weight` filter if the weight depends on the chosen options.
 
+= Can I edit an option set as JSON, or set it up with an AI assistant? =
+Yes. In the option set editor, click More (the ... button at the top right).
+Export JSON shows the whole set as text to copy or download; Import JSON
+replaces the set you are editing with pasted JSON, after checking it, and can
+be undone. Nothing changes on your store until you click Save. The format is
+described at https://print.app/docs/print-options/developers/option-set-json.
+
 = Why does the product's own price not match the option set? =
 It is not used. A product with an option set is priced entirely by the set's
 base price and modifiers, re-verified on the server at add-to-cart, and the
@@ -182,6 +189,14 @@ truth.
 4. Every price is recomputed and signed on the server before it can reach the cart.
 
 == Changelog ==
+
+= 0.4.17 =
+* New: import and export option sets as JSON. In the option set editor,
+  More (the ... button) > Export JSON shows the whole set as text to copy
+  or download, and Import JSON replaces the set you are editing with pasted
+  JSON, after checking it. The import can be undone, and nothing changes on
+  your store until you click Save. Useful for setting up options with an AI
+  assistant, copying a set to another store, or keeping a backup.
 
 = 0.4.16 =
 * New: pricing by formula. A Formula price rule works the price out from the
