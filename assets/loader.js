@@ -2,7 +2,7 @@
  * WooCommerce storefront bridge.
  *
  * Feeds the product's inline blueprint into <print-configurator>, then on
- * submit serializes {selections, file} into the hidden papo_options input
+ * submit serializes {selections, file, files} into the hidden papo_options input
  * and submits the native add-to-cart form. All pricing trust lives server
  * side (see includes/class-cart.php).
  */
@@ -85,7 +85,10 @@
                           monoPages: detail.file.monoPages,
                           canvas: detail.file.canvas
                       }
-                    : null
+                    : null,
+                // Every direct upload, per field (several fields, or several
+                // files in one). The server keeps only well-formed upload ids.
+                files: Array.isArray(detail.files) ? detail.files : []
             });
 
             // Configured jobs are one line each; copies are inside the total.

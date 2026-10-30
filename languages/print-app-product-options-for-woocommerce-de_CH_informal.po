@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Print.App Product Options for WooCommerce\n"
-"PO-Revision-Date: 2026-10-30 09:50+0000\n"
+"PO-Revision-Date: 2026-10-30 11:29+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -98,6 +98,10 @@ msgstr "Design"
 #: includes/class-cart.php
 msgid "Download file"
 msgstr "Datei herunterladen"
+
+#: includes/class-frontend.php
+msgid "Drop more files or click to add"
+msgstr "Weitere Dateien hier ablegen oder klicken zum Hinzufügen"
 
 #: includes/class-frontend.php
 msgid "Drop your file here or click to browse"
@@ -295,6 +299,10 @@ msgid "Untitled options"
 msgstr "Unbenannte Optionen"
 
 #: includes/class-frontend.php
+msgid "Up to {max} files"
+msgstr "Bis zu {max} Dateien"
+
+#: includes/class-frontend.php
 msgid "Upload is unavailable"
 msgstr "Upload nicht verfügbar"
 
@@ -313,6 +321,10 @@ msgstr "Die Breite muss zwischen {min} und {max} {unit} liegen."
 #: includes/class-admin.php
 msgid "You are not allowed to manage Print Options."
 msgstr "Sie haben keine Berechtigung, Print Options zu verwalten."
+
+#: includes/class-frontend.php
+msgid "You can add up to {max} files."
+msgstr "Sie können bis zu {max} Dateien hinzufügen."
 
 #: includes/class-product-tab.php
 msgid "You haven't created any print options yet — %s to build your first set."

@@ -4,7 +4,7 @@ Tags: woocommerce, product options, printing, web-to-print, price calculator
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 0.4.18
+Stable tag: 0.4.19
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -189,6 +189,15 @@ truth.
 4. Every price is recomputed and signed on the server before it can reach the cart.
 
 == Changelog ==
+
+= 0.4.19 =
+* New: an upload field can take several files. Turn on "Allow multiple
+  files" and set the maximum (up to 10). Customers pick or drop several
+  files at once and can remove any of them; the order screen has a
+  Download file button for each file, followed by its name.
+* Fix: with several upload fields in one option set, each field keeps its
+  own file. Before, each upload replaced the previous one and every field
+  showed the latest file's name.
 
 = 0.4.18 =
 * New: customers can upload more file types: Illustrator (AI), EPS,

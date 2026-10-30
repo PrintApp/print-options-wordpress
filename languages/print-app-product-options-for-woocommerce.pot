@@ -97,6 +97,10 @@ msgid "Download file"
 msgstr ""
 
 #: includes/class-frontend.php
+msgid "Drop more files or click to add"
+msgstr ""
+
+#: includes/class-frontend.php
 msgid "Drop your file here or click to browse"
 msgstr ""
 
@@ -292,6 +296,10 @@ msgid "Untitled options"
 msgstr ""
 
 #: includes/class-frontend.php
+msgid "Up to {max} files"
+msgstr ""
+
+#: includes/class-frontend.php
 msgid "Upload is unavailable"
 msgstr ""
 
@@ -309,6 +317,10 @@ msgstr ""
 
 #: includes/class-admin.php
 msgid "You are not allowed to manage Print Options."
+msgstr ""
+
+#: includes/class-frontend.php
+msgid "You can add up to {max} files."
 msgstr ""
 
 #: includes/class-product-tab.php

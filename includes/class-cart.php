@@ -117,6 +117,7 @@ class PAPO_Cart
         }
 
         $verified = self::verify_price($config, $payload);
+        $files    = self::uploaded_files($payload['files'] ?? null);
 
         $cart_item_data['papo_options'] = [
             'selections' => $payload['selections'],
@@ -124,13 +125,15 @@ class PAPO_Cart
             // verifier read it (see wire_selections).
             'selections_json' => (string) wp_json_encode(self::wire_selections($config, $payload['selections'])),
             'file'       => isset($payload['file']) && is_array($payload['file']) ? $payload['file'] : null,
+            'files'      => $files,
             'verified'   => $verified,
             // Null unless the blueprint opted in AND the total splits exactly.
             'units'      => self::unit_split($config, $verified),
             'display'    => self::display_pairs(
                 $config,
                 $payload['selections'],
-                isset($payload['file']) && is_array($payload['file']) ? $payload['file'] : null
+                isset($payload['file']) && is_array($payload['file']) ? $payload['file'] : null,
+                $files
             ),
             // Unique per configuration so identical products with different
             // options never merge into one cart line.
@@ -220,8 +223,44 @@ class PAPO_Cart
      * @param array<string, mixed>|null $file Uploaded file metadata, if any.
      * @return array<array{label: string, value: string}>
      */
-    private static function display_pairs(array $config, array $selections, ?array $file): array
+    /**
+     * The customer's direct uploads, as the widget listed them: [{fieldId,
+     * fileId, fileName}]. Only ids shaped like the upload API mints them are
+     * kept (file_download_url() refuses anything else), so an order can only
+     * ever link to our own download endpoint. At most 50.
+     *
+     * @param mixed $raw Posted `files`.
+     * @return array<int, array{fieldId: string, fileId: string, fileName: string}>
+     */
+    private static function uploaded_files($raw): array
     {
+        $files = [];
+        foreach (is_array($raw) ? array_slice($raw, 0, 50) : [] as $entry) {
+            if (!is_array($entry)) {
+                continue;
+            }
+            $id = (string) ($entry['fileId'] ?? '');
+            if (null === self::file_download_url($id)) {
+                continue;
+            }
+            $files[] = [
+                'fieldId'  => sanitize_text_field((string) ($entry['fieldId'] ?? '')),
+                'fileId'   => $id,
+                'fileName' => sanitize_text_field((string) ($entry['fileName'] ?? '')),
+            ];
+        }
+        return $files;
+    }
+
+    /**
+     * @param array<int, array{fieldId: string, fileId: string, fileName: string}> $files
+     */
+    private static function display_pairs(array $config, array $selections, ?array $file, array $files = []): array
+    {
+        $names_by_id = [];
+        foreach ($files as $upload) {
+            $names_by_id[$upload['fileId']] = '' !== $upload['fileName'] ? $upload['fileName'] : $upload['fileId'];
+        }
         $pairs          = [];
         $fields         = [];
         $section_titles = [];
@@ -258,14 +297,26 @@ class PAPO_Cart
                 continue;
             }
 
-            // File fields hold an opaque upload id in the selections; show the
-            // filename the customer recognises instead. A design (a designer's
-            // project) has no file name: it reads "Your design", never its id.
+            // File fields hold opaque upload ids in the selections (one, or a
+            // list for a multi-file field); show the filenames the customer
+            // recognises instead, and only this field's own files. A design (a
+            // designer's project) has no file name: it reads "Your design".
             if ('file' === $type) {
-                $name = $file['fileName']
-                    ?? (isset($file['fileId']) ? __('Your design', 'print-app-product-options-for-woocommerce') : null);
-                if (is_string($name) && '' !== $name) {
-                    $pairs[] = ['label' => $label, 'value' => $name];
+                $answer = $selections[$field_id] ?? null;
+                $ids    = is_array($answer) ? $answer : (is_string($answer) && '' !== $answer ? [$answer] : []);
+                $names  = [];
+                foreach ($ids as $id) {
+                    if (!is_string($id)) {
+                        continue;
+                    }
+                    if (isset($names_by_id[$id])) {
+                        $names[] = $names_by_id[$id];
+                    } elseif (is_array($file) && ($file['fileId'] ?? null) === $id) {
+                        $names[] = (string) ($file['fileName'] ?? __('Your design', 'print-app-product-options-for-woocommerce'));
+                    }
+                }
+                if ($names) {
+                    $pairs[] = ['label' => $label, 'value' => implode(', ', $names)];
                 }
                 continue;
             }
@@ -647,6 +698,14 @@ class PAPO_Cart
         if (!empty($options['file']['fileId'])) {
             $item->add_meta_data('_papo_file_id', sanitize_text_field((string) $options['file']['fileId']));
         }
+        // Every direct upload (several fields, or several files in one), for
+        // the download buttons on the order screen.
+        if (!empty($options['files'])) {
+            $item->add_meta_data('_papo_files', wp_json_encode(array_map(
+                static fn($upload) => ['id' => $upload['fileId'], 'name' => $upload['fileName']],
+                $options['files']
+            )));
+        }
         if (!empty($options['verified']['sku'])) {
             $item->add_meta_data('_papo_sku', sanitize_text_field((string) $options['verified']['sku']));
         }
@@ -698,14 +757,27 @@ class PAPO_Cart
         if (!$item instanceof WC_Order_Item_Product) {
             return;
         }
-        $url = self::file_download_url((string) $item->get_meta('_papo_file_id'));
-        if (null === $url) {
-            return;
+        // Every upload on the line; orders from before multi-file uploads
+        // (or with a single file) carry only _papo_file_id.
+        $uploads = json_decode((string) $item->get_meta('_papo_files'), true);
+        if (!is_array($uploads) || !$uploads) {
+            $uploads = [['id' => (string) $item->get_meta('_papo_file_id'), 'name' => '']];
         }
-        printf(
-            '<p class="papo-file-download"><a class="button button-small" href="%s" target="_blank" rel="noopener noreferrer">%s</a></p>',
-            esc_url($url),
-            esc_html__('Download file', 'print-app-product-options-for-woocommerce')
-        );
+        $links = [];
+        foreach ($uploads as $upload) {
+            $url = self::file_download_url((string) ($upload['id'] ?? ''));
+            if (null !== $url) {
+                $links[] = [$url, (string) ($upload['name'] ?? '')];
+            }
+        }
+        foreach ($links as [$url, $name]) {
+            printf(
+                '<p class="papo-file-download"><a class="button button-small" href="%s" target="_blank" rel="noopener noreferrer">%s</a>%s</p>',
+                esc_url($url),
+                esc_html__('Download file', 'print-app-product-options-for-woocommerce'),
+                // With several files, each button is followed by its file's name.
+                count($links) > 1 && '' !== $name ? ' ' . esc_html($name) : ''
+            );
+        }
     }
 }
