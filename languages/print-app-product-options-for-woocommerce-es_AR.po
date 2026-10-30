@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Print.App Product Options for WooCommerce\n"
-"PO-Revision-Date: 2026-10-26 11:19+0000\n"
+"PO-Revision-Date: 2026-10-30 09:50+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -14,6 +14,10 @@ msgstr ""
 #: includes/class-frontend.php
 msgid "1 page"
 msgstr "1 página"
+
+#: includes/class-frontend.php
+msgid "Accepted file types: {formats}"
+msgstr "Tipos de archivo aceptados: {formats}"
 
 #: includes/class-frontend.php
 msgid "Add to cart"
@@ -86,6 +90,10 @@ msgstr "Los clientes configuran y calculan el precio de su pedido directamente e
 #: includes/class-frontend.php
 msgid "Decrease {label}"
 msgstr "Reducir {label}"
+
+#: includes/class-frontend.php
+msgid "Design"
+msgstr "Diseño"
 
 #: includes/class-cart.php
 msgid "Download file"
@@ -314,6 +322,7 @@ msgstr "Aún no has creado opciones de impresión — %s para crear tu primer co
 msgid "Your choices will appear here."
 msgstr "Tus selecciones aparecerán aquí."
 
+#: includes/class-cart.php
 #: includes/class-frontend.php
 msgid "Your design"
 msgstr "Tu diseño"

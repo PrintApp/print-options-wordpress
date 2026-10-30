@@ -4,7 +4,7 @@ Tags: woocommerce, product options, printing, web-to-print, price calculator
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 0.4.17
+Stable tag: 0.4.18
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -189,6 +189,16 @@ truth.
 4. Every price is recomputed and signed on the server before it can reach the cart.
 
 == Changelog ==
+
+= 0.4.18 =
+* New: customers can upload more file types: Illustrator (AI), EPS,
+  Photoshop (PSD), ZIP, Word, Excel and CSV, as well as PDF, JPG, PNG, TIFF
+  and SVG (up to 100 MB). Choose what each upload field takes in its
+  "Accepted types", for example "pdf, zip". The file picker offers those
+  types, and a file of another type is refused with a message naming the
+  accepted ones.
+* Fix: a design made in the designer reads "Design: Your design" in the
+  cart, instead of the designer's button label and a project number.
 
 = 0.4.17 =
 * New: import and export option sets as JSON. In the option set editor,

@@ -259,9 +259,11 @@ class PAPO_Cart
             }
 
             // File fields hold an opaque upload id in the selections; show the
-            // filename the customer recognises instead.
+            // filename the customer recognises instead. A design (a designer's
+            // project) has no file name: it reads "Your design", never its id.
             if ('file' === $type) {
-                $name = $file['fileName'] ?? $file['fileId'] ?? null;
+                $name = $file['fileName']
+                    ?? (isset($file['fileId']) ? __('Your design', 'print-app-product-options-for-woocommerce') : null);
                 if (is_string($name) && '' !== $name) {
                     $pairs[] = ['label' => $label, 'value' => $name];
                 }

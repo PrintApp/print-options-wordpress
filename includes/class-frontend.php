@@ -246,10 +246,13 @@ class PAPO_Frontend
             'upload.secureLoading'      => __('Loading secure upload…', 'print-app-product-options-for-woocommerce'),
             'upload.unavailable'        => __('Upload is unavailable', 'print-app-product-options-for-woocommerce'),
             'upload.retry'              => __('Retry', 'print-app-product-options-for-woocommerce'),
+            /* translators: keep the {formats} placeholder (e.g. "PDF, JPEG") */
+            'upload.wrongType'          => __('Accepted file types: {formats}', 'print-app-product-options-for-woocommerce'),
             'artwork.or'                => __('or', 'print-app-product-options-for-woocommerce'),
             'artwork.change'            => __('Change', 'print-app-product-options-for-woocommerce'),
             'artwork.remove'            => __('Remove', 'print-app-product-options-for-woocommerce'),
             'artwork.designName'        => __('Your design', 'print-app-product-options-for-woocommerce'),
+            'artwork.label'             => __('Design', 'print-app-product-options-for-woocommerce'),
             /* translators: keep the {count} placeholder */
             'artwork.pageCount'         => __('{count} pages', 'print-app-product-options-for-woocommerce'),
             'artwork.pageCountOne'      => __('1 page', 'print-app-product-options-for-woocommerce'),
