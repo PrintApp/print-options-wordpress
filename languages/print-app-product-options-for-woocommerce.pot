@@ -259,6 +259,10 @@ msgstr ""
 msgid "This configuration could not be priced."
 msgstr ""
 
+#: includes/class-frontend.php
+msgid "This file couldn't be uploaded. {reason}"
+msgstr ""
+
 #: includes/class-cart.php
 msgid "This product has no configurator blueprint."
 msgstr ""

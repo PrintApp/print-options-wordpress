@@ -253,6 +253,8 @@ class PAPO_Frontend
             'upload.addMore'            => __('Drop more files or click to add', 'print-app-product-options-for-woocommerce'),
             /* translators: keep the {max} placeholder */
             'upload.tooMany'            => __('You can add up to {max} files.', 'print-app-product-options-for-woocommerce'),
+            /* translators: keep the {reason} placeholder: the upload server's own reason, or nothing */
+            'upload.failed'             => __('This file couldn\'t be uploaded. {reason}', 'print-app-product-options-for-woocommerce'),
             'artwork.or'                => __('or', 'print-app-product-options-for-woocommerce'),
             'artwork.change'            => __('Change', 'print-app-product-options-for-woocommerce'),
             'artwork.remove'            => __('Remove', 'print-app-product-options-for-woocommerce'),

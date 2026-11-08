@@ -4,7 +4,7 @@ Tags: woocommerce, product options, printing, web-to-print, price calculator
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 0.4.19
+Stable tag: 0.4.20
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -189,6 +189,21 @@ truth.
 4. Every price is recomputed and signed on the server before it can reach the cart.
 
 == Changelog ==
+
+= 0.4.20 =
+* Fix: when an upload is refused, for example a file under 5 KB, the
+  message appears under that upload field and the rest of the options stay
+  as they were. Before, the whole option form was replaced by the error.
+* Fix: test uploads work in the option set editor's preview. It uploads
+  to the Upload endpoint in Settings, like your product pages.
+* New: a product can take an uploaded file and a design, each in its own
+  field, such as a thesis PDF and its cover. On the file the price depends
+  on, turn on "Sets the price".
+* New: several quantity fields can take turns. The quantity field without
+  a condition is the default list, and it steps aside while a quantity
+  field whose condition matches is showing.
+* Fix: "Allow multiple files" turns itself off on Filecheck and designer
+  fields, where it has no effect.
 
 = 0.4.19 =
 * New: an upload field can take several files. Turn on "Allow multiple

@@ -86,6 +86,9 @@ class PAPO_Admin
             'ajaxUrl' => admin_url('admin-ajax.php'),
             'nonce'   => wp_create_nonce('papo_bridge'),
             'store'   => PAPO_Backend::store_id(),
+            /* The builder's live preview uploads test files where the
+               product pages do. */
+            'uploadEndpoint' => PAPO_Settings::get('papo_upload_endpoint'),
         ]);
     }
 
