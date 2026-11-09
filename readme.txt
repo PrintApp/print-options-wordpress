@@ -4,7 +4,7 @@ Tags: woocommerce, product options, printing, web-to-print, price calculator
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 0.4.20
+Stable tag: 0.4.21
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -189,6 +189,10 @@ truth.
 4. Every price is recomputed and signed on the server before it can reach the cart.
 
 == Changelog ==
+
+= 0.4.21 =
+* Fix: a Filecheck upload field opens in your site's language. Before, it
+  always showed English, whatever language the store was in.
 
 = 0.4.20 =
 * Fix: when an upload is refused, for example a file under 5 KB, the
