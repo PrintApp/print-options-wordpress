@@ -4,7 +4,7 @@ Tags: woocommerce, product options, printing, web-to-print, price calculator
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 0.4.21
+Stable tag: 0.4.22
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -189,6 +189,16 @@ truth.
 4. Every price is recomputed and signed on the server before it can reach the cart.
 
 == Changelog ==
+
+= 0.4.22 =
+* New: order tables. A "Quantity per option" field can have rows as well
+  as options, such as colours down the side and sizes across the top. The
+  customer types a quantity in each box, and volume discounts count the
+  whole table together. Add rows in the Options tab with "+ Add row".
+* New: tooltips. Options and fields can carry an extra explanation behind
+  a small (i) icon, shown on hover or tap.
+* New: help texts, descriptions and tooltips accept simple formatting:
+  **bold**, *italic* and line breaks.
 
 = 0.4.21 =
 * Fix: a Filecheck upload field opens in your site's language. Before, it

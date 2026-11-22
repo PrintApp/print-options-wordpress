@@ -52,10 +52,12 @@ class PAPO_Cart
             foreach ($value as $key => $item) {
                 /* Not sanitize_key(): it lowercases, and these keys are
                    blueprint field ids that must still match the option set
-                   afterwards. Restrict the character set, keep the case. */
+                   afterwards. Restrict the character set, keep the case.
+                   "." joins an order table's row and option ids
+                   ("black.m"); no blueprint id contains one. */
                 $key = is_int($key)
                     ? $key
-                    : preg_replace('/[^A-Za-z0-9_\-]/', '', (string) $key);
+                    : preg_replace('/[^A-Za-z0-9_\-.]/', '', (string) $key);
                 $clean[$key] = self::clean($item, $depth + 1);
             }
             return $clean;
@@ -326,6 +328,25 @@ class PAPO_Cart
                 continue;
             }
 
+            // An order table: a line per row ordered, "Black: M × 5, L × 3".
+            if ('quantities' === $type && !empty($field['rows']) && is_array($field['rows'])) {
+                $counts = self::normalize_counts($field, $value);
+                foreach ($field['rows'] as $row) {
+                    $row_id = (string) ($row['id'] ?? '');
+                    $parts  = [];
+                    foreach ($field['options'] ?? [] as $choice) {
+                        $key = $row_id . '.' . (string) ($choice['id'] ?? '');
+                        if (isset($counts[$key])) {
+                            $parts[] = (string) ($choice['label'] ?? $choice['id']) . ' × ' . $counts[$key];
+                        }
+                    }
+                    if ($parts) {
+                        $pairs[] = ['label' => (string) ($row['label'] ?? $row_id), 'value' => implode(', ', $parts)];
+                    }
+                }
+                continue;
+            }
+
             // A count per option: "M × 5, L × 3" in option order.
             if ('quantities' === $type) {
                 $counts = self::normalize_counts($field, $value);
@@ -410,7 +431,8 @@ class PAPO_Cart
      * src/quantity.ts): the counts a count-per-option answer prices as, keyed
      * by option id in option order. Unknown options, unreadable values and
      * counts of 0 or less are dropped; every other count snaps to the same
-     * grid as a quantity (0, or min, min+step, … up to max).
+     * grid as a quantity (0, or min, min+step, … up to max). An order table
+     * (`rows`) counts per cell, keyed "rowId.optionId", rows outer.
      *
      * @param array<string, mixed> $field `quantities` field from the blueprint.
      * @param mixed                $raw   Posted selection.
@@ -427,9 +449,22 @@ class PAPO_Cart
         $min  = isset($field['min']) && is_numeric($field['min']) ? (float) $field['min'] : 1.0;
         $step = isset($field['step']) && is_numeric($field['step']) && (float) $field['step'] > 0 ? (float) $field['step'] : 1.0;
 
-        $counts = [];
+        $keys = [];
         foreach ($field['options'] ?? [] as $choice) {
-            $id = (string) ($choice['id'] ?? '');
+            $keys[] = (string) ($choice['id'] ?? '');
+        }
+        if (!empty($field['rows']) && is_array($field['rows'])) {
+            $cells = [];
+            foreach ($field['rows'] as $row) {
+                foreach ($keys as $option_id) {
+                    $cells[] = (string) ($row['id'] ?? '') . '.' . $option_id;
+                }
+            }
+            $keys = $cells;
+        }
+
+        $counts = [];
+        foreach ($keys as $id) {
             if ('' === $id || !isset($raw[$id]) || !is_numeric($raw[$id])) {
                 continue;
             }

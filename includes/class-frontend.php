@@ -230,6 +230,9 @@ class PAPO_Frontend
             /* translators: keep the {label} placeholder (the option name, lower-case) */
             'choice.placeholder'        => __('Choose {label}…', 'print-app-product-options-for-woocommerce'),
             'choice.placeholderBare'    => __('Choose…', 'print-app-product-options-for-woocommerce'),
+            /* translators: accessible name of an ⓘ tooltip button; keep the {label} placeholder (the field or option name) */
+            'tip.label'                 => __('More about {label}', 'print-app-product-options-for-woocommerce'),
+            'tip.labelBare'             => __('More information', 'print-app-product-options-for-woocommerce'),
             'quantity.label'            => __('Quantity', 'print-app-product-options-for-woocommerce'),
             /* translators: keep the {label} placeholder */
             'stepper.decrease'          => __('Decrease {label}', 'print-app-product-options-for-woocommerce'),

@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Print.App Product Options for WooCommerce\n"
-"PO-Revision-Date: 2026-11-08 10:59+0000\n"
+"PO-Revision-Date: 2026-11-17 19:25+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -146,6 +146,14 @@ msgstr "Beveiligde upload laden…"
 #: includes/class-frontend.php
 msgid "Minimum order adjustment"
 msgstr "Aanpassing minimumbestelling"
+
+#: includes/class-frontend.php
+msgid "More about {label}"
+msgstr "Meer over {label}"
+
+#: includes/class-frontend.php
+msgid "More information"
+msgstr "Meer informatie"
 
 #: includes/class-product-tab.php
 msgid "None — sell at the normal price"

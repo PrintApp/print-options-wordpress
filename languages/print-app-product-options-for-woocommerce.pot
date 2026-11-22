@@ -144,6 +144,14 @@ msgstr ""
 msgid "Minimum order adjustment"
 msgstr ""
 
+#: includes/class-frontend.php
+msgid "More about {label}"
+msgstr ""
+
+#: includes/class-frontend.php
+msgid "More information"
+msgstr ""
+
 #: includes/class-product-tab.php
 msgid "None — sell at the normal price"
 msgstr ""
