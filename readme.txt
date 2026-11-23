@@ -4,7 +4,7 @@ Tags: woocommerce, product options, printing, web-to-print, price calculator
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 0.4.22
+Stable tag: 0.4.23
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -189,6 +189,11 @@ truth.
 4. Every price is recomputed and signed on the server before it can reach the cart.
 
 == Changelog ==
+
+= 0.4.23 =
+* New: a size field can start with a size filled in. Set a Default width
+  and Default height on a Dimensions field, and area and formula prices
+  show as soon as the page opens. Customers can still change the size.
 
 = 0.4.22 =
 * New: order tables. A "Quantity per option" field can have rows as well
